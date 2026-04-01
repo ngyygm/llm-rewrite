@@ -72,6 +72,15 @@ Second, we report \textbf{diagnostic findings} that all seven traditional metric
 Third, we propose \textbf{pairwise preference evaluation}: a pairwise preference learning approach (LoRA fine-tuned 7B model) achieves $\rho$=0.665, substantially outperforming absolute scoring ($\rho$=0.467), zero-shot 72B models ($\rho \leq 0.406$), general-purpose evaluators (Prometheus~2: $\rho$=0.124), and all traditional metrics.
 Fourth, we demonstrate \textbf{practical utility} through evaluator-guided data filtering that improves mean rewrite quality by 39\% compared to random selection, showing that our benchmark-derived evaluator transfers to real-world applications.
 
+Figure~\ref{fig:framework} provides an overview of the RewritingBench framework, from data collection through diagnostic analysis to pairwise preference learning and downstream validation.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/ai_generated/framework_overview_v1.png}
+\caption{Overview of the RewritingBench framework. From data collection (730 Chinese rewrite pairs) to diagnostic analysis (all traditional metrics show negative correlation), pairwise preference learning ($\rho$=0.665), and downstream validation (+39\% quality improvement).}
+\label{fig:framework}
+\end{figure}
+
 % ============================================================
 \section{Related Work}
 \label{sec:related}
@@ -405,6 +414,14 @@ Figure~\ref{fig:bias_radar} visualizes the bias profile across dimensions, confi
 Having established that RewriteJudge substantially outperforms all baselines in absolute scoring (Section~\ref{sec:main_results}), we investigate whether a different evaluation paradigm can further improve alignment with human judgment.
 Our diagnostic analysis reveals that absolute scoring imposes an artificial total ordering on rewrites whose quality may be inherently incomparable.
 We therefore investigate whether \emph{pairwise preference learning}, training the model to predict which of two rewrites is better rather than assigning an absolute score, provides a more natural evaluation framework.
+Figure~\ref{fig:paradigm_comparison} contrasts the two evaluation paradigms.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/ai_generated/pairwise_vs_absolute_v1.png}
+\caption{Comparison of absolute scoring and pairwise preference evaluation paradigms. Pairwise preference learning achieves a 42\% improvement over absolute scoring ($\rho$=0.665 vs.\ $\rho$=0.467) by learning relative quality judgments instead of mapping to an absolute scale.}
+\label{fig:paradigm_comparison}
+\end{figure*}
 
 \subsection{Method}
 
