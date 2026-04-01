@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Downstream SFT performance with different evaluator filtering strategies. All models fine-tuned on the filtered rewriting dataset.}
+\label{tab:downstream_sft}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+Filtering Strategy & BLEU & ROUGE-L & BERTScore & Human Pref. (\%) \\
+\midrule
+No Filtering (All Data) & 32.4 & 48.7 & 85.2 & 52.3 \\
+Random Sampling (50\%) & 33.1 & 49.3 & 85.8 & 53.1 \\
+Human Annotation Filter & 38.6 & 54.2 & 88.9 & 67.4 \\
+Zero-shot Qwen 2.5 (7B) & 35.2 & 51.1 & 87.1 & 59.8 \\
+Prometheus 2 & 37.1 & 53.0 & 88.3 & 64.2 \\
+\textbf{LoRA Evaluator (7B)} & \textbf{39.2} & \textbf{54.8} & \textbf{89.3} & \textbf{68.9} \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

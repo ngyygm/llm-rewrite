@@ -1,0 +1,331 @@
+{
+  "metadata": {
+    "n_samples": 129
+  },
+  "position_bias": {
+    "random_baseline": {
+      "length_diff_vs_score_pearson": 0.0352,
+      "length_diff_vs_score_pearson_p": 0.69237,
+      "length_diff_vs_score_spearman": 0.0528,
+      "length_diff_vs_score_spearman_p": 0.552481,
+      "short_input_mean_score": 2.692,
+      "long_input_mean_score": 2.531,
+      "input_length_mw_p": 0.546837,
+      "n_short_input": 65,
+      "n_long_input": 64
+    },
+    "length_heuristic": {
+      "length_diff_vs_score_pearson": 0.7891,
+      "length_diff_vs_score_pearson_p": 0.0,
+      "length_diff_vs_score_spearman": 0.8227,
+      "length_diff_vs_score_spearman_p": 0.0,
+      "short_input_mean_score": 2.015,
+      "long_input_mean_score": 2.016,
+      "input_length_mw_p": 0.997816,
+      "n_short_input": 65,
+      "n_long_input": 64
+    },
+    "char_overlap": {
+      "length_diff_vs_score_pearson": 0.1991,
+      "length_diff_vs_score_pearson_p": 0.023705,
+      "length_diff_vs_score_spearman": 0.1372,
+      "length_diff_vs_score_spearman_p": 0.120931,
+      "short_input_mean_score": 3.492,
+      "long_input_mean_score": 3.797,
+      "input_length_mw_p": 0.02877,
+      "n_short_input": 65,
+      "n_long_input": 64
+    },
+    "zero_shot_qwen_7b": {
+      "length_diff_vs_score_pearson": 0.0963,
+      "length_diff_vs_score_pearson_p": 0.277888,
+      "length_diff_vs_score_spearman": 0.0341,
+      "length_diff_vs_score_spearman_p": 0.70161,
+      "short_input_mean_score": 1.8,
+      "long_input_mean_score": 1.891,
+      "input_length_mw_p": 0.597959,
+      "n_short_input": 65,
+      "n_long_input": 64
+    },
+    "prometheus_2": {
+      "length_diff_vs_score_pearson": 0.0385,
+      "length_diff_vs_score_pearson_p": 0.665277,
+      "length_diff_vs_score_spearman": -0.039,
+      "length_diff_vs_score_spearman_p": 0.66072,
+      "short_input_mean_score": 2.108,
+      "long_input_mean_score": 1.719,
+      "input_length_mw_p": 0.131001,
+      "n_short_input": 65,
+      "n_long_input": 64
+    },
+    "prompt_based_32b": {
+      "length_diff_vs_score_pearson": 0.11,
+      "length_diff_vs_score_pearson_p": 0.214817,
+      "length_diff_vs_score_spearman": 0.0179,
+      "length_diff_vs_score_spearman_p": 0.840401,
+      "short_input_mean_score": 2.108,
+      "long_input_mean_score": 1.672,
+      "input_length_mw_p": 0.071392,
+      "n_short_input": 65,
+      "n_long_input": 64
+    },
+    "lora_evaluator_7b": {
+      "length_diff_vs_score_pearson": 0.0594,
+      "length_diff_vs_score_pearson_p": 0.503757,
+      "length_diff_vs_score_spearman": -0.0734,
+      "length_diff_vs_score_spearman_p": 0.408427,
+      "short_input_mean_score": 1.831,
+      "long_input_mean_score": 1.875,
+      "input_length_mw_p": 0.998075,
+      "n_short_input": 65,
+      "n_long_input": 64
+    }
+  },
+  "length_bias": {
+    "human_baseline": {
+      "pearson_r": -0.1354,
+      "pearson_p": 0.126173,
+      "spearman_r": -0.1114,
+      "spearman_p": 0.208675
+    },
+    "evaluators": {
+      "random_baseline": {
+        "output_length_pearson": -0.0569,
+        "output_length_pearson_p": 0.521736,
+        "output_length_spearman": -0.087,
+        "output_length_spearman_p": 0.326841,
+        "input_length_pearson": -0.0652,
+        "input_length_spearman": -0.0706,
+        "quartile_score_means": {
+          "Q1 (shortest)": 2.733,
+          "Q2": 2.588,
+          "Q3": 2.938,
+          "Q4 (longest)": 2.212
+        },
+        "output_length_bias_delta": 0.0785
+      },
+      "length_heuristic": {
+        "output_length_pearson": 0.2262,
+        "output_length_pearson_p": 0.009955,
+        "output_length_spearman": 0.2536,
+        "output_length_spearman_p": 0.003736,
+        "input_length_pearson": -0.0405,
+        "input_length_spearman": -0.0174,
+        "quartile_score_means": {
+          "Q1 (shortest)": 1.7,
+          "Q2": 2.029,
+          "Q3": 2.188,
+          "Q4 (longest)": 2.121
+        },
+        "output_length_bias_delta": 0.3616
+      },
+      "char_overlap": {
+        "output_length_pearson": 0.2655,
+        "output_length_pearson_p": 0.002363,
+        "output_length_spearman": 0.2895,
+        "output_length_spearman_p": 0.000876,
+        "input_length_pearson": 0.1871,
+        "input_length_spearman": 0.2188,
+        "quartile_score_means": {
+          "Q1 (shortest)": 3.267,
+          "Q2": 3.588,
+          "Q3": 3.75,
+          "Q4 (longest)": 3.939
+        },
+        "output_length_bias_delta": 0.4009
+      },
+      "zero_shot_qwen_7b": {
+        "output_length_pearson": -0.0748,
+        "output_length_pearson_p": 0.399217,
+        "output_length_spearman": -0.0333,
+        "output_length_spearman_p": 0.7076,
+        "input_length_pearson": -0.1019,
+        "input_length_spearman": -0.042,
+        "quartile_score_means": {
+          "Q1 (shortest)": 2.1,
+          "Q2": 1.676,
+          "Q3": 1.781,
+          "Q4 (longest)": 1.848
+        },
+        "output_length_bias_delta": 0.0606
+      },
+      "prometheus_2": {
+        "output_length_pearson": -0.0605,
+        "output_length_pearson_p": 0.495643,
+        "output_length_spearman": -0.0873,
+        "output_length_spearman_p": 0.325054,
+        "input_length_pearson": -0.0697,
+        "input_length_spearman": -0.0946,
+        "quartile_score_means": {
+          "Q1 (shortest)": 1.967,
+          "Q2": 2.294,
+          "Q3": 1.625,
+          "Q4 (longest)": 1.758
+        },
+        "output_length_bias_delta": 0.0749
+      },
+      "prompt_based_32b": {
+        "output_length_pearson": -0.1918,
+        "output_length_pearson_p": 0.029413,
+        "output_length_spearman": -0.1863,
+        "output_length_spearman_p": 0.034557,
+        "input_length_pearson": -0.2171,
+        "input_length_spearman": -0.2038,
+        "quartile_score_means": {
+          "Q1 (shortest)": 2.167,
+          "Q2": 2.294,
+          "Q3": 1.594,
+          "Q4 (longest)": 1.515
+        },
+        "output_length_bias_delta": -0.0564
+      },
+      "lora_evaluator_7b": {
+        "output_length_pearson": -0.056,
+        "output_length_pearson_p": 0.528596,
+        "output_length_spearman": -0.0467,
+        "output_length_spearman_p": 0.599281,
+        "input_length_pearson": -0.0722,
+        "input_length_spearman": -0.0466,
+        "quartile_score_means": {
+          "Q1 (shortest)": 1.8,
+          "Q2": 2.147,
+          "Q3": 1.781,
+          "Q4 (longest)": 1.667
+        },
+        "output_length_bias_delta": 0.0794
+      }
+    }
+  },
+  "verbosity_bias": {
+    "human_verbosity_spearman": -0.179,
+    "human_verbosity_p": 0.042422,
+    "evaluators": {
+      "random_baseline": {
+        "verbosity_spearman": 0.0164,
+        "verbosity_spearman_p": 0.853514,
+        "verbosity_pearson": -0.0393,
+        "verbosity_pearson_p": 0.658412,
+        "binned_analysis": {
+          "concise_ratio": 0.685,
+          "similar_ratio": 0.947,
+          "verbose_ratio": null,
+          "concise_mean_score": 2.727,
+          "similar_mean_score": 2.589,
+          "verbose_mean_score": null,
+          "concise_n": 22,
+          "similar_n": 107,
+          "verbose_n": 0
+        },
+        "verbosity_bias_vs_human": 0.1954
+      },
+      "length_heuristic": {
+        "verbosity_spearman": 0.8606,
+        "verbosity_spearman_p": 0.0,
+        "verbosity_pearson": 0.8802,
+        "verbosity_pearson_p": 0.0,
+        "binned_analysis": {
+          "concise_ratio": 0.685,
+          "similar_ratio": 0.947,
+          "verbose_ratio": null,
+          "concise_mean_score": 0.909,
+          "similar_mean_score": 2.243,
+          "verbose_mean_score": null,
+          "concise_n": 22,
+          "similar_n": 107,
+          "verbose_n": 0
+        },
+        "verbosity_bias_vs_human": 1.0396
+      },
+      "char_overlap": {
+        "verbosity_spearman": 0.2071,
+        "verbosity_spearman_p": 0.018545,
+        "verbosity_pearson": 0.2634,
+        "verbosity_pearson_p": 0.002563,
+        "binned_analysis": {
+          "concise_ratio": 0.685,
+          "similar_ratio": 0.947,
+          "verbose_ratio": null,
+          "concise_mean_score": 3.227,
+          "similar_mean_score": 3.729,
+          "verbose_mean_score": null,
+          "concise_n": 22,
+          "similar_n": 107,
+          "verbose_n": 0
+        },
+        "verbosity_bias_vs_human": 0.386
+      },
+      "zero_shot_qwen_7b": {
+        "verbosity_spearman": -0.0081,
+        "verbosity_spearman_p": 0.927394,
+        "verbosity_pearson": 0.083,
+        "verbosity_pearson_p": 0.349982,
+        "binned_analysis": {
+          "concise_ratio": 0.685,
+          "similar_ratio": 0.947,
+          "verbose_ratio": null,
+          "concise_mean_score": 1.5,
+          "similar_mean_score": 1.916,
+          "verbose_mean_score": null,
+          "concise_n": 22,
+          "similar_n": 107,
+          "verbose_n": 0
+        },
+        "verbosity_bias_vs_human": 0.1709
+      },
+      "prometheus_2": {
+        "verbosity_spearman": -0.0546,
+        "verbosity_spearman_p": 0.538863,
+        "verbosity_pearson": 0.0333,
+        "verbosity_pearson_p": 0.707908,
+        "binned_analysis": {
+          "concise_ratio": 0.685,
+          "similar_ratio": 0.947,
+          "verbose_ratio": null,
+          "concise_mean_score": 1.545,
+          "similar_mean_score": 1.991,
+          "verbose_mean_score": null,
+          "concise_n": 22,
+          "similar_n": 107,
+          "verbose_n": 0
+        },
+        "verbosity_bias_vs_human": 0.1244
+      },
+      "prompt_based_32b": {
+        "verbosity_spearman": -0.0289,
+        "verbosity_spearman_p": 0.745325,
+        "verbosity_pearson": 0.0563,
+        "verbosity_pearson_p": 0.526089,
+        "binned_analysis": {
+          "concise_ratio": 0.685,
+          "similar_ratio": 0.947,
+          "verbose_ratio": null,
+          "concise_mean_score": 1.636,
+          "similar_mean_score": 1.944,
+          "verbose_mean_score": null,
+          "concise_n": 22,
+          "similar_n": 107,
+          "verbose_n": 0
+        },
+        "verbosity_bias_vs_human": 0.1501
+      },
+      "lora_evaluator_7b": {
+        "verbosity_spearman": -0.0895,
+        "verbosity_spearman_p": 0.313193,
+        "verbosity_pearson": 0.0543,
+        "verbosity_pearson_p": 0.541438,
+        "binned_analysis": {
+          "concise_ratio": 0.685,
+          "similar_ratio": 0.947,
+          "verbose_ratio": null,
+          "concise_mean_score": 1.636,
+          "similar_mean_score": 1.897,
+          "verbose_mean_score": null,
+          "concise_n": 22,
+          "similar_n": 107,
+          "verbose_n": 0
+        },
+        "verbosity_bias_vs_human": 0.0895
+      }
+    }
+  }
+}

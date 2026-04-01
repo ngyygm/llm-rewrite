@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{Bias analysis for different evaluator methods. Lower absolute correlation values indicate less bias.}
+\label{tab:bias_analysis}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+Method & Output Len. $r$ & Input Len. $r$ & Verbosity $\\rho$ & Pos. Bias $r$ & Bias Score \\
+\midrule
+Prometheus 2 & -0.060 & -0.070 & -0.055 & 0.038 & 0.056 \\
+Char Overlap & 0.266 & 0.187 & 0.207 & 0.199 & 0.215 \\
+Length Heuristic & 0.226 & -0.041 & 0.861 & 0.789 & 0.479 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

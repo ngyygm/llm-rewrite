@@ -1,0 +1,102 @@
+# =============================================================================
+# LoRA Fine-tuning Configuration for Chinese Rewriting Quality Evaluator
+# EMNLP 2026
+# =============================================================================
+
+# --- Model ---
+model:
+  base_model_name: "Qwen/Qwen2.5-7B-Instruct"
+  # 4-bit quantization config (bitsandbytes)
+  load_in_4bit: true
+  bnb_4bit_quant_type: "nf4"
+  bnb_4bit_compute_dtype: "bfloat16"
+  bnb_4bit_use_double_quant: true
+  # Trust remote code for custom models
+  trust_remote_code: true
+  # Use fast tokenizer
+  use_fast_tokenizer: true
+
+# --- LoRA ---
+lora:
+  r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+# --- Training ---
+training:
+  num_train_epochs: 3
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 4
+  # Effective batch size = 4 * 4 = 16
+  learning_rate: 2.0e-4
+  lr_scheduler_type: "cosine"
+  warmup_ratio: 0.05
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  # Precision
+  bf16: true
+  fp16: false
+  # Memory
+  gradient_checkpointing: true
+  gradient_checkpointing_kwargs:
+    use_reentrant: false
+  # Optimizer
+  optim: "paged_adamw_8bit"
+  # Logging
+  logging_steps: 10
+  logging_first_step: true
+  report_to: "none"  # Set to "wandb" to enable W&B
+  # Saving
+  save_strategy: "epoch"
+  save_total_limit: 3
+  # Evaluation
+  eval_strategy: "epoch"
+  eval_on_start: false
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_loss"
+  greater_is_better: false
+  # Early stopping
+  early_stopping_patience: 5
+  # Misc
+  dataloader_num_workers: 4
+  dataloader_pin_memory: true
+  remove_unused_columns: false
+  seed: 42
+  # Max sequence length
+  max_seq_length: 2048
+
+# --- Data ---
+data:
+  train_data_dir: "data/human_eval"
+  eval_data_path: "data/human_eval/eval.json"
+  # Subset sizes for learning curve experiments
+  subset_sizes: [50, 100, 200, 400]
+  # Training modes
+  modes:
+    score_only:
+      train_file: "train_score_only.json"
+    multi_score:
+      train_file: "train_multi_score.json"
+
+# --- Inference ---
+inference:
+  temperature: 0.1
+  max_new_tokens: 256
+  top_p: 0.9
+  repetition_penalty: 1.1
+
+# --- Output ---
+output:
+  base_dir: "evaluator/checkpoints"
+  results_dir: "data/baselines"
+  results_file: "results_lora_evaluator.json"

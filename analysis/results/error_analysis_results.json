@@ -1,0 +1,51 @@
+# Error Analysis Results: Why Traditional Metrics Fail
+
+## Key Finding
+Traditional metrics (BLEU, ROUGE, etc.) measure **surface-level n-gram overlap** between source and rewrite. This is fundamentally misaligned with rewriting quality because:
+
+1. **Good rewrites DIFFER from the source** — they use different vocabulary and sentence structure while preserving meaning → metrics PENALIZE them (BLEU=0 for human score 4-5)
+2. **Bad rewrites COPY the source** — they are near-identical to the original with minimal changes → metrics REWARD them (BLEU=0.55 for human score 0-1)
+
+## Pattern 1: Metric Rewards Bad Rewrites (High BLEU, Low Human)
+- Example: Source about basketball player → Rewrite changes "加盟" to "加盟后", "场场" to "几乎每场" → BLEU=0.55, Human=0.7
+- Root cause: Near-copy with trivial word substitutions gets high overlap score
+
+## Pattern 2: Metric Penalizes Good Rewrites (Low BLEU, High Human)
+- Example: Source about Biden press conference → Rewrite completely restructures with different vocabulary → BLEU=0.00, Human=4.0
+- Root cause: Substantial restructuring preserves meaning but eliminates n-gram overlap
+
+## Statistical Significance
+All negative correlations are statistically significant (p < 0.001):
+| Metric | Spearman ρ | p-value |
+|--------|-----------|---------|
+| BLEU | -0.2939 | 7.25e-04 |
+| ROUGE-L | -0.3852 | 6.54e-06 |
+| SBERT-COSINE | -0.3774 | 1.04e-05 |
+| TFIDF-COSINE | -0.5711 | 1.58e-12 |
+| W2V-COSINE | -0.2848 | 1.07e-03 |
+| JACCARD-WORD | -0.5376 | 5.07e-11 |
+| JACCARD-CHAR | -0.5951 | 1.03e-13 |
+
+## Paper Text (for §Diagnostics)
+```
+Why do traditional metrics fail? We identify two systematic error patterns:
+
+(1) Surface similarity without quality. Rewrites that are near-copies of the source
+text—changing only a few words while preserving the original structure—receive high
+overlap-based metric scores but low human ratings. For example, a rewrite that
+substitutes "加盟" with "加盟后" and "场场" with "几乎每场" achieves BLEU=0.55
+but receives a human score of only 0.7. The metric rewards lexical overlap that
+reflects copying, not quality improvement.
+
+(2) Quality without surface similarity. High-quality rewrites that substantially
+restructure the sentence—using different vocabulary and syntax while preserving
+meaning—receive near-zero metric scores but high human ratings. A rewrite that
+restructures a passage about a press conference into a more concise summary
+achieves BLEU=0.00 but receives a human score of 4.0. The metric penalizes the
+very lexical variation that characterizes successful rewriting.
+
+This pattern reveals a fundamental misalignment: overlap-based metrics measure
+how SIMILAR a rewrite is to its source, while human judgment evaluates how GOOD
+the rewrite is. For text rewriting—a task where the goal is to DIFFER from the
+source while preserving meaning—these two objectives are inversely correlated.
+```

@@ -1,0 +1,28 @@
+\begin{table*}[t]
+\centering
+\caption{Main evaluation results on the Chinese rewriting quality benchmark ($n=129$). Scores are compared against human average annotations (0--5 scale). $^*$, $^{**}$, $^{***}$ indicate $p < 0.05$, $0.01$, $0.001$ respectively.}
+\label{tab:main_results}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccccc}
+\toprule
+Method & Type & Spearman $\rho$ & Pearson $r$ & Kendall $\tau$ & MAE & RMSE & Exact / $\pm$1 / $\pm$2 (\%) \\
+\midrule
+\textbf{LoRA-balanced-simple (Ours)} & \textbf{Fine-tuned (7B)} & +0.4668$^{***}$ & +0.4545$^{***}$ & +0.3653$^{***}$ & 1.163 & 1.570 & 29.5 / 69.0 / 89.1 \\
+LoRA-balanced-reasoning & Fine-tuned (7B) & +0.3576$^{***}$ & +0.3448$^{***}$ & +0.2976$^{***}$ & 1.264 & 1.597 & 24.8 / 62.0 / 86.8 \\
+LoRA-score-only-full & Fine-tuned (7B) & +0.1653 & +0.1240 & +0.1375 & 1.209 & 1.570 & 24.0 / 69.8 / 88.4 \\
+Prometheus 2 & Fine-tuned (7B) & +0.1243 & +0.1111 & +0.1031 & 1.504 & 1.888 & 21.7 / 51.9 / 82.2 \\
+Zero-shot Qwen2.5-14B & Zero-shot (14B) & +0.0706 & +0.0759 & +0.0600 & 2.075 & 2.411 & 12.1 / 33.6 / 59.8 \\
+Zero-shot Qwen2.5-7B & Zero-shot (7B) & -0.0387 & +0.0634 & -0.0321 & 2.031 & 2.376 & 11.6 / 38.0 / 60.5 \\
+G-Eval (Qwen2.5-7B) & Zero-shot (7B) & -0.0926 & -0.0123 & -0.0775 & 2.178 & 2.580 & 14.0 / 31.8 / 58.9 \\
+LoRA-original-reasoning & Fine-tuned (7B) & -0.1318 & -0.1272 & -0.1142 & 1.186 & 1.563 & 27.9 / 67.4 / 88.4 \\
+W2V-COSINE & Traditional & -0.2848$^{***}$ & -0.0768$^{***}$ & -0.2103$^{***}$ & - & - & - \\
+BLEU & Traditional & -0.2939$^{***}$ & -0.2109$^{***}$ & -0.2429$^{***}$ & - & - & - \\
+SBERT-COSINE & Traditional & -0.3774$^{***}$ & -0.0555$^{***}$ & -0.2770$^{***}$ & - & - & - \\
+ROUGE-L & Traditional & -0.3852$^{***}$ & -0.3955$^{***}$ & -0.3166$^{***}$ & - & - & - \\
+JACCARD-WORD & Traditional & -0.5376$^{***}$ & -0.5092$^{***}$ & -0.4157$^{***}$ & - & - & - \\
+TFIDF-COSINE & Traditional & -0.5711$^{***}$ & -0.5030$^{***}$ & -0.4331$^{***}$ & - & - & - \\
+JACCARD-CHAR & Traditional & -0.5951$^{***}$ & -0.5504$^{***}$ & -0.4526$^{***}$ & - & - & - \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}
