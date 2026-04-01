@@ -38,8 +38,8 @@
 \begin{abstract}
 Evaluating the quality of text rewriting remains a significant challenge, particularly for Chinese, where no validated benchmark exists and the effectiveness of automatic evaluation metrics is unknown.
 We present \textbf{RewritingBench}, the first human-annotated benchmark for Chinese text rewriting quality evaluation, comprising 730 rewrite pairs scored by three annotators (inter-annotator Spearman $\rho \approx 0.86$).
-Through systematic diagnostic analysis, we reveal a surprising finding: \textbf{all} standard evaluation metrics---including BLEU, ROUGE, SBERT cosine similarity, and embedding-based measures---exhibit \emph{negative} correlation with human judgments ($\rho$ from $-$0.24 to $-$0.60).
-We trace this failure to a fundamental misalignment: overlap-based metrics measure how \emph{similar} a rewrite is to its source, while human judgment evaluates how \emph{good} the rewrite is---and for rewriting, these objectives are inversely correlated.
+Through systematic diagnostic analysis, we reveal a surprising finding: \textbf{all} standard evaluation metrics, including BLEU, ROUGE, SBERT cosine similarity, and embedding-based measures, exhibit \emph{negative} correlation with human judgments ($\rho$ from $-$0.24 to $-$0.60).
+We trace this failure to a fundamental misalignment: overlap-based metrics measure how \emph{similar} a rewrite is to its source, while human judgment evaluates how \emph{good} the rewrite is. For rewriting, these objectives are inversely correlated.
 As a positive demonstration, we show that pairwise preference learning provides a viable alternative: a LoRA fine-tuned 7B model achieves $\rho$=0.665, outperforming absolute scoring ($\rho$=0.467), zero-shot 72B models ($\rho \leq 0.406$), and all general-purpose evaluators.
 We further validate this finding through downstream data filtering, where evaluator-guided selection improves mean rewrite quality by 39\%.
 Together, our benchmark, diagnostic analysis, and validated evaluation approach establish a foundation for advancing Chinese rewriting evaluation.
@@ -50,7 +50,7 @@ Together, our benchmark, diagnostic analysis, and validated evaluation approach 
 \label{sec:intro}
 % ============================================================
 
-Text rewriting---transforming a source text into a semantically equivalent but stylistically different output---encompasses a broad range of tasks including paraphrasing, style transfer, text simplification, and formality adaptation.
+Text rewriting transforms a source text into a semantically equivalent but stylistically different output, encompassing tasks such as paraphrasing, style transfer, text simplification, and formality adaptation.
 With the rapid advancement of large language models (LLMs), the ability to generate fluent rewrites has improved dramatically, yet evaluating the \emph{quality} of these rewrites remains a persistent challenge~\citep{zheng2023judging, liu2024geval}.
 
 The standard evaluation approach relies on surface-level overlap metrics such as BLEU~\citep{papineni2002bleu} and ROUGE~\citep{lin2004rouge}, which measure n-gram overlap between the generated text and a reference.
@@ -62,18 +62,15 @@ G-Eval~\citep{liu2024geval} uses chain-of-thought prompting with GPT-4 to evalua
 While promising, these approaches are designed as general-purpose evaluators and may lack the domain-specific understanding needed for nuanced rewriting quality assessment.
 Furthermore, their effectiveness for Chinese text evaluation remains largely unexplored.
 
-In this work, we conduct a systematic investigation of Chinese rewriting evaluation and find a striking result: \textbf{all traditional metrics exhibit negative correlation with human judgments} on our benchmark, with Spearman $\rho$ ranging from -0.24 to -0.60.
-This means that higher metric scores correspond to \emph{worse} human-rated rewrites---a consequence of metrics rewarding surface similarity to the source text rather than genuine quality.
+In this work, we conduct a systematic investigation of Chinese rewriting evaluation and find a striking result: \textbf{all traditional metrics exhibit negative correlation with human judgments} on our benchmark, with Spearman $\rho$ ranging from $-$0.24 to $-$0.60.
+This means that higher metric scores correspond to \emph{worse} human-rated rewrites, a consequence of metrics rewarding surface similarity to the source text rather than genuine quality.
 
 To address this gap, we present \textbf{RewritingBench}, a human-annotated benchmark for Chinese text rewriting quality evaluation comprising 730 rewrite pairs, and conduct a systematic diagnostic analysis of evaluation methods.
-Our key contributions are:
-
-\begin{enumerate}[leftmargin=*,itemsep=2pt]
-    \item \textbf{RewritingBench}: The first Chinese rewriting quality benchmark with 730 annotated pairs (3 annotators, 0--5 scale) and high inter-annotator agreement (Spearman $\rho \approx 0.86$).
-    \item \textbf{Diagnostic findings}: All seven traditional metrics exhibit statistically significant \emph{negative} correlation with human judgments ($\rho$ from $-$0.24 to $-$0.60, all $p < 0.001$), which we trace to a fundamental misalignment between overlap measurement and quality assessment.
-    \item \textbf{Pairwise preference evaluation}: A pairwise preference learning approach (LoRA fine-tuned 7B model) achieves $\rho$=0.665, substantially outperforming absolute scoring ($\rho$=0.467), zero-shot 72B models ($\rho \leq 0.406$), general-purpose evaluators (Prometheus~2: $\rho$=0.124), and all traditional metrics.
-    \item \textbf{Practical utility}: Evaluator-guided data filtering improves mean rewrite quality by 39\% compared to random selection, demonstrating that our benchmark-derived evaluator transfers to real-world applications.
-\end{enumerate}
+Our key contributions are as follows.
+First, we introduce \textbf{RewritingBench}, the first Chinese rewriting quality benchmark with 730 annotated pairs (3 annotators, 0--5 scale) and high inter-annotator agreement (Spearman $\rho \approx 0.86$).
+Second, we report \textbf{diagnostic findings} that all seven traditional metrics exhibit statistically significant negative correlation with human judgments ($\rho$ from $-$0.24 to $-$0.60, all $p < 0.001$), which we trace to a fundamental misalignment between overlap measurement and quality assessment.
+Third, we propose \textbf{pairwise preference evaluation}: a pairwise preference learning approach (LoRA fine-tuned 7B model) achieves $\rho$=0.665, substantially outperforming absolute scoring ($\rho$=0.467), zero-shot 72B models ($\rho \leq 0.406$), general-purpose evaluators (Prometheus~2: $\rho$=0.124), and all traditional metrics.
+Fourth, we demonstrate \textbf{practical utility} through evaluator-guided data filtering that improves mean rewrite quality by 39\% compared to random selection, showing that our benchmark-derived evaluator transfers to real-world applications.
 
 % ============================================================
 \section{Related Work}
@@ -123,21 +120,19 @@ These methods have proven effective for domain-specific adaptation~\citep{sun202
 
 \textbf{Task definition.}
 We study the evaluation of Chinese text rewriting quality: given a source text $s$ and a candidate rewrite $r$, the goal is to assign a quality score reflecting how well $r$ transforms $s$ while preserving meaning.
-Our benchmark covers \emph{general-purpose text improvement rewrites}---rewrites that improve the fluency, clarity, or readability of a source text without targeting a specific style transformation (e.g., no style transfer or formality adaptation).
+Our benchmark covers \emph{general-purpose text improvement rewrites}, i.e., rewrites that improve the fluency, clarity, or readability of a source text without targeting a specific style transformation (e.g., no style transfer or formality adaptation).
 This scope reflects the most common real-world use case: given a Chinese text of any genre (news, social media, literature, technical writing), assess whether a proposed rewrite constitutes a genuine improvement.
 The rewrite may be produced by any system (human or automated), and the quality assessment captures the overall goodness of the transformation regardless of the specific rewriting technique used.
 
 \subsection{Evaluation Framework}
 \label{sec:eval_framework}
 
-We define text rewriting quality along four complementary dimensions, scored on a 0--5 integer scale:
-\begin{enumerate}[leftmargin=*,nosep]
-    \item \textbf{Semantic consistency} (语义一致性): The rewrite should preserve the core meaning of the source text without introducing factual errors or distortions.
-    \item \textbf{Syntactic reconstruction} (句法重构): The rewrite should demonstrate structural changes in sentence organization rather than mere word substitution.
-    \item \textbf{Lexical variation} (词汇多样性): The rewrite should use different vocabulary from the source while maintaining naturalness.
-    \item \textbf{Stylistic fidelity} (风格忠实度): The rewrite should adhere to the target style specifications if provided.
-\end{enumerate}
-The final score (要求5, ``overall score'') is a holistic quality judgment that integrates all dimensions. In our human annotation protocol, annotators provide only the holistic score, as the four dimensions serve as guidelines rather than separate ratings.
+We define text rewriting quality along four complementary dimensions, each scored on a 0--5 integer scale.
+\textbf{Semantic consistency} (语义一致性) requires the rewrite to preserve the core meaning of the source text without introducing factual errors or distortions.
+\textbf{Syntactic reconstruction} (句法重构) requires structural changes in sentence organization rather than mere word substitution.
+\textbf{Lexical variation} (词汇多样性) requires the rewrite to use different vocabulary from the source while maintaining naturalness.
+\textbf{Stylistic fidelity} (风格忠实度) requires the rewrite to adhere to any target style specifications.
+The final score is a holistic quality judgment that integrates all dimensions. In our human annotation protocol, annotators provide only the holistic score, as the four dimensions serve as guidelines rather than separate ratings.
 
 \subsection{Training Data}
 \label{sec:training_data}
@@ -159,7 +154,7 @@ The score distribution in the evaluation set closely mirrors the full distributi
 \label{sec:balanced}
 
 A key challenge in score prediction is the highly imbalanced score distribution: Score~0 accounts for 15\% of samples while Score~5 accounts for only 3\%.
-We found that training the absolute scoring model (RewriteJudge) on the original imbalanced distribution causes severe mode collapse---the model predicts Score~1 for 82\% of evaluation samples, achieving near-zero correlation with human judgments ($\rho$=0.165).
+We found that training the absolute scoring model (RewriteJudge) on the original imbalanced distribution causes severe mode collapse: the model predicts Score~1 for 82\% of evaluation samples, achieving near-zero correlation with human judgments ($\rho$=0.165).
 
 To address this, we apply class-balanced oversampling to create 168 samples per score class (the size of the largest minority class plus a buffer), yielding a balanced training set of 1,008 samples.
 Each class is independently oversampled through random duplication with slight data augmentation.
@@ -187,13 +182,11 @@ We deliberately avoid chain-of-thought reasoning prefixes, as our experiments sh
 \subsection{Downstream Evaluation Pipeline}
 \label{sec:downstream}
 
-To validate the practical utility of our evaluator, we design an evaluator-guided data filtering pipeline:
-\begin{enumerate}[leftmargin=*,nosep]
-    \item Generate 900 rewrite candidates (300 source texts $\times$ 3 quality levels via different generation prompts).
-    \item Score all candidates using RewriteJudge.
-    \item Apply various filtering strategies (threshold-based, percentile-based) to select high-quality subsets.
-    \item Measure the resulting data quality improvement by comparing mean evaluator scores and the percentage of rewrites above a quality threshold.
-\end{enumerate}
+To validate the practical utility of our evaluator, we design an evaluator-guided data filtering pipeline.
+First, we generate 900 rewrite candidates (300 source texts $\times$ 3 quality levels via different generation prompts).
+Second, we score all candidates using RewriteJudge.
+Third, we apply various filtering strategies (threshold-based and percentile-based) to select high-quality subsets.
+Finally, we measure the resulting data quality improvement by comparing mean evaluator scores and the percentage of rewrites above a quality threshold.
 
 % ============================================================
 \section{Experiments}
@@ -206,14 +199,10 @@ To validate the practical utility of our evaluator, we design an evaluator-guide
 \subsubsection{Evaluation Metrics}
 
 All reported correlations are computed on a held-out evaluation set of 129 samples (stratified split from 730 total), ensuring that models are never evaluated on their training data.
-We report the following metrics comparing evaluator predictions against human average scores:
-\begin{itemize}[leftmargin=*,nosep]
-    \item \textbf{Spearman $\rho$} (primary): Rank correlation, robust to outliers and non-linear relationships.
-    \item \textbf{Pearson $r$}: Linear correlation between raw scores.
-    \item \textbf{Kendall $\tau$}: Ordinal association measure.
-    \item \textbf{MAE / RMSE}: Absolute and squared error metrics.
-    \item \textbf{Exact / $\pm$1 / $\pm$2 agreement}: Percentage of predictions within specified tolerance of the human score.
-\end{itemize}
+We report the following metrics comparing evaluator predictions against human average scores.
+Our primary metric is \textbf{Spearman $\rho$}, a rank correlation measure that is robust to outliers and non-linear relationships.
+We additionally report \textbf{Pearson $r$} for linear correlation, \textbf{Kendall $\tau$} for ordinal association, and \textbf{MAE / RMSE} for absolute and squared error.
+We also report \textbf{Exact / $\pm$1 / $\pm$2 agreement}, the percentage of predictions within specified tolerance of the human score.
 
 \subsubsection{Baselines}
 
@@ -265,7 +254,7 @@ The inter-annotator Spearman of $\approx 0.86$ provides an approximate upper bou
 All seven traditional metrics exhibit \emph{negative} correlation with human judgments.
 JACCARD-CHAR shows the strongest negative correlation at $\rho$=-0.595, meaning that higher character overlap between source and rewrite systematically corresponds to lower human-rated quality.
 This is a natural consequence of the rewriting task: better rewrites differ more from the source, which traditional overlap metrics penalize.
-Even SBERT-COSINE ($\rho$=-0.377), which captures semantic similarity, fails because semantic preservation alone is insufficient---a rewrite can be semantically equivalent to the source yet poorly written.
+Even SBERT-COSINE ($\rho$=-0.377), which captures semantic similarity, fails because semantic preservation alone is insufficient: a rewrite can be semantically equivalent to the source yet poorly written.
 
 \textbf{General-purpose LLM evaluators underperform.}
 We evaluate two state-of-the-art LLM-based evaluators.
@@ -329,6 +318,7 @@ The sharp improvement at the full dataset size suggests that having sufficient e
 \centering
 \caption{Data quality under evaluator-guided filtering. Higher mean scores indicate better predicted quality.}
 \label{tab:downstream_filtering}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lcccc}
 \toprule
 Strategy & $N$ & Mean & $\sigma$ & \%$\geq$3 \\
@@ -343,16 +333,17 @@ All & 900 & 2.93 & 1.51 & 65.3 \\
 Bottom 50\% & 450 & 0.37 & 0.48 & 0.0 \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 To demonstrate practical value beyond correlation metrics, we apply RewriteJudge to filter a dataset of 900 generated rewrites (300 source texts $\times$ 3 quality levels).
 Table~\ref{tab:downstream_filtering} compares evaluator-guided filtering against multiple baselines: random selection, BLEU-based filtering, and threshold-based strategies.
 
 \textbf{Evaluator-guided filtering dramatically improves data quality.}
-Selecting the evaluator's top 50\% of rewrites yields a mean score of 4.16 with 100\% of selected rewrites scoring $\geq$ 3, compared to 2.99 and 68.2\% for random 50\% selection---a 39.1\% improvement in mean quality.
+Selecting the evaluator's top 50\% of rewrites yields a mean score of 4.16 with 100\% of selected rewrites scoring $\geq$ 3, compared to 2.99 and 68.2\% for random 50\% selection, a 39.1\% improvement in mean quality.
 Even the more aggressive top 30\% selection achieves a mean of 4.34.
 Notably, BLEU-based filtering selects only 65 rewrites (7.2\% of the dataset) with a mean of 4.02 and 92.3\% above threshold, demonstrating that overlap-based metrics cannot reliably identify high-quality rewrites even when used directly for filtering.
-This contrast---where the evaluator effectively filters the full dataset while BLEU can barely identify any high-quality rewrites---validates the practical advantage of our approach beyond what ranking correlation alone captures.
+This contrast, where the evaluator effectively filters the full dataset while BLEU can barely identify any high-quality rewrites, validates the practical advantage of our approach beyond what ranking correlation alone captures.
 
 The ``bottom 50\%'' strategy confirms that the evaluator successfully identifies low-quality rewrites: the mean score drops to 0.37 with 0\% passing the quality threshold, providing a reliable mechanism for data quality assurance in rewriting pipelines.
 
@@ -363,6 +354,7 @@ The ``bottom 50\%'' strategy confirms that the evaluator successfully identifies
 \centering
 \caption{Bias analysis across evaluator methods. Lower absolute values indicate less bias. \textbf{LoRA} = RewriteJudge.}
 \label{tab:bias_analysis}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lccccc}
 \toprule
 Method & Output Len.\,$r$ & Input Len.\,$r$ & Verbosity $\rho$ & Pos.\,Bias $r$ & Avg \\
@@ -373,16 +365,17 @@ Char Overlap & +0.27 & +0.19 & +0.21 & +0.20 & 0.22 \\
 Length Heuristic & +0.23 & $-$0.04 & +0.86 & +0.79 & 0.48 \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 A reliable evaluator should judge quality based on content, not spurious features such as text length or verbosity.
 Table~\ref{tab:bias_analysis} compares bias across evaluator categories.
-We include two additional reference methods: (1) \textbf{character overlap} (JACCARD-CHAR), representing traditional overlap-based metrics; and (2) a \textbf{length heuristic} that assigns quality scores based solely on the ratio of rewrite length to source length---a naive but surprisingly common proxy used in practice.
+We include two additional reference methods: (1) \textbf{character overlap} (JACCARD-CHAR), representing traditional overlap-based metrics; and (2) a \textbf{length heuristic} that assigns quality scores based solely on the ratio of rewrite length to source length, a naive but surprisingly common proxy used in practice.
 
 \textbf{Length bias.}
 RewriteJudge shows minimal length bias (output length correlation $r$=-0.05), comparable to Prometheus~2 ($r$=-0.06).
 In contrast, character overlap ($r$=0.27) and the length heuristic ($r$=0.23) show substantial positive length bias, systematically favoring longer outputs.
-The length heuristic exhibits extreme verbosity bias ($\rho$=0.86), strongly preferring verbose outputs---a known failure mode of naive evaluation heuristics~\citep{kuang2024evaluating}.
+The length heuristic exhibits extreme verbosity bias ($\rho$=0.86), strongly preferring verbose outputs, a known failure mode of naive evaluation heuristics~\citep{kuang2024evaluating}.
 
 \textbf{Position bias.}
 RewriteJudge shows nearly zero position bias ($r$=-0.07), meaning it evaluates rewrites consistently regardless of input text length.
@@ -411,7 +404,7 @@ Figure~\ref{fig:bias_radar} visualizes the bias profile across dimensions, confi
 
 Having established that RewriteJudge substantially outperforms all baselines in absolute scoring (Section~\ref{sec:main_results}), we investigate whether a different evaluation paradigm can further improve alignment with human judgment.
 Our diagnostic analysis reveals that absolute scoring imposes an artificial total ordering on rewrites whose quality may be inherently incomparable.
-We therefore investigate whether \emph{pairwise preference learning}---training the model to predict which of two rewrites is better rather than assigning an absolute score---provides a more natural evaluation framework.
+We therefore investigate whether \emph{pairwise preference learning}, training the model to predict which of two rewrites is better rather than assigning an absolute score, provides a more natural evaluation framework.
 
 \subsection{Method}
 
@@ -425,8 +418,9 @@ For inference, we evaluate all $\binom{129}{2} = 8{,}256$ possible pairs from th
 
 \begin{table}[t]
 \centering
-\caption{Comparison of evaluation paradigms. Pairwise preference learning substantially outperforms absolute scoring and zero-shot LLM baselines. Zero-shot LLMs use the same pairwise evaluation protocol without fine-tuning.}
+\caption{Comparison of evaluation paradigms. Pairwise preference learning substantially outperforms absolute scoring and zero-shot LLM baselines.}
 \label{tab:pairwise_results}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lcc}
 \toprule
 Method & Training Pairs & Spearman $\rho$ \\
@@ -443,6 +437,7 @@ Prometheus~2 (7B) & -- & +0.124 \\
 G-Eval (7B) & -- & $-$0.093 \\
 \bottomrule
 \end{tabular}
+}
 \end{table}
 
 Table~\ref{tab:pairwise_results} compares absolute scoring and pairwise preference learning.
@@ -451,7 +446,7 @@ Notably, our 7B fine-tuned model outperforms zero-shot Qwen2.5-72B~\citep{qwen20
 
 \textbf{Cross-source training is essential.}
 The pairwise model trained on cross-source pairs ($\rho$=0.665) substantially outperforms the model trained on generated pairs ($\rho$=0.421).
-Cross-source pairs---constructed by pairing rewrites from different source texts with different human scores---provide broader quality coverage than generated pairs, which are derived from the same source texts with different generation prompts.
+Cross-source pairs, constructed by pairing rewrites from different source texts with different human scores, provide broader quality coverage than generated pairs, which are derived from the same source texts with different generation prompts.
 
 \textbf{Why does pairwise outperform absolute?}
 We attribute this to two factors:
@@ -503,14 +498,12 @@ Training Data & Pairs & Spearman $\rho$ \\
 Table~\ref{tab:pairwise_data_efficiency} examines how pairwise evaluation quality scales with training data.
 Strikingly, the scaling is \emph{non-monotonic}: 25\% data achieves $\rho$=0.434, but 50\% data drops to $\rho$=0.140 (not statistically significant, $p$=0.113), before recovering to $\rho$=0.665 at 100\%.
 We investigated this anomaly and found its root cause: the 50\% model developed a strong \emph{position bias}, consistently predicting that the second presented rewrite is preferred, regardless of content.
-Evidence for position bias is captured by two complementary diagnostics:
-\begin{enumerate}[leftmargin=*,nosep]
-    \item \textbf{Accuracy--correlation paradox}: the 50\% model achieves 99.2\% pairwise accuracy yet only $\rho$=0.140, because our accuracy metric counts ties (from position-swap averaging) as correct. The 100\% model achieves 90.0\% accuracy and $\rho$=0.665, where accuracy reflects genuine quality discrimination.
-    \item \textbf{Position-swap averaging}: we present each pair in both orderings (A,B) and (B,A) and average the preferences. A position-biased model---one that always predicts ``the second rewrite wins''---produces average preference $\approx 0.5$ for every pair, collapsing the win-rate distribution to near-uniform and yielding near-zero Spearman correlation.
-\end{enumerate}
+Evidence for position bias is captured by two complementary diagnostics.
+First, the \textbf{accuracy-correlation paradox}: the 50\% model achieves 99.2\% pairwise accuracy yet only $\rho$=0.140, because our accuracy metric counts ties (from position-swap averaging) as correct. The 100\% model achieves 90.0\% accuracy and $\rho$=0.665, where accuracy reflects genuine quality discrimination.
+Second, \textbf{position-swap averaging}: we present each pair in both orderings (A,B) and (B,A) and average the preferences. A position-biased model that always predicts ``the second rewrite wins'' produces average preference $\approx 0.5$ for every pair, collapsing the win-rate distribution to near-uniform and yielding near-zero Spearman correlation.
 In contrast, the 100\% model shows no such paradox (90.0\% accuracy aligned with $\rho$=0.665), confirming that sufficient training data prevents shortcut learning.
 This finding illustrates both a risk and a mitigation: pairwise preference models can exploit spurious correlations in specific data subsets, but position-swap averaging provides a built-in diagnostic for detecting such failures.
-For practical deployment, we recommend using the accuracy--correlation consistency check as a validation signal and ensuring sufficient data diversity to prevent shortcut learning.
+For practical deployment, we recommend using the accuracy-correlation consistency check as a validation signal and ensuring sufficient data diversity to prevent shortcut learning.
 
 % ============================================================
 \section{Error Analysis: Why Traditional Metrics Fail}
@@ -526,22 +519,22 @@ In this section, we provide a detailed diagnosis.
 We identify two systematic error patterns that explain the negative correlations:
 
 \textbf{Pattern 1: Surface similarity without quality.}
-Rewrites that are near-copies of the source text---changing only a few words while preserving the original structure---receive high overlap-based metric scores but low human ratings.
+Rewrites that are near-copies of the source text, changing only a few words while preserving the original structure, receive high overlap-based metric scores but low human ratings.
 For example, a rewrite that substitutes ``\textit{加盟}'' with ``\textit{加盟后}'' and ``\textit{场场}'' with ``\textit{几乎每场}'' achieves BLEU=0.55 but receives a human score of only 0.7.
 The metric rewards lexical overlap that reflects copying, not genuine quality improvement.
 
 \textbf{Pattern 2: Quality without surface similarity.}
-High-quality rewrites that substantially restructure the sentence---using different vocabulary and syntax while preserving meaning---receive near-zero metric scores but high human ratings.
+High-quality rewrites that substantially restructure the sentence, using different vocabulary and syntax while preserving meaning, receive near-zero metric scores but high human ratings.
 A rewrite that restructures a passage about a press conference into a more concise summary achieves BLEU=0.00 but receives a human score of 4.0.
 The metric penalizes the very lexical variation that characterizes successful rewriting.
 
 \subsection{Root Cause: Misaligned Objectives}
 
 These two patterns reveal a fundamental misalignment: overlap-based metrics measure how \emph{similar} a rewrite is to its source, while human judgment evaluates how \emph{good} the rewrite is.
-The critical insight is that these are not merely different metrics---they are \emph{inversely correlated} for rewriting.
+The critical insight is that these are not merely different metrics; they are \emph{inversely correlated} for rewriting.
 Pattern~1 shows that high source similarity indicates \emph{insufficient transformation} (the rewrite barely changed anything), while Pattern~2 shows that high source dissimilarity indicates \emph{successful transformation} (the rewrite substantially improved the text).
 This inverse relationship explains why the negative correlations are universal and statistically significant rather than reflecting random noise or a specific metric deficiency.
-For text rewriting---a task where the goal is to DIFFER from the source while preserving meaning---these two objectives are inversely correlated.
+For text rewriting, a task where the goal is to differ from the source while preserving meaning, these two objectives are inversely correlated.
 This explains why the strongest negative correlations are observed for character-level metrics (JACCARD-CHAR: $\rho$=$-$0.60), which most directly measure surface overlap, while semantic metrics like SBERT-COSINE ($\rho$=$-$0.38) show somewhat weaker (but still significantly negative) correlations.
 
 \subsection{Implications}
@@ -556,7 +549,7 @@ Our RewritingBench and the associated pairwise preference evaluator provide a va
 
 \textbf{Why do traditional metrics fail for rewriting?}
 Our error analysis (Section~\ref{sec:error_analysis}) traces the universal negative correlation to a fundamental misalignment: overlap-based metrics measure surface similarity to the source, while human judgment evaluates rewrite quality.
-For rewriting---where the goal is transformation, not reproduction---these objectives are inversely correlated.
+For rewriting, where the goal is transformation rather than reproduction, these objectives are inversely correlated.
 This finding generalizes beyond Chinese: any evaluation scenario where good outputs should differ from inputs will face the same challenge.
 
 \textbf{Simple output format beats reasoning.}
@@ -583,14 +576,14 @@ Calibration improvements (e.g., through temperature tuning or score normalizatio
 RewriteJudge achieves Spearman $\rho$=0.467 with MAE=1.16 on a 0--5 scale.
 While the MAE may appear moderate, it reflects a known property of rank-correlation metrics: Spearman $\rho$ measures the \emph{ordinal agreement} between predicted and true rankings, which can be high even when absolute predictions are noisy.
 Specifically, an evaluator that consistently overestimates scores by 1 point would have MAE$\approx$1.0 but perfect Spearman correlation ($\rho$=1.0).
-In our setting, the moderate MAE (1.16) combined with positive Spearman (0.467) indicates that RewriteJudge captures the correct relative ordering while exhibiting some calibration drift---a common phenomenon in fine-tuned evaluators~\citep{lee2025reliable}.
+In our setting, the moderate MAE (1.16) combined with positive Spearman (0.467) indicates that RewriteJudge captures the correct relative ordering while exhibiting some calibration drift, a common phenomenon in fine-tuned evaluators~\citep{lee2025reliable}.
 For practical applications such as data filtering (Section~\ref{sec:downstream_results}), ranking accuracy is more important than absolute score precision, as the goal is to select the best rewrites rather than predict their exact quality scores.
 
 \textbf{Limitations.}
 Our work has several limitations.
 First, the training set of 730 annotated pairs (1,008 after balancing) is relatively small, and performance may improve with more annotated data.
 Second, the benchmark covers only Chinese text rewriting; cross-lingual generalization remains untested.
-Third, while $\rho$=0.467 substantially outperforms all baselines, there is still room for improvement---roughly half of the variance in human judgments is not captured.
+Third, while $\rho$=0.467 substantially outperforms all baselines, there is still room for improvement: roughly half of the variance in human judgments is not captured.
 Fourth, our pairwise baseline comparison includes zero-shot Qwen2.5-72B and DeepSeek-V3, but not proprietary frontier models (e.g., GPT-4o, Claude); including such models would provide an even more complete picture of the evaluation landscape.
 Fifth, we use LoRA rather than full-parameter fine-tuning; while LoRA achieves strong results with minimal compute (a single 3090 GPU, $\sim$25 minutes), full fine-tuning may provide a higher performance ceiling.
 We chose LoRA for its practical accessibility, as full fine-tuning of a 7B model would require significantly more GPU memory and time.

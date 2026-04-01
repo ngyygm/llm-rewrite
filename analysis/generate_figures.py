@@ -85,23 +85,23 @@ def plot_score_distribution(eval_data, all_results, metadata, output_dir, dpi=30
         ("zeroshot_qwen7b", "Zero-shot 7B"),
     ]
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 4.5), gridspec_kw={"width_ratios": [1.1, 1]})
+    fig, axes = plt.subplots(1, 2, figsize=(10, 3.8), gridspec_kw={"width_ratios": [1.1, 1]})
 
     # Left: human distribution
     ax = axes[0]
     bins = np.arange(-0.5, 6.5, 1)
     human_counts = np.histogram(human_scores, bins=bins)[0]
     human_pct = human_counts / len(human_scores) * 100
-    ax.bar(labels, human_pct, width=0.8, color="#1F2937", alpha=0.85,
+    ax.bar(labels, human_pct, width=0.7, color="#1F2937", alpha=0.85,
            label="Human Annotations", edgecolor="white", linewidth=0.5, zorder=5)
     for i, (cnt, pct) in enumerate(zip(human_counts, human_pct)):
-        ax.text(i, pct + 1.5, f"{cnt}", ha="center", va="bottom",
-                fontsize=9, fontweight="bold", color="#1F2937")
-    ax.set_xlabel("Score", fontsize=12, fontweight="bold")
-    ax.set_ylabel("Frequency (%)", fontsize=12, fontweight="bold")
-    ax.set_title("Human Annotation Distribution", fontsize=13, fontweight="bold")
+        ax.text(i, pct + 1.0, f"{cnt}", ha="center", va="bottom",
+                fontsize=7.5, fontweight="bold", color="#1F2937")
+    ax.set_xlabel("Score", fontsize=10)
+    ax.set_ylabel("Frequency (%)", fontsize=10)
+    ax.set_title("Human Annotation Distribution", fontsize=10.5, fontweight="bold")
     ax.set_xticks(labels)
-    ax.set_ylim(0, max(human_pct) + 10)
+    ax.set_ylim(0, max(human_pct) + 8)
     ax.grid(True, axis="y", alpha=0.3, linestyle="--")
 
     # Right: grouped comparison
@@ -132,15 +132,14 @@ def plot_score_distribution(eval_data, all_results, metadata, output_dir, dpi=30
 
     legend_elements = [Patch(facecolor=info[2], alpha=0.8, label=info[1])
                        for info in methods_to_show]
-    ax2.legend(handles=legend_elements, fontsize=8, framealpha=0.9, loc="upper right")
-    ax2.set_xlabel("Score", fontsize=12, fontweight="bold")
-    ax2.set_ylabel("Frequency (%)", fontsize=12, fontweight="bold")
-    ax2.set_title("Score Distribution Comparison", fontsize=13, fontweight="bold")
+    ax2.legend(handles=legend_elements, fontsize=7, framealpha=0.9, loc="upper right")
+    ax2.set_xlabel("Score", fontsize=10)
+    ax2.set_ylabel("Frequency (%)", fontsize=10)
+    ax2.set_title("Score Distribution Comparison", fontsize=10.5, fontweight="bold")
     ax2.set_xticks(labels)
     ax2.grid(True, axis="y", alpha=0.3, linestyle="--")
 
-    fig.suptitle("Score Distribution Analysis", fontsize=14, fontweight="bold", y=1.02)
-    fig.tight_layout()
+    fig.tight_layout(pad=1.5)
     for ext in ["pdf", "png"]:
         out_path = f"{output_dir}/score_distribution.{ext}"
         fig.savefig(out_path, dpi=dpi, bbox_inches="tight", format=ext)
@@ -173,7 +172,7 @@ def plot_confusion_matrix(eval_data, all_results, method="lora_balanced_simple",
 
     display = get_display_name(method)
 
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+    fig, axes = plt.subplots(1, 2, figsize=(10, 4.2))
     for ax, data, title_suffix, fmt in [
         (axes[0], matrix, "Counts", "d"),
         (axes[1], matrix_pct, "Row-normalised (%)", ".1f"),
@@ -186,20 +185,17 @@ def plot_confusion_matrix(eval_data, all_results, method="lora_balanced_simple",
                 text = f"{val}" if fmt == "d" else f"{val:.1f}%"
                 text_color = "white" if val > (data.max() * 0.6) else "black"
                 ax.text(j, i, text, ha="center", va="center",
-                        fontsize=10, color=text_color, fontweight="bold")
+                        fontsize=8, color=text_color, fontweight="bold")
         ax.set_xticks(range(n))
         ax.set_yticks(range(n))
-        ax.set_xticklabels(labels)
-        ax.set_yticklabels(labels)
-        ax.set_xlabel("Predicted Score", fontsize=12, fontweight="bold")
-        ax.set_ylabel("Human Score", fontsize=12, fontweight="bold")
-        ax.set_title(f"Confusion Matrix ({title_suffix})\n{display}",
-                     fontsize=12, fontweight="bold")
-        plt.colorbar(im, ax=ax, shrink=0.8)
+        ax.set_xticklabels(labels, fontsize=9)
+        ax.set_yticklabels(labels, fontsize=9)
+        ax.set_xlabel("Predicted Score", fontsize=10)
+        ax.set_ylabel("Human Score", fontsize=10)
+        ax.set_title(f"{display} ({title_suffix})", fontsize=10.5, fontweight="bold")
+        plt.colorbar(im, ax=ax, shrink=0.75)
 
-    fig.suptitle("Confusion Matrix: Evaluator Predictions vs Human Annotations",
-                 fontsize=14, fontweight="bold", y=1.02)
-    fig.tight_layout()
+    fig.tight_layout(pad=1.5)
     for ext in ["pdf", "png"]:
         out_path = f"{output_dir}/confusion_matrix_{method}.{ext}"
         fig.savefig(out_path, dpi=dpi, bbox_inches="tight", format=ext)
@@ -252,7 +248,7 @@ def plot_method_comparison(all_results, metadata, trad_results, output_dir, dpi=
     trad_entries = [e for e in entries if e[2] == "traditional"]
 
     # Plot
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5.5), gridspec_kw={"width_ratios": [3, 2]})
+    fig, axes = plt.subplots(1, 2, figsize=(12, 4.5), gridspec_kw={"width_ratios": [3, 2]})
 
     # Left: LLM-based methods (main comparison)
     ax = axes[0]
@@ -264,7 +260,7 @@ def plot_method_comparison(all_results, metadata, trad_results, output_dir, dpi=
     colors = [PALETTE.get(e[3], "#666") for e in main_entries]
 
     y_pos = np.arange(len(names))
-    bars = ax.barh(y_pos, values, color=colors, alpha=0.85, edgecolor="white", linewidth=0.5, height=0.7)
+    bars = ax.barh(y_pos, values, color=colors, alpha=0.85, edgecolor="white", linewidth=0.5, height=0.65)
 
     # Highlight best
     if values:
@@ -273,15 +269,15 @@ def plot_method_comparison(all_results, metadata, trad_results, output_dir, dpi=
         bars[best_idx].set_linewidth(2)
 
     for i, (bar, val) in enumerate(zip(bars, values)):
-        offset = 0.01 if val >= 0 else -0.03
+        offset = 0.01 if val >= 0 else -0.01
         ha = "left" if val >= 0 else "right"
-        ax.text(val + offset, i, f"{val:+.4f}", va="center", ha=ha,
+        ax.text(val + offset, i, f"{val:+.3f}", va="center", ha=ha,
                 fontsize=8, fontweight="bold")
 
     ax.set_yticks(y_pos)
-    ax.set_yticklabels(names, fontsize=9)
-    ax.set_xlabel("Spearman $\\rho$", fontsize=12, fontweight="bold")
-    ax.set_title("LLM-based Evaluator Comparison", fontsize=13, fontweight="bold")
+    ax.set_yticklabels(names, fontsize=8.5)
+    ax.set_xlabel("Spearman $\\rho$", fontsize=10)
+    ax.set_title("LLM-based Evaluators", fontsize=10.5, fontweight="bold")
     ax.axvline(x=0, color="black", linewidth=0.8)
     ax.grid(True, axis="x", alpha=0.3, linestyle="--")
     ax.invert_yaxis()
@@ -292,21 +288,20 @@ def plot_method_comparison(all_results, metadata, trad_results, output_dir, dpi=
     names2 = [e[0] for e in trad_entries]
     values2 = [e[1] for e in trad_entries]
     y_pos2 = np.arange(len(names2))
-    bars2 = ax2.barh(y_pos2, values2, color="#9CA3AF", alpha=0.7, edgecolor="white", height=0.7)
+    bars2 = ax2.barh(y_pos2, values2, color="#9CA3AF", alpha=0.7, edgecolor="white", height=0.65)
     for i, (bar, val) in enumerate(zip(bars2, values2)):
-        ax2.text(val + 0.01, i, f"{val:+.4f}", va="center", ha="left",
-                 fontsize=7, fontweight="bold")
+        ax2.text(val - 0.01, i, f"{val:+.3f}", va="center", ha="right",
+                 fontsize=7.5, fontweight="bold")
     ax2.set_yticks(y_pos2)
     ax2.set_yticklabels(names2, fontsize=8)
-    ax2.set_xlabel("Spearman $\\rho$", fontsize=12, fontweight="bold")
-    ax2.set_title("Traditional Metrics", fontsize=13, fontweight="bold")
+    ax2.set_xlabel("Spearman $\\rho$", fontsize=10)
+    ax2.set_title("Traditional Metrics", fontsize=10.5, fontweight="bold")
     ax2.axvline(x=0, color="black", linewidth=0.8)
     ax2.grid(True, axis="x", alpha=0.3, linestyle="--")
     ax2.invert_yaxis()
+    ax2.set_xlim(-0.7, 0.0)
 
-    fig.suptitle("Evaluator Correlation with Human Annotations",
-                 fontsize=14, fontweight="bold", y=1.02)
-    fig.tight_layout()
+    fig.tight_layout(pad=1.5)
     for ext in ["pdf", "png"]:
         out_path = f"{output_dir}/method_comparison.{ext}"
         fig.savefig(out_path, dpi=dpi, bbox_inches="tight", format=ext)

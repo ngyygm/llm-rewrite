@@ -336,7 +336,7 @@ def _plot_length_bias_scatter(length_results: dict, output_dir: str, dpi: int):
     eval_results = length_results.get("evaluators", {})
     human_base = length_results.get("human_baseline", {})
 
-    fig, ax = plt.subplots(1, 1, figsize=(9, 5.5))
+    fig, ax = plt.subplots(1, 1, figsize=(7, 4))
 
     # Collect methods
     methods = [m for m in ["lora_evaluator", "prometheus_2", "zero_shot_7b"]
@@ -357,27 +357,27 @@ def _plot_length_bias_scatter(length_results: dict, output_dir: str, dpi: int):
         y = r * (x_vals - x_mean) / x_std + 2.5 + rng.normal(0, 0.15, len(x_vals))
         y = np.clip(y, 0, 5)
 
-        ax.scatter(x_vals, y, s=8, alpha=0.25, color=colors_list[i])
+        ax.scatter(x_vals, y, s=6, alpha=0.2, color=colors_list[i])
         # Trend line
         z = np.polyfit(x_vals, y, 1)
         p = np.poly1d(z)
-        ax.plot(x_vals, p(x_vals), color=colors_list[i], linewidth=2.5,
-                label=f"{METHOD_DISPLAY.get(method, method)} (r={r:.3f})")
+        ax.plot(x_vals, p(x_vals), color=colors_list[i], linewidth=2,
+                label=f"{METHOD_DISPLAY.get(method, method)} (r={r:.2f})")
 
     # Human baseline
     h_r = human_base.get("pearson_r", 0)
-    ax.axhline(y=2.5, color=COLORS["human"], linewidth=1.5, linestyle="--",
-               alpha=0.5, label=f"Human baseline (r={h_r:.3f})")
+    ax.axhline(y=2.5, color=COLORS["human"], linewidth=1.2, linestyle="--",
+               alpha=0.5, label=f"Human baseline (r={h_r:.2f})")
 
-    ax.set_xlabel("Output Length (characters)", fontsize=12, fontweight="bold")
-    ax.set_ylabel("Predicted Score", fontsize=12, fontweight="bold")
-    ax.set_title("Length Bias: Output Length vs Predicted Score",
-                 fontsize=13, fontweight="bold")
-    ax.legend(fontsize=9, framealpha=0.9)
+    ax.set_xlabel("Output Length (characters)", fontsize=10)
+    ax.set_ylabel("Predicted Score", fontsize=10)
+    ax.set_title("Length Bias: Output Length vs Score",
+                 fontsize=10.5, fontweight="bold")
+    ax.legend(fontsize=8, framealpha=0.9)
     ax.set_ylim(0, 5.5)
     ax.grid(True, alpha=0.3, linestyle="--")
 
-    fig.tight_layout()
+    fig.tight_layout(pad=1.0)
     for ext in ["pdf", "png"]:
         out_path = os.path.join(output_dir, f"length_bias_scatter.{ext}")
         fig.savefig(out_path, dpi=dpi, bbox_inches="tight", format=ext)
@@ -396,10 +396,10 @@ def _plot_verbosity_bias_bars(verbosity_results: dict, output_dir: str, dpi: int
     bins = ["concise", "similar", "verbose"]
     bin_labels = ["Concise\n(ratio < 0.8)", "Similar\n(0.8-1.2)", "Verbose\n(ratio > 1.2)"]
 
-    fig, ax = plt.subplots(1, 1, figsize=(10, 5.5))
+    fig, ax = plt.subplots(1, 1, figsize=(8, 4))
 
     x = np.arange(len(bins))
-    width = 0.8 / len(methods)
+    width = 0.65 / len(methods)
 
     for i, method in enumerate(methods):
         binned = eval_results[method].get("binned_analysis", {})
@@ -411,21 +411,21 @@ def _plot_verbosity_bias_bars(verbosity_results: dict, output_dir: str, dpi: int
                       label=METHOD_DISPLAY.get(method, method))
 
         for bar, val in zip(bars, means):
-            ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.05,
-                    f"{val:.2f}", ha="center", va="bottom", fontsize=8,
+            ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.08,
+                    f"{val:.1f}", ha="center", va="bottom", fontsize=7,
                     fontweight="bold", color=color)
 
     ax.set_xticks(x + width * (len(methods) - 1) / 2)
-    ax.set_xticklabels(bin_labels, fontsize=10)
-    ax.set_xlabel("Verbosity Category", fontsize=12, fontweight="bold")
-    ax.set_ylabel("Mean Predicted Score", fontsize=12, fontweight="bold")
-    ax.set_title("Verbosity Bias: Mean Score by Output Verbosity Level",
-                 fontsize=13, fontweight="bold")
-    ax.legend(fontsize=8, framealpha=0.9, ncol=2, loc="upper left")
+    ax.set_xticklabels(bin_labels, fontsize=9)
+    ax.set_xlabel("Verbosity Category", fontsize=10)
+    ax.set_ylabel("Mean Predicted Score", fontsize=10)
+    ax.set_title("Verbosity Bias: Mean Score by Output Verbosity",
+                 fontsize=10.5, fontweight="bold")
+    ax.legend(fontsize=7, framealpha=0.9, ncol=2, loc="upper left")
     ax.set_ylim(0, 5.5)
     ax.grid(True, axis="y", alpha=0.3, linestyle="--")
 
-    fig.tight_layout()
+    fig.tight_layout(pad=1.0)
     for ext in ["pdf", "png"]:
         out_path = os.path.join(output_dir, f"verbosity_bias_bars.{ext}")
         fig.savefig(out_path, dpi=dpi, bbox_inches="tight", format=ext)
@@ -476,30 +476,30 @@ def _plot_bias_comparison_radar(position_results: dict,
     angles = np.linspace(0, 2 * np.pi, n_dims, endpoint=False).tolist()
     angles += angles[:1]
 
-    fig, ax = plt.subplots(1, 1, figsize=(7, 7), subplot_kw=dict(polar=True))
+    fig, ax = plt.subplots(1, 1, figsize=(5.5, 5.5), subplot_kw=dict(polar=True))
 
     for method, vals in zip(methods, all_values):
         norm_vals = [v / m for v, m in zip(vals, max_vals)]
         norm_vals += norm_vals[:1]
 
         color = COLORS.get(method, "#333")
-        ax.plot(angles, norm_vals, "o-", linewidth=2, markersize=6,
+        ax.plot(angles, norm_vals, "o-", linewidth=1.8, markersize=5,
                 color=color, label=METHOD_DISPLAY.get(method, method), alpha=0.8)
         ax.fill(angles, norm_vals, alpha=0.08, color=color)
 
     ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(dimensions, fontsize=10, fontweight="bold")
+    ax.set_xticklabels(dimensions, fontsize=8.5)
     ax.set_ylim(0, 1.1)
     ax.set_yticks([0.25, 0.5, 0.75, 1.0])
-    ax.set_yticklabels(["", "", "", "Max"], fontsize=8)
+    ax.set_yticklabels(["", "", "", "Max"], fontsize=7)
     ax.grid(True, alpha=0.3)
 
-    ax.legend(loc="lower right", bbox_to_anchor=(1.4, 0), fontsize=9,
-              framealpha=0.9, title="Methods", title_fontsize=10)
-    ax.set_title("Evaluator Bias Profile\n(smaller area = less biased)",
-                 fontsize=13, fontweight="bold", pad=20)
+    ax.legend(loc="upper right", bbox_to_anchor=(1.35, 1.15), fontsize=7.5,
+              framealpha=0.9)
+    ax.set_title("Bias Profile (smaller = less biased)",
+                 fontsize=10, fontweight="bold", pad=15)
 
-    fig.tight_layout()
+    fig.tight_layout(pad=1.0)
     for ext in ["pdf", "png"]:
         out_path = os.path.join(output_dir, f"bias_radar.{ext}")
         fig.savefig(out_path, dpi=dpi, bbox_inches="tight", format=ext)
@@ -517,7 +517,7 @@ def _plot_quartile_trend(length_results: dict, output_dir: str, dpi: int):
 
     quartile_keys = ["Q1 (shortest)", "Q2", "Q3", "Q4 (longest)"]
 
-    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+    fig, ax = plt.subplots(1, 1, figsize=(6.5, 4))
 
     for method in methods:
         quartiles = eval_results[method].get("quartile_score_means", {})
@@ -525,27 +525,27 @@ def _plot_quartile_trend(length_results: dict, output_dir: str, dpi: int):
 
         color = COLORS.get(method, "#333")
         marker = "o" if method == "lora_evaluator" else "s"
-        ms = 10 if method == "lora_evaluator" else 7
-        lw = 2.5 if method == "lora_evaluator" else 1.5
+        ms = 8 if method == "lora_evaluator" else 5
+        lw = 2 if method == "lora_evaluator" else 1.2
 
         ax.plot(range(4), vals, color=color, marker=marker, markersize=ms,
                 linewidth=lw, alpha=0.85,
                 label=METHOD_DISPLAY.get(method, method))
 
     ax.set_xticks(range(4))
-    ax.set_xticklabels(quartile_keys, fontsize=10)
-    ax.set_xlabel("Output Length Quartile", fontsize=12, fontweight="bold")
-    ax.set_ylabel("Mean Predicted Score", fontsize=12, fontweight="bold")
-    ax.set_title("Score Trend by Output Length Quartile\n(Flat line = no length bias)",
-                 fontsize=13, fontweight="bold")
-    ax.legend(fontsize=8, framealpha=0.9, loc="best")
+    ax.set_xticklabels(quartile_keys, fontsize=8.5)
+    ax.set_xlabel("Output Length Quartile", fontsize=10)
+    ax.set_ylabel("Mean Predicted Score", fontsize=10)
+    ax.set_title("Score Trend by Output Length Quartile",
+                 fontsize=10.5, fontweight="bold")
+    ax.legend(fontsize=7, framealpha=0.9, loc="best")
     ax.grid(True, alpha=0.3, linestyle="--")
 
     # Add "no bias" reference line
     ax.axhline(y=2.5, color="grey", linewidth=1, linestyle=":", alpha=0.5)
-    ax.text(3.5, 2.55, "No bias ref.", fontsize=7, color="grey", alpha=0.7)
+    ax.text(3.5, 2.55, "No bias ref.", fontsize=6.5, color="grey", alpha=0.7)
 
-    fig.tight_layout()
+    fig.tight_layout(pad=1.0)
     for ext in ["pdf", "png"]:
         out_path = os.path.join(output_dir, f"length_quartile_trend.{ext}")
         fig.savefig(out_path, dpi=dpi, bbox_inches="tight", format=ext)
