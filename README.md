@@ -17,7 +17,8 @@
 > Through systematic diagnostic analysis, we reveal a surprising finding: **all standard evaluation metrics exhibit *negative* correlation with human judgments** (&rho; from -0.24 to -0.60).
 > We trace this failure to a fundamental misalignment: overlap-based metrics measure how *similar* a rewrite is to its source, while human judgment evaluates how *good* the rewrite is.
 >
-> As a positive demonstration, a **LoRA fine-tuned 7B model** with pairwise preference learning achieves &rho;=0.665, outperforming zero-shot **72B models** (&rho;&le;0.406), absolute scoring (&rho;=0.467), and all general-purpose evaluators.
+> As a positive demonstration, a **LoRA fine-tuned 7B model** with pairwise preference learning achieves &rho;=0.665, outperforming zero-shot models up to **235B parameters** (&rho;&le;0.406), absolute scoring (&rho;=0.467), and all general-purpose evaluators.
+> Surprisingly, newer and larger models (Qwen3-235B, DeepSeek-V3.1, Kimi-K2) perform *worse* than their smaller predecessors, exhibiting negative or near-zero correlation with human judgments.
 
 ---
 
@@ -27,6 +28,7 @@
 - [Main Results](#main-results)
 - [Why Traditional Metrics Fail](#why-traditional-metrics-fail)
 - [Pairwise Preference Evaluation](#pairwise-preference-evaluation)
+- [Scaling & Generational Analysis](#scaling--generational-analysis)
 - [Ablation Studies](#ablation-studies)
 - [Bias Analysis](#bias-analysis)
 - [Downstream Validation](#downstream-validation)
@@ -139,25 +141,84 @@ This generalizes beyond Chinese: any evaluation scenario where good outputs shou
 
 Instead of assigning an absolute score, we train the model to predict **which of two rewrites is better**. From 600 training samples, we construct **2,652 cross-source pairwise comparisons** with balanced labels. At inference, we evaluate all C(129,2) = 8,256 pairs and compute each rewrite's **win rate**.
 
-### Pairwise vs. Absolute (Table 4)
+### Pairwise vs. Zero-Shot Baselines (Table 4)
 
-| Method | Training Data | Spearman &rho; |
-|--------|:------------:|:--------------:|
-| **Pairwise (cross-source)** | **2,652 pairs** | **+0.665** |
-| Pairwise (generated) | 1,200 pairs | +0.421 |
-| Absolute scoring (balanced) | 1,008 samples | +0.467 |
-| Absolute scoring (original) | 600 samples | +0.165 |
-| Qwen2.5-72B (zero-shot) | &mdash; | +0.406 |
-| DeepSeek-V3 (zero-shot) | &mdash; | +0.391 |
-| Prometheus 2 (7B) | &mdash; | +0.124 |
-| G-Eval (7B) | &mdash; | &minus;0.093 |
+| Method | Params | Spearman &rho; | Accuracy |
+|--------|:------:|:--------------:|:--------:|
+| **Pairwise (cross-source, ours)** | **7B** | **+0.665** | **90.0%** |
+| Absolute scoring (balanced, ours) | 7B | +0.467 | &mdash; |
+| Qwen2.5-72B-Instruct (zero-shot) | 72B | +0.406 | 69.3% |
+| DeepSeek-V3 (zero-shot) | 685B | +0.391 | 67.7% |
+| Qwen3-235B-A22B (zero-shot) | 235B | +0.132 | 72.0% |
+| DeepSeek-V3.1-Terminus (zero-shot) | 685B | &minus;0.049 | 49.9% |
+| Kimi-K2 (zero-shot) | ~1T | &minus;0.472 | 31.6% |
 
-**A 7B fine-tuned model outperforms a zero-shot 72B model by 64%.**
+**Our 7B LoRA model outperforms all zero-shot baselines up to ~1T parameters.**
+
+### Scaling & Generational Analysis
+
+<p align="center"><img src="assets/scaling_analysis.png" width="60%"><br><em>Model scale vs. evaluation quality. Scaling up zero-shot models does not improve rewriting evaluation.</em></p>
+
+**Scaling does not help.** The trend line across zero-shot models slopes *downward*: larger models do not systematically evaluate rewriting quality better.
+
+<p align="center"><img src="assets/generational_regression.png" width="85%"><br><em>Generational regression: newer models within the same family perform substantially worse.</em></p>
+
+**Generational regression.** Newer models perform *worse* than their predecessors:
+- **Qwen3-235B** (&rho;=0.132) drops **67%** from Qwen2.5-72B (&rho;=0.406), despite 3&times; more parameters
+- **DeepSeek-V3.1** (&rho;=&minus;0.049) drops **112%** from DeepSeek-V3 (&rho;=0.391), falling into negative territory
+- **Kimi-K2** (&rho;=&minus;0.472), the largest model tested (~1T), shows the *worst* performance
+
+We hypothesize this reflects a training data misalignment: newer models optimized for instruction following and helpfulness may *conflict* with the critical assessment required for quality evaluation.
+
+### Accuracy vs. Ranking Correlation Paradox
+
+<p align="center"><img src="assets/accuracy_vs_rho.png" width="55%"><br><em>Pairwise accuracy is a misleading metric for zero-shot evaluators.</em></p>
+
+| Model | Accuracy | Spearman &rho; | Paradox? |
+|-------|:--------:|:--------------:|:--------:|
+| Ours (7B LoRA) | 90.0% | +0.665 | No |
+| Qwen3-235B | 72.0% | +0.132 | **Yes** |
+| Qwen2.5-72B | 69.3% | +0.406 | Mild |
+| DeepSeek-V3 | 67.7% | +0.391 | No |
+| Kimi-K2 | 31.6% | &minus;0.472 | No |
+
+Qwen3-235B achieves the *highest* zero-shot accuracy (72.0%) yet only &rho;=0.132, while Qwen2.5-72B achieves *lower* accuracy (69.3%) but substantially higher &rho;=0.406. Accuracy treats all pairs equally; Spearman requires correct *ranking* of all rewrites.
 
 ### Why Pairwise Wins
 
 1. **Easier learning signal**: The model only needs to detect relative differences, not learn the full 0&ndash;5 score distribution.
 2. **Robust aggregation**: Each rewrite's quality is informed by multiple comparisons (win rate), reducing noise from any single prediction.
+3. **Immune to scale**: Even zero-shot models up to ~1T parameters cannot match a 7B model fine-tuned with pairwise preference learning.
+
+---
+
+## Scaling & Generational Analysis
+
+<p align="center"><img src="assets/scaling_analysis.png" width="55%"><br><em>Model scale vs. evaluation quality. Scaling up zero-shot models does <strong>not</strong> improve rewriting evaluation; our 7B LoRA model outperforms all zero-shot baselines.</em></p>
+
+The relationship between scale and evaluation quality is **negative**: the trend line across zero-shot models slopes downward.
+
+<p align="center"><img src="assets/generational_regression.png" width="80%"><br><em>Generational regression within model families. Newer versions perform substantially worse than their predecessors.</em></p>
+
+**Within-family regression:**
+
+| Family | Old Model | Old &rho; | New Model | New &rho; | Change |
+|--------|-----------|:---------:|-----------|:---------:|:------:|
+| Qwen | Qwen2.5-72B | +0.406 | Qwen3-235B | +0.132 | **&minus;67%** |
+| DeepSeek | DeepSeek-V3 | +0.391 | DeepSeek-V3.1 | &minus;0.049 | **&minus;112%** |
+
+Despite 3&times; more parameters, Qwen3-235B drops 67% from Qwen2.5-72B. DeepSeek-V3.1 falls into negative territory. We hypothesize that newer models optimized for instruction following and helpfulness **conflict** with the critical assessment required for quality evaluation.
+
+### Format Compliance vs. Quality
+
+| Model | Parse Fail | Spearman &rho; |
+|-------|:----------:|:--------------:|
+| DeepSeek-V3 | 0.0% | +0.391 |
+| Kimi-K2 | 0.0% | &minus;0.472 |
+| Qwen2.5-72B | 8.8% | +0.406 |
+| Qwen3-235B | 9.0% | +0.132 |
+
+Format compliance and evaluation quality are **orthogonal**: models with 0% parse failures span the full quality range (best to worst).
 
 ---
 
