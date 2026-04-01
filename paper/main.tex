@@ -40,7 +40,7 @@ Evaluating the quality of text rewriting remains a significant challenge, partic
 We present \textbf{RewritingBench}, the first human-annotated benchmark for Chinese text rewriting quality evaluation, comprising 730 rewrite pairs scored by three annotators (inter-annotator Spearman $\rho \approx 0.86$).
 Through systematic diagnostic analysis, we reveal a surprising finding: \textbf{all} standard evaluation metrics, including BLEU, ROUGE, SBERT cosine similarity, and embedding-based measures, exhibit \emph{negative} correlation with human judgments ($\rho$ from $-$0.24 to $-$0.60).
 We trace this failure to a fundamental misalignment: overlap-based metrics measure how \emph{similar} a rewrite is to its source, while human judgment evaluates how \emph{good} the rewrite is. For rewriting, these objectives are inversely correlated.
-As a positive demonstration, we show that pairwise preference learning provides a viable alternative: a LoRA fine-tuned 7B model achieves $\rho$=0.665, outperforming absolute scoring ($\rho$=0.467), zero-shot 72B models ($\rho \leq 0.406$), and all general-purpose evaluators.
+As a positive demonstration, we show that pairwise preference learning provides a viable alternative: a LoRA fine-tuned 7B model achieves $\rho$=0.665, outperforming absolute scoring ($\rho$=0.467), zero-shot models up to 235B parameters ($\rho \leq 0.406$), and all general-purpose evaluators.
 We further validate this finding through downstream data filtering, where evaluator-guided selection improves mean rewrite quality by 39\%.
 Together, our benchmark, diagnostic analysis, and validated evaluation approach establish a foundation for advancing Chinese rewriting evaluation.
 \end{abstract}
@@ -69,7 +69,7 @@ To address this gap, we present \textbf{RewritingBench}, a human-annotated bench
 Our key contributions are as follows.
 First, we introduce \textbf{RewritingBench}, the first Chinese rewriting quality benchmark with 730 annotated pairs (3 annotators, 0--5 scale) and high inter-annotator agreement (Spearman $\rho \approx 0.86$).
 Second, we report \textbf{diagnostic findings} that all seven traditional metrics exhibit statistically significant negative correlation with human judgments ($\rho$ from $-$0.24 to $-$0.60, all $p < 0.001$), which we trace to a fundamental misalignment between overlap measurement and quality assessment.
-Third, we propose \textbf{pairwise preference evaluation}: a pairwise preference learning approach (LoRA fine-tuned 7B model) achieves $\rho$=0.665, substantially outperforming absolute scoring ($\rho$=0.467), zero-shot 72B models ($\rho \leq 0.406$), general-purpose evaluators (Prometheus~2: $\rho$=0.124), and all traditional metrics.
+Third, we propose \textbf{pairwise preference evaluation}: a pairwise preference learning approach (LoRA fine-tuned 7B model) achieves $\rho$=0.665, substantially outperforming absolute scoring ($\rho$=0.467), zero-shot models up to 235B parameters ($\rho \leq 0.406$), general-purpose evaluators (Prometheus~2: $\rho$=0.124), and all traditional metrics.
 Fourth, we demonstrate \textbf{practical utility} through evaluator-guided data filtering that improves mean rewrite quality by 39\% compared to random selection, showing that our benchmark-derived evaluator transfers to real-world applications.
 
 Figure~\ref{fig:framework} provides an overview of the RewritingBench framework, from data collection through diagnostic analysis to pairwise preference learning and downstream validation.
@@ -435,31 +435,30 @@ For inference, we evaluate all $\binom{129}{2} = 8{,}256$ possible pairs from th
 
 \begin{table}[t]
 \centering
-\caption{Comparison of evaluation paradigms. Pairwise preference learning substantially outperforms absolute scoring and zero-shot LLM baselines.}
+\caption{Comparison of evaluation paradigms. Pairwise preference learning substantially outperforms absolute scoring and all zero-shot LLM baselines, including frontier models with up to 235B parameters.}
 \label{tab:pairwise_results}
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{lcc}
 \toprule
-Method & Training Pairs & Spearman $\rho$ \\
+Method & Params & Spearman $\rho$ \\
 \midrule
-Absolute scoring (balanced, 1,008) & 1,008 & +0.467 \\
-Absolute scoring (original, 600) & 600 & +0.165 \\
+\textbf{Pairwise (cross-source, ours)} & \textbf{7B} & \textbf{+0.665} \\
+Absolute scoring (balanced, ours) & 7B & +0.467 \\
 \midrule
-\textbf{Pairwise (cross-source)} & \textbf{2,652} & \textbf{+0.665} \\
-Pairwise (generated) & 1,200 & +0.421 \\
-\midrule
-Qwen2.5-72B (zero-shot) & -- & +0.406 \\
-DeepSeek-V3 (zero-shot) & -- & +0.391 \\
-Prometheus~2 (7B) & -- & +0.124 \\
-G-Eval (7B) & -- & $-$0.093 \\
+Qwen2.5-72B-Instruct (zero-shot) & 72B & +0.406 \\
+DeepSeek-V3 (zero-shot) & 685B & +0.391 \\
+Qwen3-235B-A22B (zero-shot) & 235B & +0.132 \\
+DeepSeek-V3.1-Terminus (zero-shot) & 685B & $-$0.049 \\
+Kimi-K2 (zero-shot) & 1T & $-$0.472 \\
 \bottomrule
 \end{tabular}
 }
 \end{table}
 
-Table~\ref{tab:pairwise_results} compares absolute scoring and pairwise preference learning.
-The pairwise model achieves $\rho$=0.665, a \textbf{42\% improvement} over absolute scoring ($\rho$=0.467) and substantially outperforming all zero-shot baselines, including Qwen2.5-72B ($\rho$=0.406) and DeepSeek-V3 ($\rho$=0.391).
-Notably, our 7B fine-tuned model outperforms zero-shot Qwen2.5-72B~\citep{qwen2025qwen25} and DeepSeek-V3~\citep{deepseekai2024deepseekv3} by 64--70\%, demonstrating that task-specific fine-tuning with pairwise preference learning is far more effective than scaling model size.
+Table~\ref{tab:pairwise_results} compares absolute scoring and pairwise preference learning against zero-shot LLM baselines.
+The pairwise model achieves $\rho$=0.665, a \textbf{42\% improvement} over absolute scoring ($\rho$=0.467) and substantially outperforming all zero-shot baselines.
+Among zero-shot models, Qwen2.5-72B ($\rho$=0.406) and DeepSeek-V3 ($\rho$=0.391) show moderate positive correlation, while larger and more recent models perform surprisingly poorly: Qwen3-235B ($\rho$=0.132), DeepSeek-V3.1 ($\rho$=$-$0.049), and Kimi-K2 ($\rho$=$-$0.472).
+Notably, our 7B fine-tuned model outperforms all zero-shot baselines including models up to 1T parameters, demonstrating that task-specific fine-tuning with pairwise preference learning is far more effective than scaling model size.
 
 \textbf{Cross-source training is essential.}
 The pairwise model trained on cross-source pairs ($\rho$=0.665) substantially outperforms the model trained on generated pairs ($\rho$=0.421).
@@ -601,7 +600,7 @@ Our work has several limitations.
 First, the training set of 730 annotated pairs (1,008 after balancing) is relatively small, and performance may improve with more annotated data.
 Second, the benchmark covers only Chinese text rewriting; cross-lingual generalization remains untested.
 Third, while $\rho$=0.467 substantially outperforms all baselines, there is still room for improvement: roughly half of the variance in human judgments is not captured.
-Fourth, our pairwise baseline comparison includes zero-shot Qwen2.5-72B and DeepSeek-V3, but not proprietary frontier models (e.g., GPT-4o, Claude); including such models would provide an even more complete picture of the evaluation landscape.
+Fourth, our pairwise baseline comparison includes zero-shot open-weight models up to 235B parameters (Qwen3-235B, Qwen2.5-72B, DeepSeek-V3, DeepSeek-V3.1, Kimi-K2), but not proprietary frontier models (e.g., GPT-4o, Claude); including such models would provide an even more complete picture of the evaluation landscape.
 Fifth, we use LoRA rather than full-parameter fine-tuning; while LoRA achieves strong results with minimal compute (a single 3090 GPU, $\sim$25 minutes), full fine-tuning may provide a higher performance ceiling.
 We chose LoRA for its practical accessibility, as full fine-tuning of a 7B model would require significantly more GPU memory and time.
 Finally, our evaluation is limited to general-purpose text improvement; extending to specific rewriting tasks (style transfer, simplification, formality adaptation) would strengthen the findings.
@@ -613,7 +612,7 @@ Finally, our evaluation is limited to general-purpose text improvement; extendin
 
 We present RewritingBench, the first human-annotated benchmark for Chinese text rewriting quality evaluation, comprising 730 annotated pairs.
 Our diagnostic analysis reveals that all standard evaluation metrics exhibit statistically significant negative correlation with human judgments, which we trace to a fundamental misalignment between overlap measurement and quality assessment.
-Building on this insight, we demonstrate that pairwise preference learning provides a robust evaluation framework: a LoRA fine-tuned 7B model achieves $\rho$=0.665, substantially outperforming absolute scoring ($\rho$=0.467), zero-shot 72B models ($\rho \leq 0.406$), general-purpose evaluators (Prometheus~2: $\rho$=0.124), and all traditional metrics.
+Building on this insight, we demonstrate that pairwise preference learning provides a robust evaluation framework: a LoRA fine-tuned 7B model achieves $\rho$=0.665, substantially outperforming absolute scoring ($\rho$=0.467), zero-shot models up to 235B parameters ($\rho \leq 0.406$), general-purpose evaluators (Prometheus~2: $\rho$=0.124), and all traditional metrics.
 Downstream validation confirms practical utility: evaluator-guided filtering improves data quality by 39\% compared to random selection.
 Our benchmark and findings establish a foundation for developing and evaluating Chinese rewriting systems, and we release our data, evaluation code, and fine-tuned models to support future research.
 
