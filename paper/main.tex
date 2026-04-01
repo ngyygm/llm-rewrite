@@ -220,7 +220,7 @@ We evaluate 16 methods spanning four categories:
 \textbf{Zero-shot LLMs}: Qwen2.5-7B, Qwen2.5-14B with a standard evaluation prompt.
 \textbf{General-purpose evaluators}: G-Eval (Qwen2.5-7B backbone, chain-of-thought), Prometheus~2 (7B fine-tuned judge).
 \textbf{Fine-tuned variants}: Multiple LoRA configurations with different data sizes and output formats.
-For pairwise evaluation (Section~\ref{sec:pairwise}), we additionally evaluate zero-shot Qwen2.5-72B and DeepSeek-V3 using the same pairwise comparison protocol without fine-tuning.
+For pairwise evaluation (Section~\ref{sec:pairwise}), we additionally evaluate five zero-shot models using the same pairwise comparison protocol without fine-tuning: Qwen2.5-72B-Instruct (72B), Qwen3-235B-A22B (235B), DeepSeek-V3 (685B), DeepSeek-V3.1-Terminus (685B), and Kimi-K2 ($\sim$1T). These span model sizes from 72B to $\sim$1T parameters and include both established and frontier models released in 2025.
 
 \subsection{Main Results}
 \label{sec:main_results}
@@ -459,6 +459,33 @@ Table~\ref{tab:pairwise_results} compares absolute scoring and pairwise preferen
 The pairwise model achieves $\rho$=0.665, a \textbf{42\% improvement} over absolute scoring ($\rho$=0.467) and substantially outperforming all zero-shot baselines.
 Among zero-shot models, Qwen2.5-72B ($\rho$=0.406) and DeepSeek-V3 ($\rho$=0.391) show moderate positive correlation, while larger and more recent models perform surprisingly poorly: Qwen3-235B ($\rho$=0.132), DeepSeek-V3.1 ($\rho$=$-$0.049), and Kimi-K2 ($\rho$=$-$0.472).
 Notably, our 7B fine-tuned model outperforms all zero-shot baselines including models up to 1T parameters, demonstrating that task-specific fine-tuning with pairwise preference learning is far more effective than scaling model size.
+
+\subsection{Scaling and Generational Analysis}
+\label{sec:scaling}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/scaling_analysis.pdf}
+\caption{Model scale vs.\ evaluation quality on RewritingBench. Scaling up zero-shot models does not improve rewriting evaluation; our 7B LoRA model outperforms all zero-shot baselines by a wide margin.}
+\label{fig:scaling}
+\end{figure}
+
+Figure~\ref{fig:scaling} plots model parameter count against Spearman $\rho$ for all pairwise zero-shot baselines.
+The relationship between scale and evaluation quality is \emph{negative}: the trend line across zero-shot models slopes downward, indicating that larger models do not systematically evaluate rewriting quality better.
+Our 7B fine-tuned model, positioned far above this trend, is the sole exception.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/generational_regression.pdf}
+\caption{Generational regression within model families. Newer versions perform substantially worse than their predecessors: Qwen3-235B drops 67\% from Qwen2.5-72B, and DeepSeek-V3.1 drops 112\% from DeepSeek-V3 (into negative territory).}
+\label{fig:generational}
+\end{figure}
+
+This finding becomes sharper when comparing within model families (Figure~\ref{fig:generational}).
+Qwen3-235B ($\rho$=0.132) drops 67\% from Qwen2.5-72B ($\rho$=0.406), despite having 3$\times$ more parameters and representing a newer generation.
+DeepSeek-V3.1 ($\rho$=$-$0.049) drops 112\% from DeepSeek-V3 ($\rho$=0.391), falling into negative correlation.
+Kimi-K2 ($\rho$=$-$0.472), the largest model tested ($\sim$1T parameters), shows the worst performance of all.
+We hypothesize that this regression reflects a training data misalignment: newer models are optimized for instruction following and helpfulness, which may \emph{conflict} with the critical assessment required for quality evaluation, where the model must distinguish genuinely good rewrites from superficially fluent but mediocre ones.
 
 \textbf{Cross-source training is essential.}
 The pairwise model trained on cross-source pairs ($\rho$=0.665) substantially outperforms the model trained on generated pairs ($\rho$=0.421).
@@ -787,6 +814,83 @@ Source & Rewrite & Human & RJ \\
 \includegraphics[width=\columnwidth]{figures/learning_curve.pdf}
 \caption{Full learning curve including both LoRA variants and baseline methods (dashed lines). All baselines show flat or negative correlation regardless of data size.}
 \label{fig:learning_curve_full}
+\end{figure}
+
+\section{Extended Zero-Shot Baseline Analysis}
+\label{sec:appendix_zero_shot}
+
+\subsection{Accuracy vs.\ Ranking Correlation}
+\label{sec:appendix_acc_rho}
+
+A natural expectation is that higher pairwise accuracy should correspond to higher Spearman $\rho$.
+Our results contradict this: Table~\ref{tab:acc_rho_paradox} shows that pairwise accuracy and ranking correlation are poorly aligned for zero-shot models.
+
+\begin{table}[h]
+\centering
+\caption{Accuracy--correlation paradox in zero-shot pairwise evaluation. Qwen3-235B achieves the highest accuracy (72.0\%) but near-zero $\rho$=0.132.}
+\label{tab:acc_rho_paradox}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+Model & Accuracy (\%) & Spearman $\rho$ & Paradox? \\
+\midrule
+Ours (7B LoRA) & 90.0 & +0.665 & No \\
+Qwen3-235B & 72.0 & +0.132 & Yes \\
+Qwen2.5-72B & 69.3 & +0.406 & Mild \\
+DeepSeek-V3 & 67.7 & +0.391 & No \\
+DeepSeek-V3.1 & 49.9 & $-$0.049 & Yes \\
+Kimi-K2 & 31.6 & $-$0.472 & No \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Qwen3-235B achieves the highest zero-shot accuracy (72.0\%) yet only $\rho$=0.132, while Qwen2.5-72B achieves lower accuracy (69.3\%) but substantially higher $\rho$=0.406.
+This paradox arises because pairwise accuracy treats all pairs equally, while Spearman $\rho$ measures whether the \emph{ranking} of all rewrites is correct.
+A model that correctly identifies easy pairs (large quality differences) but makes systematic errors on harder pairs can achieve high accuracy with low correlation.
+Our fine-tuned model avoids this paradox: 90.0\% accuracy aligns with $\rho$=0.665, indicating consistent quality discrimination across the full difficulty spectrum.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/accuracy_vs_rho.pdf}
+\caption{Pairwise accuracy vs.\ Spearman $\rho$. The paradox zone (high accuracy, low $\rho$) reveals that accuracy alone is a misleading metric for zero-shot evaluators.}
+\label{fig:acc_vs_rho}
+\end{figure}
+
+\subsection{Format Compliance vs.\ Evaluation Quality}
+\label{sec:appendix_parse}
+
+We examine whether format compliance (the ability to follow the pairwise comparison output format) correlates with evaluation quality.
+Table~\ref{tab:parse_analysis} shows the parse failure rate for each zero-shot baseline.
+
+\begin{table}[h]
+\centering
+\caption{Format compliance vs.\ evaluation quality. Models with zero parse failures include both the best and worst performers, indicating format compliance is independent of evaluation capability.}
+\label{tab:parse_analysis}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+Model & Parse Fail (\%) & Spearman $\rho$ & Quality \\
+\midrule
+DeepSeek-V3 & 0.0 & +0.391 & Best zero-shot \\
+Kimi-K2 & 0.0 & $-$0.472 & Worst zero-shot \\
+DeepSeek-V3.1 & 0.0 & $-$0.049 & Poor \\
+Qwen2.5-72B & 8.8 & +0.406 & Good \\
+Qwen3-235B & 9.0 & +0.132 & Poor \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Format compliance and evaluation quality are \emph{independent}: the three models with zero parse failures include both the best zero-shot performer (DeepSeek-V3, $\rho$=0.391) and the worst (Kimi-K2, $\rho$=$-$0.472).
+Conversely, the two models with the highest parse failure rates (Qwen2.5-72B and Qwen3-235B, both $\sim$9\%) achieve divergent $\rho$ values (0.406 vs.\ 0.132).
+This confirms that the ability to follow output formatting instructions is orthogonal to the ability to assess rewriting quality, a concerning finding for practitioners who may use format compliance as a proxy for model reliability.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/parse_failure_vs_rho.pdf}
+\caption{Parse failure rate vs.\ Spearman $\rho$. No correlation exists between format compliance and evaluation quality: models with 0\% parse failures span the full quality range.}
+\label{fig:parse_vs_rho}
 \end{figure}
 
 \end{document}
