@@ -428,6 +428,10 @@ def run_prometheus_evaluator(
 
 def run_all_fine_tuned(
     data: List[Dict],
+<<<<<<< HEAD
+=======
+    model_name: str = DEFAULT_MODEL,
+>>>>>>> my local backup before merging
     temperature: float = 0.1,
     load_in_4bit: bool = True,
     max_samples: Optional[int] = None,
@@ -455,7 +459,11 @@ def run_all_fine_tuned(
     print("=" * 60)
 
     result_prometheus = run_prometheus_evaluator(
+<<<<<<< HEAD
         model_name=DEFAULT_MODEL,
+=======
+        model_name=model_name,
+>>>>>>> my local backup before merging
         data=data,
         method_label="Prometheus-2-7B",
         rubric=SCORE_RUBRIC_ZH,
@@ -476,7 +484,11 @@ def run_all_fine_tuned(
     mprompt_reference = REFERENCE_ANSWER_ZH + "\n\n请用中文进行评估并给出评分。"
 
     result_mprometheus = run_prometheus_evaluator(
+<<<<<<< HEAD
         model_name=DEFAULT_MODEL,
+=======
+        model_name=model_name,
+>>>>>>> my local backup before merging
         data=data,
         method_label="M-Prometheus-7B",
         rubric=SCORE_RUBRIC_ZH,
@@ -542,6 +554,10 @@ def main():
     else:
         results = run_all_fine_tuned(
             data,
+<<<<<<< HEAD
+=======
+            model_name=args.model,
+>>>>>>> my local backup before merging
             temperature=args.temperature,
             load_in_4bit=not args.no_4bit,
             max_samples=args.max_samples,

@@ -19,6 +19,7 @@ echo ""
 mkdir -p data/baselines
 
 # Step 1: Traditional metrics (no GPU needed)
+<<<<<<< HEAD
 echo "[Step 1/4] Running traditional metrics (BLEU, ROUGE, Jaccard, etc.)..."
 cd baselines
 python3 run_traditional.py \
@@ -46,14 +47,45 @@ python3 run_llm_evaluators.py \
     --model_path "${LOCAL_MODEL_PATH:-Qwen/Qwen2.5-7B-Instruct}"
 cd "$PROJECT_DIR"
 echo ""
+=======
+# echo "[Step 1/4] Running traditional metrics (BLEU, ROUGE, Jaccard, etc.)..."
+# cd baselines
+# python3 run_traditional.py \
+#     --eval-path "$PROJECT_DIR/data/human_eval/eval.json"
+# cd "$PROJECT_DIR"
+# echo ""
+
+# # Step 2: ParaScore (no GPU needed)
+# echo "[Step 2/4] Running ParaScore..."
+# cd baselines
+# python3 run_parascore.py \
+#     --eval-path "$PROJECT_DIR/data/human_eval/eval.json"
+# cd "$PROJECT_DIR"
+# echo ""
+
+# # Step 3: LLM-based evaluators (requires GPU)
+# echo "[Step 3/4] Running LLM-based evaluators (G-Eval, zero-shot, prompt-based)..."
+# echo "  This requires a GPU with ~16GB VRAM"
+# cd baselines
+# python3 run_llm_evaluators.py \
+#     --eval-path "$PROJECT_DIR/data/human_eval/eval.json" \
+#     --model "${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen2.5-7B-Instruct}"
+# cd "$PROJECT_DIR"
+# echo ""
+>>>>>>> my local backup before merging
 
 # Step 4: Prometheus 2 / M-Prometheus (requires GPU)
 echo "[Step 4/4] Running Prometheus 2 / M-Prometheus..."
 cd baselines
 python3 run_fine_tuned_evaluators.py \
+<<<<<<< HEAD
     --eval_data "$PROJECT_DIR/data/human_eval/eval.json" \
     --output_dir "$PROJECT_DIR/data/baselines" \
     --model_path "${PROMETHEUS_MODEL_PATH:-prometheus-eval/prometheus-7b-v2.0}"
+=======
+    --eval-path "$PROJECT_DIR/data/human_eval/eval.json" \
+    --model "${PROMETHEUS_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/baokailin/train_model/prometheus-7b-v2.0}"
+>>>>>>> my local backup before merging
 cd "$PROJECT_DIR"
 echo ""
 

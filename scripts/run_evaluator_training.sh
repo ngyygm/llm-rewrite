@@ -8,7 +8,11 @@ set -euo pipefail
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_DIR"
 
+<<<<<<< HEAD
 BASE_MODEL="${LOCAL_MODEL_PATH:-Qwen/Qwen2.5-7B-Instruct}"
+=======
+BASE_MODEL="${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen2.5-7B-Instruct}"
+>>>>>>> my local backup before merging
 EVAL_DATA="$PROJECT_DIR/data/human_eval/eval.json"
 CHECKPOINT_DIR="$PROJECT_DIR/evaluator/checkpoints"
 RESULTS_DIR="$PROJECT_DIR/data/baselines"
@@ -23,6 +27,7 @@ echo ""
 mkdir -p "$CHECKPOINT_DIR" "$RESULTS_DIR"
 
 # Step 1: Full training - Score Only mode (primary)
+<<<<<<< HEAD
 echo "[Step 1/6] Training full model - score_only mode..."
 python3 evaluator/train_lora.py \
     --data_path "$PROJECT_DIR/data/human_eval/train_score_only.json" \
@@ -36,11 +41,30 @@ python3 evaluator/train_lora.py \
     --grad_accum 4
 
 echo ""
+=======
+# echo "[Step 1/6] Training full model - score_only mode..."
+# python3 evaluator/train_lora.py \
+#     --data_path "$PROJECT_DIR/data/human_eval/train_score_only.json" \
+#     --eval_data_path "$EVAL_DATA" \
+#     --output_dir "$CHECKPOINT_DIR/score_only_full" \
+#     --base_model "$BASE_MODEL" \
+#     --mode score_only \
+#     --epochs 3 \
+#     --lr 2e-4 \
+#     --batch_size 4 \
+#     --grad_accum 4
+
+# echo ""
+>>>>>>> my local backup before merging
 
 # Step 2: Evaluate full score_only model
 echo "[Step 2/6] Evaluating score_only_full..."
 python3 evaluator/eval_evaluator.py \
+<<<<<<< HEAD
     --model_path "$CHECKPOINT_DIR/score_only_full" \
+=======
+    --model_path "/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/baokailin/github.com/ngyygm/llm-rewrite.git/evaluator/checkpoints/balanced_simple/checkpoint-189" \
+>>>>>>> my local backup before merging
     --eval_data_path "$EVAL_DATA" \
     --base_model "$BASE_MODEL" \
     --mode score_only \
@@ -50,6 +74,7 @@ python3 evaluator/eval_evaluator.py \
 echo ""
 
 # Step 3: Full training - Multi Score mode
+<<<<<<< HEAD
 echo "[Step 3/6] Training full model - multi_score mode..."
 python3 evaluator/train_lora.py \
     --data_path "$PROJECT_DIR/data/human_eval/train_multi_score.json" \
@@ -101,6 +126,59 @@ print(d['metrics_vs_avg_score']['spearman_rho'])
 ")
     echo ", {\"subset_size\": $SIZE, \"method\": \"lora_7b\", \"spearman\": $SPEARMON}" >> "$LEARNING_CURVE_DATA"
 done
+=======
+# echo "[Step 3/6] Training full model - multi_score mode..."
+# python3 evaluator/train_lora.py \
+#     --data_path "$PROJECT_DIR/data/human_eval/train_multi_score.json" \
+#     --eval_data_path "$EVAL_DATA" \
+#     --output_dir "$CHECKPOINT_DIR/multi_score_full" \
+#     --base_model "$BASE_MODEL" \
+#     --mode multi_score \
+#     --epochs 3 \
+#     --lr 2e-4 \
+#     --batch_size 4 \
+#     --grad_accum 4
+
+# echo ""
+
+# Step 4: Learning curve training (subsets)
+# SUBSETS=(50 100 200 400)
+# LEARNING_CURVE_DATA="$RESULTS_DIR/learning_curves.json"
+# echo "[" > "$LEARNING_CURVE_DATA"
+# echo "  {\"subset_size\": 0, \"method\": \"zero_shot_7b\", \"spearman\": 0}" >> "$LEARNING_CURVE_DATA"
+
+# for SIZE in "${SUBSETS[@]}"; do
+#     echo ""
+#     echo "[Learning Curve] Training on $SIZE samples..."
+#     python3 evaluator/train_lora.py \
+#         --data_path "$PROJECT_DIR/data/human_eval/train_score_only_${SIZE}.json" \
+#         --eval_data_path "$EVAL_DATA" \
+#         --output_dir "$CHECKPOINT_DIR/score_only_${SIZE}" \
+#         --base_model "$BASE_MODEL" \
+#         --mode score_only \
+#         --epochs 3 \
+#         --lr 2e-4 \
+#         --batch_size 4 \
+#         --grad_accum 4 \
+#         --subset_size $SIZE
+
+#     echo "[Learning Curve] Evaluating $SIZE subset..."
+#     python3 evaluator/eval_evaluator.py \
+#         --model_path "$CHECKPOINT_DIR/score_only_${SIZE}" \
+#         --eval_data_path "$EVAL_DATA" \
+#         --base_model "$BASE_MODEL" \
+#         --mode score_only \
+#         --results_path "$RESULTS_DIR/results_lora_score_only_${SIZE}.json"
+
+#     # Append to learning curve data
+#     SPEARMAN=$(python3 -c "
+# import json
+# d = json.load(open('$RESULTS_DIR/results_lora_score_only_${SIZE}.json'))
+# print(d['metrics_vs_avg_score']['spearman_rho'])
+# ")
+#     echo ", {\"subset_size\": $SIZE, \"method\": \"lora_7b\", \"spearman\": $SPEARMAN}" >> "$LEARNING_CURVE_DATA"
+# done
+>>>>>>> my local backup before merging
 
 echo "]" >> "$LEARNING_CURVE_DATA"
 

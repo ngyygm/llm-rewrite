@@ -8,7 +8,11 @@ set -euo pipefail
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_DIR"
 
+<<<<<<< HEAD
 BASE_MODEL="${LOCAL_MODEL_PATH:-Qwen/Qwen2.5-7B-Instruct}"
+=======
+BASE_MODEL="${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen2.5-7B-Instruct }"
+>>>>>>> my local backup before merging
 GENERATED_DIR="$PROJECT_DIR/data/generated_rewrites"
 FILTERED_DIR="$GENERATED_DIR/filtered"
 SFT_DIR="$PROJECT_DIR/downstream/checkpoints"

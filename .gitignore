@@ -9,8 +9,13 @@ build/
 # Training checkpoints (too large for GitHub)
 evaluator/checkpoints/
 
+<<<<<<< HEAD
 # Data files
 # data/ -- now tracked in git
+=======
+# Data files (uploaded to HuggingFace)
+data/
+>>>>>>> my local backup before merging
 
 # LaTeX intermediates
 *.aux

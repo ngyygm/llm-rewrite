@@ -36,7 +36,11 @@ START_TIME=$(date +%s)
 # Step 0: Verify data preparation
 # ==========================================================================
 echo "[Step 0] Verifying data preparation..."
+<<<<<<< HEAD
 if [ ! -f "data/human_eval/train_score_only.json" ] || [ ! -f "data/human_eval/eval.json" ]; then
+=======
+if [ ! -f "data/human_eval/train_score_only_balanced.json" ] || [ ! -f "data/human_eval/eval.json" ]; then
+>>>>>>> my local backup before merging
     echo "  Running data conversion..."
     python3 scripts/convert_data.py
 else

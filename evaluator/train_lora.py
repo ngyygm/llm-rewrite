@@ -38,6 +38,12 @@ import sys
 import time
 from pathlib import Path
 
+<<<<<<< HEAD
+=======
+# Block broken apex from interfering with transformers/trl imports
+sys.modules['apex'] = None  # type: ignore
+
+>>>>>>> my local backup before merging
 import numpy as np
 import torch
 
