@@ -201,14 +201,23 @@ def main():
 
         rng_sub.shuffle(subset)
 
-        sub_data = [
+        sub_data_reasoning = [
             make_reasoning_sample(d["input"], d["output"], d["consensus_score"], rng_sub)
             for d in subset
         ]
 
+        sub_data_simple = [
+            make_simple_sample(d["input"], d["output"], d["consensus_score"])
+            for d in subset
+        ]
+
         with open(OUT_DIR / f"train_balanced_reasoning_{size}.json", "w", encoding="utf-8") as f:
-            json.dump(sub_data, f, ensure_ascii=False, indent=2)
-        print(f"Saved train_balanced_reasoning_{size}.json: {len(sub_data)} samples")
+            json.dump(sub_data_reasoning, f, ensure_ascii=False, indent=2)
+        print(f"Saved train_balanced_reasoning_{size}.json: {len(sub_data_reasoning)} samples")
+
+        with open(OUT_DIR / f"train_score_only_balanced_{size}.json", "w", encoding="utf-8") as f:
+            json.dump(sub_data_simple, f, ensure_ascii=False, indent=2)
+        print(f"Saved train_score_only_balanced_{size}.json: {len(sub_data_simple)} samples")
 
     print("\nDone!")
 

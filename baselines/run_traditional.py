@@ -13,9 +13,11 @@ Usage:
     python baselines/run_traditional.py
 """
 
+import sys
+sys.modules['apex'] = None  # type: ignore
+
 import json
 import re
-import sys
 import warnings
 import numpy as np
 from pathlib import Path
@@ -125,15 +127,22 @@ def compute_jaccard_word(input_text: str, output_text: str) -> float:
 # BLEU Score
 # ============================================================
 
+def _tokenize_chinese(text: str) -> str:
+    """Tokenize Chinese text by inserting spaces between characters."""
+    return " ".join(list(text.strip()))
+
+
 def compute_bleu(input_text: str, output_text: str) -> float:
     """Compute BLEU score using sacrebleu.
 
     Treats the input as the reference and output as the hypothesis.
+    Uses character-level tokenization for Chinese.
     """
     try:
         import sacrebleu
-        # sacrebleu expects list of refs (list of lists) and list of hyps
-        bleu = sacrebleu.sentence_bleu(output_text, [input_text])
+        ref = _tokenize_chinese(input_text)
+        hyp = _tokenize_chinese(output_text)
+        bleu = sacrebleu.sentence_bleu(hyp, [ref])
         return bleu.score / 100.0  # Normalize to [0, 1]
     except Exception as e:
         warnings.warn(f"BLEU computation failed: {e}")
@@ -148,11 +157,14 @@ def compute_rouge_l(input_text: str, output_text: str) -> float:
     """Compute ROUGE-L F1 score using rouge_score.
 
     Treats the input as the reference and output as the hypothesis.
+    Uses character-level tokenization for Chinese.
     """
     try:
         from rouge_score import rouge_scorer
         scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=False)
-        scores = scorer.score(input_text, output_text)
+        ref = _tokenize_chinese(input_text)
+        hyp = _tokenize_chinese(output_text)
+        scores = scorer.score(ref, hyp)
         return scores["rougeL"].fmeasure
     except Exception as e:
         warnings.warn(f"ROUGE-L computation failed: {e}")

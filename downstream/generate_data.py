@@ -101,7 +101,7 @@ def generate_source_texts_via_api(api_url: str, total_target: int = 2000, existi
                 response = requests.post(
                     f"{api_url}/v1/chat/completions",
                     json={
-                        "model": "default",
+                        "model": "/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen3-8B",
                         "messages": [{"role": "user", "content": batch_prompt}],
                         "temperature": 0.9,
                         "max_tokens": 2048,
@@ -139,9 +139,11 @@ def generate_source_texts_via_api(api_url: str, total_target: int = 2000, existi
     return all_texts
 
 
-def generate_rewrites_via_api(source_texts: list, api_url: str, output_dir: Path):
-    """Generate 3 rewrites per source text (low/medium/high quality)."""
+def generate_rewrites_via_api(source_texts: list, api_url: str, output_dir: Path, max_workers: int = 32):
+    """Generate 3 rewrites per source text (low/medium/high quality), in parallel."""
     import requests
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    import threading
 
     quality_prompts = {
         "low": "请对以下中文文本进行改写。要求：改写质量较低，可以丢失部分原意，词汇替换不准确，句式变化生硬。\n\n原文：{text}",
@@ -149,48 +151,63 @@ def generate_rewrites_via_api(source_texts: list, api_url: str, output_dir: Path
         "high": "请对以下中文文本进行高质量改写。要求：完整保留原文语义，使用不同的词汇和句式表达，保持原文风格。\n\n原文：{text}",
     }
 
-    all_rewrites = []
+    model_name = "/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen3-8B"
 
-    for i, source in enumerate(source_texts):
-        print(f"  Processing {i + 1}/{len(source_texts)}: {source['category']}")
+    def process_one(args):
+        i, source, quality, prompt_template = args
         source_text = source["text"]
         source_hash = source["source_hash"]
+        prompt = prompt_template.format(text=source_text)
+        try:
+            response = requests.post(
+                f"{api_url}/v1/chat/completions",
+                json={
+                    "model": model_name,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "temperature": 0.8 if quality != "high" else 0.6,
+                    "max_tokens": 512,
+                },
+                timeout=60,
+            )
+            result = response.json()
+            rewrite = result["choices"][0]["message"]["content"].strip()
+            return {
+                "source_text": source_text,
+                "source_category": source["category"],
+                "source_hash": source_hash,
+                "rewrite_text": rewrite,
+                "quality_level": quality,
+            }
+        except Exception as e:
+            print(f"    Error ({source['category']} {quality}): {e}")
+            return None
 
-        for quality, prompt_template in quality_prompts.items():
-            prompt = prompt_template.format(text=source_text)
+    # Build all tasks
+    tasks = [
+        (i, source, quality, prompt_template)
+        for i, source in enumerate(source_texts)
+        for quality, prompt_template in quality_prompts.items()
+    ]
 
-            try:
-                response = requests.post(
-                    f"{api_url}/v1/chat/completions",
-                    json={
-                        "model": "default",
-                        "messages": [{"role": "user", "content": prompt}],
-                        "temperature": 0.8 if quality != "high" else 0.6,
-                        "max_tokens": 512,
-                    },
-                    timeout=60,
-                )
-                result = response.json()
-                rewrite = result["choices"][0]["message"]["content"].strip()
+    all_rewrites = []
+    lock = threading.Lock()
+    completed = 0
 
-                all_rewrites.append({
-                    "source_text": source_text,
-                    "source_category": source["category"],
-                    "source_hash": source_hash,
-                    "rewrite_text": rewrite,
-                    "quality_level": quality,
-                })
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(process_one, task): task for task in tasks}
+        for future in as_completed(futures):
+            result = future.result()
+            with lock:
+                completed += 1
+                if result is not None:
+                    all_rewrites.append(result)
+                if completed % 150 == 0:
+                    print(f"  Progress: {completed}/{len(tasks)} tasks done ({len(all_rewrites)} rewrites)")
+                    save_path = output_dir / "rewrites_progress.json"
+                    with open(save_path, "w", encoding="utf-8") as f:
+                        json.dump(all_rewrites, f, ensure_ascii=False, indent=2)
 
-            except Exception as e:
-                print(f"    Error: {e}")
-
-        # Save progress every 50 sources
-        if (i + 1) % 50 == 0:
-            save_path = output_dir / "rewrites_progress.json"
-            with open(save_path, "w", encoding="utf-8") as f:
-                json.dump(all_rewrites, f, ensure_ascii=False, indent=2)
-            print(f"    Saved progress: {len(all_rewrites)} rewrites")
-
+    print(f"  Total rewrites generated: {len(all_rewrites)}")
     return all_rewrites
 
 

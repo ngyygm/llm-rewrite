@@ -8,6 +8,7 @@ Supports multiple filtering strategies:
 4. BLEU-filtered: Select by BLEU range
 5. Evaluator-filtered: Use trained LoRA evaluator scores
 """
+import hashlib
 import json
 import random
 from pathlib import Path
@@ -159,17 +160,6 @@ def main():
                 (r["source_text"] + r["rewrite_text"]).encode("utf-8")
             ).hexdigest()
             scores[h] = quality_to_score.get(r.get("quality_level", "medium"), 3)
-
-    import hashlib
-
-    # Need to recompute scores with correct hash
-    scores = {}
-    quality_to_score = {"low": 1, "medium": 3, "high": 5}
-    for r in rewrites:
-        h = hashlib.md5(
-            (r["source_text"] + r["rewrite_text"]).encode("utf-8")
-        ).hexdigest()
-        scores[h] = quality_to_score.get(r.get("quality_level", "medium"), 3)
 
     strategies = {}
 

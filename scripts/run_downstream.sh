@@ -8,18 +8,22 @@ set -euo pipefail
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_DIR"
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 BASE_MODEL="${LOCAL_MODEL_PATH:-Qwen/Qwen2.5-7B-Instruct}"
 =======
 BASE_MODEL="${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen2.5-7B-Instruct }"
 >>>>>>> my local backup before merging
+=======
+BASE_MODEL="${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen2.5-7B-Instruct}"
+>>>>>>> Stashed changes
 GENERATED_DIR="$PROJECT_DIR/data/generated_rewrites"
 FILTERED_DIR="$GENERATED_DIR/filtered"
 SFT_DIR="$PROJECT_DIR/downstream/checkpoints"
 EVAL_RESULTS_DIR="$PROJECT_DIR/data/downstream_results"
 
 EVALUATOR_CHECKPOINT="${EVALUATOR_ADAPTER:-$PROJECT_DIR/evaluator/checkpoints/score_only_full}"
-API_URL="${API_URL:-http://localhost:8000}"
+API_URL="${API_URL:-http://33.32.20.98:30002}"
 
 echo "============================================"
 echo "EMNLP 2026: Downstream SFT Validation"

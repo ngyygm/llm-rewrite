@@ -16,9 +16,11 @@ Usage:
     python baselines/run_parascore.py --model paraphrase-multilingual-MiniLM-L12-v2
 """
 
+import sys
+sys.modules['apex'] = None  # type: ignore
+
 import json
 import re
-import sys
 import warnings
 import numpy as np
 from pathlib import Path

@@ -4,8 +4,8 @@
 
 set -euo pipefail
 
-PROJECT_ROOT="/home/linkco/exa/llm-rewrite/emnlp2026"
-BASE_MODEL="/home/linkco/exa/models/Qwen2.5-7B-Instruct"
+PROJECT_ROOT="/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/baokailin/github.com/ngyygm/llm-rewrite.git"
+BASE_MODEL="/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen2.5-7B-Instruct"
 
 run_training() {
     local name=$1
@@ -15,7 +15,7 @@ run_training() {
 
     echo "===== Training: $name (r=$lora_r) ====="
 
-    CUDA_VISIBLE_DEVICES=1 python "$PROJECT_ROOT/evaluator/train_lora.py" \
+    CUDA_VISIBLE_DEVICES=0 python "$PROJECT_ROOT/evaluator/train_lora.py" \
         --data_path "$data" \
         --output_dir "$PROJECT_ROOT/evaluator/checkpoints/$name" \
         --base_model "$BASE_MODEL" \
@@ -51,6 +51,7 @@ run_eval() {
     echo "===== Evaluating: $name ====="
     python "$PROJECT_ROOT/evaluator/eval_pairwise.py" \
         --checkpoint "$PROJECT_ROOT/evaluator/checkpoints/$name" \
+        --base_model "$BASE_MODEL" \
         --output_path "$PROJECT_ROOT/data/pairwise/$out.json" \
         --eval_mode cross_source
 

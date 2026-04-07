@@ -262,20 +262,22 @@ def print_best_methods(all_results: Dict) -> str:
         ("finetuned", "fine_tuned"),
         ("parascore", "parascore"),
     ]:
-        if key in all_results:
-            corrs = all_results[key].get("correlations", {})
+        if key not in all_results:
+            continue
+        val = all_results[key]
+        if isinstance(val, list):
+            # llm_evaluators / fine_tuned are lists of result dicts
+            for r in val:
+                if isinstance(r, dict) and "correlations" in r:
+                    c = r["correlations"]
+                    if isinstance(c, dict):
+                        all_methods.append((f"[{category}] {c.get('method', '')}", c))
+        elif isinstance(val, dict):
+            corrs = val.get("correlations", {})
             if isinstance(corrs, dict):
                 for name, corr in corrs.items():
                     if isinstance(corr, dict):
                         all_methods.append((f"[{category}] {name}", corr))
-            elif isinstance(corrs, list):
-                for r in corrs:
-                    if isinstance(r, dict) and "correlations" in r:
-                        c = r["correlations"]
-                        if isinstance(c, dict):
-                            all_methods.append(
-                                (f"[{category}] {c.get('method', '')}", c)
-                            )
 
     if all_methods:
         best_overall = max(
@@ -362,7 +364,90 @@ Examples:
         "--max-samples", type=int, default=None,
         help="Limit evaluation to N samples (for debugging)"
     )
+    parser.add_argument(
+        "--combine-only", action="store_true",
+        help="Only combine existing result files into all_results.json, do not re-run any baselines"
+    )
     args = parser.parse_args()
+
+    # ------------------------------------------------------------------
+    # --combine-only: load existing result files and merge, no re-running
+    # ------------------------------------------------------------------
+    if args.combine_only:
+        print("=" * 120)
+        print("EMNLP 2026 - Combining existing baseline results")
+        print(f"Timestamp: {datetime.now().isoformat()}")
+        print("=" * 120)
+
+        all_results = {
+            "timestamp": datetime.now().isoformat(),
+            "config": {"combine_only": True},
+        }
+
+        # Traditional metrics
+        trad_path = RESULTS_DIR / "traditional_metrics.json"
+        if trad_path.exists():
+            with open(trad_path, "r", encoding="utf-8") as f:
+                trad = json.load(f)
+            all_results["traditional"] = {
+                "correlations": trad.get("correlations", {}),
+                "level_analysis": trad.get("level_analysis", {}),
+                "metrics_run": trad.get("metrics_run", []),
+            }
+            print(f"  Loaded: {trad_path.name}")
+        else:
+            print(f"  Missing: {trad_path.name}")
+
+        # ParaScore
+        ps_path = RESULTS_DIR / "parascore_metrics.json"
+        if ps_path.exists():
+            with open(ps_path, "r", encoding="utf-8") as f:
+                ps = json.load(f)
+            all_results["parascore"] = {
+                "correlations": ps.get("correlations", {}),
+                "level_analysis": ps.get("level_analysis", {}),
+                "modes": ps.get("modes", []),
+            }
+            print(f"  Loaded: {ps_path.name}")
+        else:
+            print(f"  Missing: {ps_path.name}")
+
+        # LLM evaluators (zero_shot, geval)
+        llm_results = []
+        for fname in sorted(RESULTS_DIR.glob("llm_*.json")):
+            with open(fname, "r", encoding="utf-8") as f:
+                llm_results.append(json.load(f))
+            print(f"  Loaded: {fname.name}")
+        if llm_results:
+            all_results["llm_evaluators"] = llm_results
+
+        # Fine-tuned evaluators (Prometheus, M-Prometheus)
+        ft_results = []
+        for fname in sorted(RESULTS_DIR.glob("finetuned_*.json")):
+            with open(fname, "r", encoding="utf-8") as f:
+                ft_results.append(json.load(f))
+            print(f"  Loaded: {fname.name}")
+        if ft_results:
+            all_results["fine_tuned"] = ft_results
+
+        # Print summary and save
+        n_eval = 0
+        summary = print_summary_table(all_results)
+        print(summary)
+        best = print_best_methods(all_results)
+        print(best)
+
+        out_path = save_results(all_results, "all_results.json")
+        print(f"Combined results saved to: {out_path}")
+
+        summary_path = RESULTS_DIR / "summary_table.txt"
+        with open(summary_path, "w", encoding="utf-8") as f:
+            f.write(f"EMNLP 2026 - Chinese Rewriting Evaluation: Baseline Summary\n")
+            f.write(f"Generated: {datetime.now().isoformat()}\n\n")
+            f.write(summary)
+            f.write(best)
+        print(f"Summary table saved to: {summary_path}")
+        return
 
     print("=" * 120)
     print("EMNLP 2026 - Chinese Rewriting Evaluation: All Baselines")

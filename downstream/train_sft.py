@@ -4,6 +4,11 @@ SFT training for downstream validation.
 Train Qwen2.5-7B-Instruct on filtered rewrite pairs using LoRA.
 This tests whether evaluator-guided data selection improves downstream quality.
 """
+import sys
+sys.modules['apex'] = None  # type: ignore
+sys.modules['flash_attn'] = None  # type: ignore
+sys.modules['bitsandbytes'] = None  # type: ignore
+
 import argparse
 import json
 import os
@@ -15,10 +20,10 @@ from datasets import Dataset
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
-    BitsAndBytesConfig,
+    # BitsAndBytesConfig,
     TrainingArguments,
 )
-from peft import LoraConfig, TaskType, get_peft_model, prepare_model_for_kbit_training
+from peft import LoraConfig, TaskType, get_peft_model
 from trl import SFTTrainer, SFTConfig
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,15 +37,15 @@ def load_sft_data(data_path: str) -> list:
 
 
 def setup_model_and_tokenizer(base_model: str, use_4bit: bool = True):
-    """Load model and tokenizer with optional 4-bit quantization."""
-    bnb_config = None
-    if use_4bit:
-        bnb_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_quant_type="nf4",
-            bnb_4bit_compute_dtype=torch.bfloat16,
-            bnb_4bit_use_double_quant=True,
-        )
+    """Load model and tokenizer in bf16 (no quantization)."""
+    # bnb_config = None
+    # if use_4bit:
+    #     bnb_config = BitsAndBytesConfig(
+    #         load_in_4bit=True,
+    #         bnb_4bit_quant_type="nf4",
+    #         bnb_4bit_compute_dtype=torch.bfloat16,
+    #         bnb_4bit_use_double_quant=True,
+    #     )
 
     tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True)
     if tokenizer.pad_token is None:
@@ -48,14 +53,14 @@ def setup_model_and_tokenizer(base_model: str, use_4bit: bool = True):
 
     model = AutoModelForCausalLM.from_pretrained(
         base_model,
-        quantization_config=bnb_config,
+        # quantization_config=bnb_config,
         device_map="auto",
         trust_remote_code=True,
         torch_dtype=torch.bfloat16,
-        attn_implementation="flash_attention_2",
+        # attn_implementation="flash_attention_2",
     )
 
-    model = prepare_model_for_kbit_training(model)
+    # model = prepare_model_for_kbit_training(model)
     model.gradient_checkpointing_enable()
 
     return model, tokenizer

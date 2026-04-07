@@ -38,12 +38,18 @@ import sys
 import time
 from pathlib import Path
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
 # Block broken apex from interfering with transformers/trl imports
 sys.modules['apex'] = None  # type: ignore
 
 >>>>>>> my local backup before merging
+=======
+# Block broken apex from interfering with transformers/trl imports
+sys.modules['apex'] = None  # type: ignore
+
+>>>>>>> Stashed changes
 import numpy as np
 import torch
 
@@ -318,7 +324,7 @@ def main():
     from transformers import (
         AutoModelForCausalLM,
         AutoTokenizer,
-        BitsAndBytesConfig,
+        # BitsAndBytesConfig,
         TrainingArguments,
     )
     from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training, TaskType
@@ -327,13 +333,13 @@ def main():
     # ------------------------------------------------------------------
     # Quantization & Tokenizer
     # ------------------------------------------------------------------
-    logger.info("Initializing 4-bit quantization config...")
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
-        bnb_4bit_use_double_quant=True,
-    )
+    # logger.info("Initializing 4-bit quantization config...")
+    # bnb_config = BitsAndBytesConfig(
+    #     load_in_4bit=True,
+    #     bnb_4bit_quant_type="nf4",
+    #     bnb_4bit_compute_dtype=torch.bfloat16,
+    #     bnb_4bit_use_double_quant=True,
+    # )
 
     logger.info(f"Loading tokenizer from {args.base_model}...")
     tokenizer = AutoTokenizer.from_pretrained(
@@ -349,24 +355,24 @@ def main():
     # ------------------------------------------------------------------
     # Model
     # ------------------------------------------------------------------
-    logger.info(f"Loading base model with 4-bit quantization...")
+    logger.info(f"Loading base model in bf16 (no quantization)...")
     model = AutoModelForCausalLM.from_pretrained(
         args.base_model,
-        quantization_config=bnb_config,
+        # quantization_config=bnb_config,
         device_map="auto",
         trust_remote_code=True,
         torch_dtype=torch.bfloat16,
-        attn_implementation="sdpa",
+        # attn_implementation="sdpa",
     )
     model.config.pretraining_tp = 1
 
     # Prepare model for k-bit training
-    logger.info("Preparing model for k-bit training...")
-    model = prepare_model_for_kbit_training(
-        model,
-        use_gradient_checkpointing=True,
-        gradient_checkpointing_kwargs={"use_reentrant": False},
-    )
+    # logger.info("Preparing model for k-bit training...")
+    # model = prepare_model_for_kbit_training(
+    #     model,
+    #     use_gradient_checkpointing=True,
+    #     gradient_checkpointing_kwargs={"use_reentrant": False},
+    # )
 
     # Enable gradient checkpointing explicitly
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
@@ -424,7 +430,8 @@ def main():
         bf16=True,
         fp16=False,
         # Optimizer
-        optim="paged_adamw_8bit",
+        # optim="paged_adamw_8bit",
+        optim="adamw_torch",
         # Gradient checkpointing is already enabled on model
         gradient_checkpointing=False,
         # Logging
