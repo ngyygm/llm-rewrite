@@ -1,0 +1,27 @@
+{
+  "model": "Pro/deepseek-ai/DeepSeek-V3",
+  "eval_type": "api_cross_source_pairwise",
+  "elapsed_seconds": 1347.6,
+  "metrics": {
+    "total_pairs": 6585,
+    "valid_pairs": 6585,
+    "parse_failures": 0,
+    "parse_failure_rate": 0.0,
+    "pairwise_accuracy": 0.677,
+    "accuracy_easy_diff_ge2": 0.6716,
+    "accuracy_easy_total": 3027,
+    "accuracy_medium_diff_1to2": 0.681,
+    "accuracy_medium_total": 2777,
+    "accuracy_hard_diff_05to1": 0.6837,
+    "accuracy_hard_total": 781,
+    "spearman_rho_winrate_vs_avg": 0.3862,
+    "spearman_pvalue": 6e-06,
+    "kendall_tau_winrate_vs_avg": 0.2819,
+    "kendall_pvalue": 7e-06,
+    "num_rewrites_with_comparisons": 129,
+    "min_score_diff": 1.0,
+    "position_swap": false
+  },
+  "total_api_calls": 6585,
+  "api_errors": 0
+}

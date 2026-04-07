@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Data quality analysis under different evaluator-guided filtering strategies. Higher mean evaluator scores indicate better predicted rewrite quality.}
+\label{tab:downstream_filtering}
+\begin{tabular}{lcccc}
+\toprule
+Filtering Strategy & $N$ & Mean Score & $\sigma$ & \% Score $\geq$ 3 \\
+\midrule
+\textbf{Evaluator Top 30Pct} & 270 & \textbf{4.34} & 0.48 & 100.0\% \\
+Evaluator Thresh 4 & 429 & 4.22 & 0.41 & 100.0\% \\
+\textbf{Evaluator Top 50Pct} & 450 & \textbf{4.16} & 0.48 & 100.0\% \\
+Bleu Mid Range & 65 & 4.02 & 1.02 & 92.3\% \\
+Evaluator Thresh 3 & 588 & 3.89 & 0.64 & 100.0\% \\
+Random 50Pct & 450 & 2.99 & 1.49 & 68.2\% \\
+All & 900 & 2.93 & 1.51 & 65.3\% \\
+Evaluator Low & 166 & 0.37 & 0.48 & 0.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,33 @@
+{
+  "model": "/home/linkco/exa/models/Qwen2.5-7B-Instruct",
+  "checkpoint": "/home/linkco/exa/llm-rewrite/emnlp2026/evaluator/checkpoints/pairwise_b1_50pct",
+  "eval_mode": "cross_source",
+  "inference_params": {
+    "temperature": 0.1,
+    "max_new_tokens": 50
+  },
+  "cross_source": {
+    "elapsed_seconds": 14020.4,
+    "metrics": {
+      "total_pairs": 6585,
+      "valid_pairs": 6585,
+      "parse_failures": 0,
+      "parse_failure_rate": 0.0,
+      "pairwise_accuracy": 0.9916,
+      "accuracy_easy_diff_ge2": 0.9963,
+      "accuracy_easy_total": 3011,
+      "accuracy_medium_diff_1to2": 0.9871,
+      "accuracy_medium_total": 2787,
+      "accuracy_hard_diff_05to1": 0.9898,
+      "accuracy_hard_total": 787,
+      "spearman_rho_winrate_vs_avg": 0.1403,
+      "spearman_pvalue": 0.112802,
+      "kendall_tau_winrate_vs_avg": 0.0822,
+      "kendall_pvalue": 0.2045,
+      "num_rewrites_with_comparisons": 129,
+      "min_score_diff": 1.0
+    },
+    "num_pair_results": 6585,
+    "num_per_rewrite_stats": 129
+  }
+}

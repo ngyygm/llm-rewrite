@@ -1,0 +1,180 @@
+{
+  "lora_balanced_simple": {
+    "display_name": "LoRA-balanced-simple (Ours)",
+    "category": "lora",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.4668,
+    "notes": "1008 balanced"
+  },
+  "lora_balanced_reasoning": {
+    "display_name": "LoRA-balanced-reasoning",
+    "category": "lora",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.3576,
+    "notes": "1008 balanced"
+  },
+  "lora_original_reasoning": {
+    "display_name": "LoRA-original-reasoning",
+    "category": "lora",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.1318,
+    "notes": "600 original"
+  },
+  "lora_score_only_full": {
+    "display_name": "LoRA-score-only-full",
+    "category": "lora",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.1653,
+    "notes": "600 original"
+  },
+  "lora_balanced_simple_50": {
+    "display_name": "LoRA-balanced-simple-50",
+    "category": "lora",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.0213,
+    "notes": "50 balanced subset"
+  },
+  "lora_balanced_simple_100": {
+    "display_name": "LoRA-balanced-simple-100",
+    "category": "lora",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.0576,
+    "notes": "100 balanced subset"
+  },
+  "lora_balanced_simple_200": {
+    "display_name": "LoRA-balanced-simple-200",
+    "category": "lora",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.1893,
+    "notes": "200 balanced subset"
+  },
+  "lora_balanced_simple_400": {
+    "display_name": "LoRA-balanced-simple-400",
+    "category": "lora",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.2113,
+    "notes": "400 balanced subset"
+  },
+  "geval_qwen7b": {
+    "display_name": "G-Eval (Qwen2.5-7B)",
+    "category": "llm",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.0926,
+    "notes": "CoT evaluation"
+  },
+  "zeroshot_qwen7b": {
+    "display_name": "Zero-shot Qwen2.5-7B",
+    "category": "llm",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.0387,
+    "notes": "Zero-shot prompt"
+  },
+  "zeroshot_qwen14b": {
+    "display_name": "Zero-shot Qwen2.5-14B",
+    "category": "llm",
+    "size": "14B",
+    "valid": 107,
+    "failures": 22,
+    "spearman_vs_avg": 0.0706,
+    "notes": "Zero-shot prompt"
+  },
+  "prometheus2": {
+    "display_name": "Prometheus 2",
+    "category": "llm",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.1243,
+    "notes": "Fine-tuned judge, absolute grading"
+  },
+  "trad_jaccard_char": {
+    "display_name": "JACCARD-CHAR",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.5951,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_jaccard_word": {
+    "display_name": "JACCARD-WORD",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.5376,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_bleu": {
+    "display_name": "BLEU",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.2939,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_rouge_l": {
+    "display_name": "ROUGE-L",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.3852,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_tfidf_cosine": {
+    "display_name": "TFIDF-COSINE",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.5711,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_sbert_cosine": {
+    "display_name": "SBERT-COSINE",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.3774,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_w2v_cosine": {
+    "display_name": "W2V-COSINE",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.2848,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  }
+}

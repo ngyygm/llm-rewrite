@@ -9,8 +9,8 @@ build/
 # Training checkpoints (too large for GitHub)
 evaluator/checkpoints/
 
-# Data files (uploaded to HuggingFace)
-data/
+# Data files
+# data/ -- now tracked in git
 
 # LaTeX intermediates
 *.aux

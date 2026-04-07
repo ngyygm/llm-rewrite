@@ -1,0 +1,38 @@
+{
+  "model": "/home/linkco/exa/models/Qwen2.5-7B-Instruct",
+  "adapter_path": "evaluator/checkpoints/balanced_simple_200",
+  "mode": "score_only",
+  "inference_params": {
+    "temperature": 0.1,
+    "max_new_tokens": 256,
+    "top_p": 0.9,
+    "repetition_penalty": 1.1
+  },
+  "num_samples": 129,
+  "metrics_vs_avg_score": {
+    "spearman_rho": 0.1893,
+    "pearson_r": 0.1369,
+    "kendall_tau": 0.1482,
+    "mae": 1.522,
+    "rmse": 1.939,
+    "exact_agreement": 0.1628,
+    "within_1_pct": 0.5194,
+    "within_2_pct": 0.7752,
+    "num_valid": 129,
+    "num_total": 129,
+    "parse_failures": 0
+  },
+  "metrics_vs_consensus_score": {
+    "spearman_rho": 0.1699,
+    "pearson_r": 0.1201,
+    "kendall_tau": 0.1385,
+    "mae": 1.5194,
+    "rmse": 1.9569,
+    "exact_agreement": 0.2403,
+    "within_1_pct": 0.5426,
+    "within_2_pct": 0.7829,
+    "num_valid": 129,
+    "num_total": 129,
+    "parse_failures": 0
+  }
+}

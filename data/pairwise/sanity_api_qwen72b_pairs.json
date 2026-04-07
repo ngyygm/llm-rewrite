@@ -1,0 +1,72 @@
+[
+  {
+    "index_a": 0,
+    "index_b": 20,
+    "avg_score_a": 0.0,
+    "avg_score_b": 1.0,
+    "score_diff": 1.0,
+    "a_should_win": false,
+    "response_ab": "改写B的质量更高。原因是改写B不仅保留了原文的主要信息，还对内容进行了优化，使其更加简洁明了，同时增加了对读者的吸引力。相比之下，改写A虽然也保留了原文的主要信息，但在",
+    "response_ba": "改写B的质量更高。原因是改写B不仅保留了原文的核心信息，还对句子结构进行了优化，使得表达更加流畅自然。相比之下，改写A虽然也对原文进行了适当的调整，但是“激发更多人报考的热情",
+    "pref_ab": 0.0,
+    "pref_ba": 0.0,
+    "avg_preference": 0.5,
+    "parse_ok": true
+  },
+  {
+    "index_a": 0,
+    "index_b": 21,
+    "avg_score_a": 0.0,
+    "avg_score_b": 1.333,
+    "score_diff": 1.333,
+    "a_should_win": false,
+    "response_ab": "改写B的质量更高。原因是改写B在保持原意的基础上，对句子进行了更加流畅和简洁的改写，使表达更加清晰。而改写A虽然也对原文进行了改写，但“可两人间却",
+    "response_ba": "两篇改写各有千秋，但从整体上来看，改写B在语言流畅度、情感表达和信息准确性方面表现得更为出色。因此，我会选择B作为质量更高的改写。\n\nA的改写在信息准确性",
+    "pref_ab": 0.0,
+    "pref_ba": 0.0,
+    "avg_preference": 0.5,
+    "parse_ok": true
+  },
+  {
+    "index_a": 0,
+    "index_b": 22,
+    "avg_score_a": 0.0,
+    "avg_score_b": 0.667,
+    "score_diff": 0.667,
+    "a_should_win": false,
+    "response_ab": "改写B的质量更高，因此选择B。改写B在保留原文信息的基础上，对句子进行了更加流畅和自然的改写，同时对一些词汇进行了更准确的替换，如“前期”改为“开局”，“拖",
+    "response_ba": "改写A的质量更高，因此选择A。理由如下：\n\n1. **语言流畅性**：改写A在语言表达上更加流畅，用词更加准确。例如，“前三年首发的场次合计只有8场”改",
+    "pref_ab": 0.0,
+    "pref_ba": 1.0,
+    "avg_preference": 0.0,
+    "parse_ok": true
+  },
+  {
+    "index_a": 0,
+    "index_b": 23,
+    "avg_score_a": 0.0,
+    "avg_score_b": 1.0,
+    "score_diff": 1.0,
+    "a_should_win": false,
+    "response_ab": "改写B的质量更高。原因是改写B在保持原文信息完整的同时，对句子结构进行了优化，使得表达更加流畅和简洁。而改写A虽然也对原文进行了改写，但“可两人间却毫无亲情",
+    "response_ba": "改写A和改写B在质量上各有千秋，但根据对原文信息的准确传达、语言的流畅度以及表达的自然度来判断，改写A在细节处理上更为准确，语言也更加流畅，",
+    "pref_ab": 0.0,
+    "pref_ba": -1.0,
+    "avg_preference": -1.0,
+    "parse_ok": false
+  },
+  {
+    "index_a": 0,
+    "index_b": 24,
+    "avg_score_a": 0.0,
+    "avg_score_b": 1.0,
+    "score_diff": 1.0,
+    "a_should_win": false,
+    "response_ab": "改写B的质量更高。原因是改写B准确地传达了原文B的信息，并且在语言表达上更加简洁明了。而改写A虽然也较好地传达了原文A的情感和信息，但在“俩水没有丝毫",
+    "response_ba": "B\n\n改写B的质量更高。它不仅保留了原文的核心信息，还对语言进行了优化，使得表达更加流畅自然。相比之下，改写A将原文中的“200亿元”错误地改写为“2千",
+    "pref_ab": 0.0,
+    "pref_ba": 0.0,
+    "avg_preference": 0.5,
+    "parse_ok": true
+  }
+]

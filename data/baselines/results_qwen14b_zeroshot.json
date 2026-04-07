@@ -1,0 +1,29 @@
+{
+  "model": "/home/linkco/exa/models/Qwen2.5-14B-Instruct",
+  "metrics_vs_avg_score": {
+    "spearman_rho": 0.0706,
+    "pearson_r": 0.0759,
+    "kendall_tau": 0.06,
+    "mae": 2.0966,
+    "rmse": 2.4322,
+    "exact_agreement": 0.1121,
+    "within_1_pct": 0.3271,
+    "within_2_pct": 0.5421,
+    "num_valid": 107,
+    "num_total": 129,
+    "parse_failures": 22
+  },
+  "metrics_vs_consensus_score": {
+    "spearman_rho": 0.0858,
+    "pearson_r": 0.0878,
+    "kendall_tau": 0.0753,
+    "mae": 2.0748,
+    "rmse": 2.411,
+    "exact_agreement": 0.1215,
+    "within_1_pct": 0.3364,
+    "within_2_pct": 0.5981,
+    "num_valid": 107,
+    "num_total": 129,
+    "parse_failures": 22
+  }
+}

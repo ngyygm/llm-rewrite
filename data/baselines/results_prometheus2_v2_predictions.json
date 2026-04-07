@@ -1,0 +1,1550 @@
+[
+  {
+    "index": 0,
+    "response": "The response demonstrates a significant loss of original meaning, which is evident from the phrase \"可两人间却毫无亲情可言.\" This sentence introduces a new element - the absence of relationship between the characters - which deviates from the original text's emphasis on the emotional bond between the sisters. Additionally, the use of \"妹妹\" instead of \"妹啊\" represents a minor structural modification, but it does not contribute to the overall quality of the rewrite. Furthermore, the phrase \"大美明白自己的病情,便找来小美说到:\" is a direct quote from the original text, indicating excessive word-for-word copying rather than creative rewriting. Therefore, the response falls short in terms of preserving the original meaning and introducing meaningful structural and lexical changes. So the overall score is 2. [RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 1,
+    "response": "The response provided maintains the core meaning of the original text, which is essential according to the score rubric. However, there is a noticeable lack of structural and lexical variation. While the sentence structure remains largely unchanged, the choice of words could be more varied to enhance the quality of the rewrite. For instance, instead of using \"较前一日\" and \"达\", alternative phrases such as \"与昨日比较\" and \"达到\" could have been employed to introduce some variety. Additionally, the use of \"约\" before the total market value could be seen as slightly informal, which might not align perfectly with the formal tone typically associated with financial news. Despite these minor shortcomings, the overall quality of the rewrite is still quite high, as it effectively conveys the same information as the original text without significant loss of meaning. Therefore, based on the score rubric, this response would receive a score of 4. \n[RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 2,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. The sentence structure remains largely unchanged, and the choice of words does not significantly deviate from the original text. While the response is accurate and retains the essence of the original message, it falls short in terms of creativity and natural flow. It could have been improved by incorporating more varied sentence structures and a wider range of vocabulary to enhance readability and engagement. Therefore, according to the score rubric, this response would be rated as having acceptable quality due to its adherence to the original meaning but lack of significant structural or lexical changes. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 3,
+    "response": "The response effectively maintains the core meaning of the original text, demonstrating a good understanding of the subject matter. It introduces some structural changes, such as the use of \"取得了骄人的成绩\" instead of \"创造了GDP增速\", which adds a touch of creativity to the sentence structure. Additionally, the phrase \"并斩获国家和省一系列殊荣\" provides a more comprehensive view of the achievements, indicating a broader scope of recognition. However, there could be further enhancement in terms of vocabulary diversity and more varied sentence structures to elevate the quality of the rewrite. For instance, the repetition of \"全市第一\" and \"全省唯一\" could have been diversified to add variety to the language used. Despite these areas for improvement, the response does a commendable job at preserving the original meaning while incorporating meaningful structural and lexical changes. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 4,
+    "response": "The response provided does not significantly deviate from the original text, which results in a lack of structural and lexical variation. While the core meaning of the instructions is retained, the sentence structure remains largely unchanged. This is evident in phrases such as \"将半锅水倒入炖锅中\" and \"将排骨、姜片、料酒放入汆烫30分钟\", which closely mirror the original text's phrasing. Additionally, the use of words like \"倒入\", \"放入\", and \"加适量盐\" are direct translations of the original text's verbs, indicating minimal word-for-word copying. Although the response maintains the original meaning, it falls short in terms of creativity and naturalness in its sentence construction and choice of vocabulary. Therefore, according to the score rubric, this response would be rated as having acceptable quality. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 5,
+    "response": "The response provided does not significantly alter the sentence structure or vocabulary from the original text. It merely restates the information without adding any new elements or demonstrating creativity in language use. This results in a text that is almost identical to the original, which does not meet the requirement for sentence structure and vocabulary variation. Therefore, according to the score rubric, this response would be rated as having poor quality due to its significant loss of original meaning and minimal structural modification. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 6,
+    "response": "The response provided does not significantly deviate from the original text, which results in a lack of structural and lexical variation. While the core message remains intact, there is minimal effort made to introduce new sentence structures or vocabulary. For instance, phrases like \"考虑不够周全\" and \"基辅的当局也深受贪污腐败之苦\" are direct translations from the original text without any substantial alteration. This indicates a failure to fully embrace the task's requirement for sentence structure and vocabulary diversity. Therefore, according to the score rubric, this response would be rated as having poor quality due to its significant loss of original meaning and minimal structural modification. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 0,
+    "avg_score": 0.333,
+    "annotator_scores": [
+      0,
+      1,
+      0
+    ]
+  },
+  {
+    "index": 7,
+    "response": "The response provided does not significantly alter the sentence structure or vocabulary from the original text. It merely repeats the sequence of streets and directions without adding any new information or changing the order of the elements. This results in a text that is almost identical to the original, which does not meet the requirement of the task to introduce meaningful structural and lexical changes. Therefore, according to the score rubric, this response would be rated as having poor quality due to its significant loss of original meaning and minimal structural modification. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 8,
+    "response": "The response demonstrates a good understanding of the original text's core message and maintains its essence. It successfully modifies the sentence structure and introduces new vocabulary, such as \"担保机构\" instead of \"保荐机构\" and \"生意成果\" instead of \"经营成果\". However, there could be more creativity in the choice of words and phrases to enhance the overall quality of the rewrite. For instance, the phrase \"经过审查核实\" could have been replaced with a more varied expression to better reflect the process of verification. Despite this, the response effectively conveys the same meaning as the original text, making it a strong example of a well-crafted rewrite. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 9,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, it falls short in terms of sentence structure and vocabulary diversity. While the basic information about the arrival of the Chinese judges and their preparation for the World Cup is retained, there is little variation in sentence structure or choice of words. For instance, phrases like \"准备执法\" and \"领取了训练及执法工作的各种装备\" are direct translations from the original text without much creativity or linguistic variety. Additionally, the use of \"2022年的世界杯足球赛\" instead of \"2022世界杯足球赛\" shows a minor deviation from the original text's style. Therefore, although the response does not completely fail, it does not fully meet the expectations of the score rubric for a higher score. It retains most of the original meaning but lacks sufficient structural or lexical variation. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 10,
+    "response": "The response effectively maintains the core meaning of the original text, which is crucial according to the score rubric. It introduces minor structural modifications such as changing \"公开信息\" to \"公布的数据\" and \"安置房、配建房等一次性资产处置收入\" to \"安置房、配建房等一次性资产处置收入\". These changes do not significantly alter the original message. However, the response could have benefited from more varied vocabulary and sentence structure to enhance its quality further. For instance, instead of using \"有偿使用收入\", a more varied phrase like \"利用收益\" could have been used. Despite these areas for improvement, the response does a commendable job at retaining the original meaning and making slight structural adjustments. Therefore, based on the score rubric, the response is of good quality. \n[RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 11,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. While the sentence structure remains largely unchanged, the choice of words does not significantly deviate from the original text. For instance, phrases like \"最大功率\" and \"NEDC续航\" are repeated verbatim without any attempt at rephrasing or introducing new vocabulary. This results in a response that, although accurate, lacks creativity and does not fully exploit the potential for linguistic diversity. Therefore, according to the score rubric, this response would be rated as having acceptable quality due to its retention of most of the original meaning but its insufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 12,
+    "response": "The provided response does not meet the requirements of the task. It merely restates the original text without making any significant changes in sentence structure or vocabulary. There is no evidence of creativity or natural language use, which results in a lack of variety and depth in the response. Furthermore, the response does not introduce any new elements or perspectives that would enrich the narrative. In essence, the response is a direct copy of the original text, failing to fulfill the requirement of changing both sentence structure and vocabulary. Therefore, according to the score rubric, this response falls into the category of \"poor quality\" due to its failure to preserve the original meaning while introducing meaningful structural and lexical changes. So the overall score is 2. [RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 13,
+    "response": "The response effectively maintains the core message of the original text, which is about the efforts made by the county to improve the environmental quality of rural areas through wastewater treatment projects. However, there are some minor differences in sentence structure and vocabulary usage that distinguish it from the original. For instance, \"筹划\" is used instead of \"谋划,\" and \"建成\" replaces \"完成.\" These changes, while subtle, contribute to a more varied and natural language use. Additionally, the phrase \"促进乡村整体发展\" introduces a new concept of promoting overall development of the village, which adds depth to the original message. Therefore, the response demonstrates a good level of quality in terms of preserving the original meaning while incorporating meaningful structural and lexical changes. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 14,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. For instance, the phrase \"慧博云通\" remains unchanged, and the term \"下跌\" is used instead of \"下滑\", which does not significantly alter the sentence's structure or meaning. Additionally, the use of \"亿\" instead of \"万元\" is a minor change that doesn't contribute to a more varied language style. While the response retains the original meaning, it falls short in terms of creativity and naturalness in its reformulation. Therefore, according to the score rubric, this response would be rated as having acceptable quality due to its limited structural and lexical modifications. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 15,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance readability and comprehension. For instance, phrases like \"adopted\" and \"configured\" could have replaced \"is\" and \"set,\" respectively, to add variety and depth to the language used. Additionally, the use of \"first generation\" instead of \"first model\" would have introduced a slight variation in terms of vocabulary. Despite these areas for improvement, the response does succeed in retaining the original meaning without significant loss or excessive word-for-word copying. Therefore, according to the score rubric, this response would be rated as having acceptable quality. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 16,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, it falls short in terms of sentence structure and vocabulary diversity. The sentence \"1933年法国留学毕业后回国\" is almost identical to the original sentence, indicating a lack of creativity in sentence construction. Additionally, the phrase \"1952年起历任\" does not convey the same level of detail as the original text, which specifies the sequence of roles held by the individual. While the response retains the essence of the original text, it could benefit from more varied sentence structures and a richer vocabulary to enhance its quality. Therefore, according to the score rubric, this response would receive a score of 3 due to its acceptable quality in preserving the original meaning but lacking in structural and lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 17,
+    "response": "The response provided demonstrates a high level of proficiency in Chinese text rewriting. It successfully retains the core message of the original text while making significant structural and lexical changes. For instance, the phrase \"在发展中蝶变\" was transformed into \"发展中蝶变,\" which maintains the original meaning but introduces a more concise structure. Additionally, the term \"守正中创新\" was altered to \"守正创新,\" which simplifies the sentence without losing its essence. Furthermore, the use of \"传承着吉林人质朴的情义\" instead of \"传递着吉林人质朴的情感\" shows a thoughtful choice of words that enhances the overall quality of the text. The response also effectively uses synonyms like \"悠久历史的老字号\" and \"续写着关东黑暗土地上的文明与文化,\" which adds variety to the vocabulary while keeping the original intent intact. These elements collectively contribute to a rewrite that is both creative and faithful to the original text. Therefore, according to the score rubric, this response exhibits excellent quality in terms of preserving the original meaning with creative and natural structural reformulation and diverse vocabulary. So the overall score is 5. \n[RESULT] 5",
+    "predicted_score": 5,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 18,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. The sentences are almost identical to the original, with only minor adjustments made to the phrasing. For instance, \"扫黑除恶\" was changed to \"扫黑除恶、弘扬正气\", which does not significantly alter the sentence's structure or meaning. Similarly, \"决战决胜脱贫攻坚、全面建成小康社会\" was slightly modified to \"决战决胜脱贫攻坚、全面建成小康社会\" without adding new information or changing the sentence's flow. This indicates a limited effort in rewriting the text, resulting in a less engaging and dynamic narrative. Therefore, while the response retains the original meaning, it falls short in terms of creativity and linguistic diversity. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 19,
+    "response": "The response provided does not meet the requirements of the task. It merely restates the original sentence without making any significant changes in structure or vocabulary. This results in a complete failure to introduce any new elements or variations that would enhance the quality of the text. The sentence \"发行人所属行业的基本情况：……………………。\" is essentially identical to the original text, which indicates a severe semantic distortion and lack of structural change. Therefore, according to the score rubric, this response would receive a score of 1. \n[RESULT] 1",
+    "predicted_score": 1,
+    "consensus_score": 0,
+    "avg_score": 0.0,
+    "annotator_scores": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 20,
+    "response": "The response effectively maintains the core meaning of the original text, which is about the QQ group for the 2020 business unit exam preparation and the free course offer for the recruitment exam. However, there are some minor structural changes that make the sentence flow more naturally. For instance, \"提供\" is used instead of \"获取更多资讯,\" which is a slight shift from the original text's focus on information gathering. Additionally, the phrase \"拓宽选人用人渠道\" is replaced with \"开拓招聘用人渠道,\" which is a more direct way of expressing the idea of expanding recruitment channels. These changes contribute to a more coherent and engaging narrative without losing the essence of the original message. Therefore, the response demonstrates a good level of quality in terms of preserving the original meaning while introducing meaningful structural and lexical changes. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 21,
+    "response": "The response provided maintains the core meaning of the original text, which is about the prevalence of counterfeit wine on the market and its associated risks. However, there are some minor issues that prevent it from achieving a higher score. While the sentence structure remains largely unchanged, the choice of words could be more varied to enhance the readability and flow of the text. For instance, phrases like \"最遭质疑\" and \"制作的劣质勾兑酒\" could have been replaced with more dynamic expressions. Additionally, the use of \"甚至\" at the end of the sentence feels slightly out of place, as it does not contribute significantly to the overall message. Despite these shortcomings, the response still manages to convey the essential information without significant loss of meaning. Therefore, according to the score rubric, this response would receive a score of 3 due to its acceptable quality in retaining the original meaning but lacking sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      0,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 22,
+    "response": "The response provided does show some effort in rewriting the original text, however, it falls short in terms of maintaining the core meaning and introducing significant structural or lexical changes. While the sentence structure remains largely unchanged, there is a slight alteration in the choice of words such as \"开局\" instead of \"前期\", which doesn't significantly impact the overall meaning. Additionally, the phrase \"会给球队带来麻烦\" is a direct translation from English and does not add much value to the original text. It also lacks the depth and nuance present in the original statement about the pressure and self-doubt experienced by Chen Mingyu. Therefore, although the response retains the basic meaning, it does not fully meet the requirements of the task, which calls for a more creative and natural rephrasing. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 0.667,
+    "annotator_scores": [
+      0,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 23,
+    "response": "The response maintains the core meaning of the original text, which is commendable. However, there's a noticeable lack of structural and lexical variation. For instance, phrases like \"拿到\" and \"保持热状态\" are direct translations from the original text, showing minimal effort in sentence structure modification. Additionally, words such as \"成绩\" and \"飙升\" are used without much creativity, which could have been replaced with more varied vocabulary. Despite these shortcomings, the response does manage to convey the same information as the original text, albeit in a slightly different manner. Therefore, according to the score rubric, this response would be rated as having acceptable quality due to its retention of most of the original meaning but lack of sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 24,
+    "response": "The response provided demonstrates a significant deviation from the original text, which results in a loss of the original meaning. The phrase \"建立总规模\" is a direct translation of \"set up total scale,\" which does not convey the same sense as \"设立总规模.\" Additionally, the use of \"2千亿元\" instead of \"200亿元\" represents a substantial numerical error. Furthermore, the sentence structure is almost identical to the original text, indicating minimal structural modification. The choice of words such as \"建立\" and \"投资\" also contributes to a less natural flow compared to the original text. These factors collectively result in a rewrite that falls short of preserving the original meaning and lacks the necessary structural and lexical variations. Therefore, according to the score rubric, this response would be rated as having poor quality. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 25,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance the quality of the rewrite. For instance, phrases like \"成立以来\" and \"佼佼者\" are used without much creativity, which makes the text feel somewhat repetitive. Additionally, the use of \"基于计算机视觉技术\" and \"高速场景及港内集装箱卡车的无人驾驶运输服务\" are direct translations from the original text, indicating a missed opportunity to introduce new vocabulary or phrasing. Therefore, although the response retains the original meaning, it does not fully meet the criteria for a higher score due to its limited structural and lexical modifications. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 0.667,
+    "annotator_scores": [
+      0,
+      2,
+      0
+    ]
+  },
+  {
+    "index": 26,
+    "response": "The response provided demonstrates a significant loss of original meaning, which is evident from the simplification of the sentence structure and the omission of key details such as \"沈阳市\" being replaced by \"沈阳市气象台\". This leads to a reduction in the clarity and specificity of the message. Additionally, the phrase \"可能影响交通\" is less precise than the original \"对交通有影响\", indicating a potential rather than a certain effect on traffic. Furthermore, the use of \"及\" instead of \"和\" in the list of affected areas introduces ambiguity, as it could be interpreted as including both the listed areas and additional ones. These factors contribute to a lower quality of the rewrite compared to the original text. Therefore, according to the score rubric, this response would receive a score of 2 due to its poor quality, significant loss of original meaning, and minimal structural modification. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 1,
+    "avg_score": 0.667,
+    "annotator_scores": [
+      0,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 27,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. For instance, phrases like \"自女儿过世后\" and \"毒枭老大只能带领手下先离去\" are almost identical to their counterparts in the original text. This indicates a minimal effort in sentence structure modification. Additionally, the use of words such as \"正\" and \"派着\" does not significantly contribute to the diversity of vocabulary. While the overall meaning remains intact, the response could benefit from more creative and varied language choices to enhance its quality. Therefore, according to the score rubric, this response would receive a score of 3 due to its acceptable quality, retaining most of the original meaning but lacking sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 28,
+    "response": "The response provided maintains the core meaning of the original text, which is essential according to the score rubric. However, there is a noticeable lack of structural and lexical variation compared to the original text. While the sentence structure remains largely unchanged, the choice of words could be more varied to enhance the quality of the rewrite. For instance, phrases like \"至少两只产品\" and \"作为一个发行对象\" could have been expressed differently to introduce more variety in language use. Despite these shortcomings, the response does succeed in conveying the same information as the original text, albeit in a slightly less engaging manner. Therefore, based on the score rubric's criteria for a score of 3, the response demonstrates an acceptable level of quality by retaining most of the original meaning but lacking sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 0.667,
+    "annotator_scores": [
+      0,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 29,
+    "response": "The response maintains the core message of the original text, which is about the challenges faced by process-oriented industries in achieving efficiency, sustainability, and reliability through CPS. However, there is a noticeable lack of structural and lexical variation compared to the original text. For instance, the phrase \"高效\" is repeated without further elaboration or contextualization. Additionally, the sentence structure remains largely unchanged, which does not contribute to a more engaging or informative narrative. While the response does introduce some minor changes, such as replacing \"工业\" with \"流程型工业,\" these alterations do not significantly enhance the overall quality of the text. Therefore, according to the score rubric, this response would be rated as having acceptable quality due to its retention of most of the original meaning but lack of sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 30,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance the quality of the rewrite. For instance, \"宣布\" can be replaced with a more dynamic verb like \"公告\" or \"通知\", and \"随着\" could be substituted with \"与来临之际\". These minor alterations would have added depth to the sentence and made it more engaging. Despite these shortcomings, the response does succeed in retaining the essence of the original message, thus meeting the basic requirements of the task. Therefore, according to the score rubric, this response would receive a score of 3 due to its acceptable quality in maintaining the original meaning but lacking in structural and lexical diversity. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 0.667,
+    "annotator_scores": [
+      0,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 31,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance readability and comprehension. For instance, phrases like \"adopt\" and \"configured\" could have replaced \"使用\" and \"匹配\", respectively, to introduce some diversity in vocabulary. Additionally, the use of \"only need\" instead of \"for\" in the last sentence slightly deviates from the original text's tone. Despite these minor issues, the overall quality of the rewrite is satisfactory, as it retains the essential information without significant loss of meaning. Therefore, according to the score rubric, this response would be rated as having acceptable quality. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 32,
+    "response": "The response provided does not meet the requirements of the task. It merely repeats the original text without making any significant changes in sentence structure or vocabulary. This indicates a complete failure to fulfill the instruction's demand for a rewrite that maintains the core meaning while altering the sentence structure and word choice. There is no evidence of creativity or natural language use, which results in a text that is essentially identical to the original. Therefore, according to the score rubric, this response would receive a score of 1 due to its severe semantic distortion and lack of structural change. \n[RESULT] 1",
+    "predicted_score": 1,
+    "consensus_score": 1,
+    "avg_score": 0.667,
+    "annotator_scores": [
+      0,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 33,
+    "response": "The response maintains the core meaning of the original text, focusing on the practicality of the interior design and the use of rotary knobs and buttons. It also mentions the comfort of the seat material and its ability to prevent fatigue during long drives. However, the sentence structure and vocabulary used in the response are quite similar to those in the original text, lacking significant structural or lexical variations. This results in a response that, while accurate, does not fully meet the requirement for creativity and diversity in language use. Therefore, according to the score rubric, this response would be rated as having acceptable quality. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      2,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 34,
+    "response": "In this response, there is a noticeable attempt to modify the sentence structure and vocabulary, which aligns with the requirement of the task. However, the changes made are quite minor and do not significantly alter the original meaning. For instance, \"倒入油\" is a direct translation of \"pour oil into the pan,\" which does not add much value to the sentence. Similarly, \"中间打一个蛋\" is a literal translation of \"put an egg in the middle,\" lacking creativity in language use. While these sentences are structurally different from the original, they do not introduce substantial structural or lexical changes. Therefore, although the response retains the core meaning of the original text, it falls short in terms of linguistic diversity and creativity. This results in a response that is acceptable but not particularly high in quality. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 0.667,
+    "annotator_scores": [
+      0,
+      2,
+      0
+    ]
+  },
+  {
+    "index": 35,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance the readability and flow of the text. For instance, phrases like \"会议上\" and \"到场参加\" are direct translations from the original text and do not add much value in terms of language creativity. Additionally, the use of \"位\" before \"高校科研专家\" and \"代表\" before \"生态合作伙伴代表\" feels redundant and does not contribute to the overall clarity or sophistication of the text. Therefore, although the response retains the original meaning, it falls short in terms of linguistic diversity and structural innovation. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 0.667,
+    "annotator_scores": [
+      0,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 36,
+    "response": "The response maintains the core meaning of the original text, which is about the Hawks' struggles and their recent victory over the Magic. However, there are some minor issues with sentence structure and word choice that prevent it from achieving a higher score. For instance, the phrase \"在客场击败魔术之后\" could be more naturally phrased as \"after defeating the Magic at home.\" Additionally, the use of \"必然会面临\" feels slightly forced and could be replaced with a more natural expression like \"will certainly face.\" These small adjustments would improve the flow and readability of the text. Despite these minor shortcomings, the overall quality of the rewrite is still quite high, effectively conveying the original message with only slight deviations in language use. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      0,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 37,
+    "response": "The response provided maintains the core meaning of the original text, which is the appointment of Liu Chang Hong as a lecturer, vice professor, and graduate student advisor at the People's University of China's Business School Accounting Department from December 1989 to June 1991. However, there is a slight deviation from the original sentence structure, which results in a minor loss of the original text's flow. Additionally, the use of \"兼任\" instead of \"兼\" could be seen as a less common choice, indicating a degree of lexical variation. Despite these observations, the overall quality of the rewrite is still quite high, effectively preserving the original meaning while introducing some structural and lexical changes. Therefore, according to the score rubric, this response would receive a score of 4. \n[RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 38,
+    "response": "The response provided maintains the core message of the original text, which is about the resistance of American students against being drafted into the army during World War II. However, there are some minor changes in sentence structure and vocabulary that make the response slightly different from the original. For instance, \"他们不仅积极举行游行\" replaces \"they also actively organize marches,\" and \"要求终止这不公正的“暴行”\" substitutes \"demand the end of this unjust war.\" These changes introduce a more natural flow of language without significantly altering the original meaning. Additionally, the use of \"超150万名大学生\" instead of \"over 150 million students\" is a slight deviation from the original text's phrasing, yet it does not detract from the overall message. Therefore, while the response is not entirely identical to the original text, it still effectively conveys the intended meaning with only minor variations in sentence structure and vocabulary. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 39,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. The sentence structure remains largely unchanged, and the vocabulary used is quite similar to the original text. While the response does introduce some minor changes, such as the use of \"与\" instead of \"和\" when referring to the joint effort of the city government and the housing authority, these changes are not significant enough to elevate the quality of the rewrite. Additionally, the inclusion of more names at the end of the sentence adds to the length of the sentence without significantly altering its structure or content. Therefore, although the response retains the original meaning, it falls short in terms of creativity and naturalness in its structural reformulation and diversity of vocabulary. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 0.667,
+    "annotator_scores": [
+      0,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 40,
+    "response": "The response provided does not significantly deviate from the original text. It maintains the core meaning of the 721 law and its implications for the internet industry. However, there is a noticeable lack of structural and lexical variation. The sentence structure remains largely unchanged, and the choice of words is quite similar to the original text. This results in a response that, while accurate, does not fully meet the requirement for creative and natural structural reformulation and diverse vocabulary. Therefore, according to the score rubric, this response would be rated as having acceptable quality. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 0.667,
+    "annotator_scores": [
+      0,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 41,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. For instance, phrases like \"发现一名大约四岁的小女孩\" and \"号召大家一起帮忙\" are direct translations from the original text without much creativity or natural flow. Additionally, the sentence structure remains largely unchanged, which does not contribute significantly to the overall quality of the rewrite. While the response does retain the original meaning, it falls short in terms of introducing meaningful structural and lexical changes. Therefore, according to the score rubric, this response would be rated as having acceptable quality. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      0,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 42,
+    "response": "The response provided maintains the core meaning of the original text, which is to explain how to calculate the alcohol content of different types of alcoholic beverages. However, there is a noticeable lack of structural and lexical variation compared to the original text. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance readability and comprehension. For instance, instead of using \"体积\" and \"浓度\", alternative terms like \"volume\" and \"concentration\" could have been used to introduce some diversity in vocabulary. Additionally, the phrase \"高出10倍多\" could have been expressed in a more natural way, such as \"is higher by a factor of 10\". These minor improvements would have elevated the quality of the response. Therefore, according to the score rubric, this response demonstrates an acceptable level of quality, retaining most of the original meaning but lacking sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 43,
+    "response": "The response provided does not meet the requirements of the task. It merely restates the original text without making any significant changes in sentence structure or vocabulary. This results in a text that is almost identical to the original, failing to introduce any new elements or variations. The lack of creativity and natural flow in the sentence structure makes the response fall short of the expectations outlined in the score rubric. Therefore, according to the rubric's criteria, this response would be scored as 1 due to its complete failure to modify the original text in a meaningful way. \n[RESULT] 1",
+    "predicted_score": 1,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      1,
+      1,
+      2
+    ]
+  },
+  {
+    "index": 44,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, it falls short in terms of sentence structure and vocabulary diversity. While the basic information about the product and its certification is retained, the sentence construction remains quite similar to the original text, lacking the creativity and natural flow expected from a high-quality rewrite. Furthermore, the use of words such as \"生产\" and \"销售\" does not introduce significant variation in vocabulary. Therefore, although the response is accurate and retains the original meaning, it does not fully meet the criteria for a higher score due to its limited structural and lexical modifications. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      3,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 45,
+    "response": "The response provided maintains the core meaning of the original text, which is about the importance of parents accompanying their children during reading activities to help develop learning habits. However, the sentence structure and vocabulary used in the response are quite similar to those in the original text, lacking significant variation. While the sentence does convey the intended message, it doesn't introduce new elements or demonstrate a high level of creativity in its rephrasing. Therefore, according to the score rubric, this response would be rated as having acceptable quality because it retains most of the original meaning but falls short in terms of structural and lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 46,
+    "response": "The response provided maintains the core meaning of the original text, which is essential for this task. However, there is a noticeable lack of structural and lexical variation when compared to the original text. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance the quality of the rewrite. For instance, instead of using \"提前\" and \"申请\", alternative phrases like \"先提\" and \"申请一张\" could have been used to introduce some variety. Additionally, the phrase \"保隆车辆运输畅通\" from the original text was simplified to \"保证车辆畅行\" in the response, which slightly reduces the richness of the original message. Despite these shortcomings, the response does succeed in conveying the main idea without significant loss of original meaning. Therefore, according to the score rubric, the response would be rated as having acceptable quality. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 47,
+    "response": "The response demonstrates a good understanding of the original text's core message and maintains its essence throughout the rewrite. It introduces some structural changes by altering sentence structure and adding new phrases such as \"不过要撰写\" and \"不宜浮沉不定\". However, these changes are relatively minor and do not significantly enhance the overall quality of the text. Additionally, the vocabulary used is quite similar to the original text, which limits the degree of lexical variation. While the response does attempt to diversify the content by suggesting different themes for the public account, it could have further expanded on this aspect to provide more variety and depth. Overall, the response effectively retains the original meaning but falls short in terms of structural and lexical creativity. Therefore, according to the score rubric, the response would receive a score of 4. \n[RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      1,
+      2,
+      1
+    ]
+  },
+  {
+    "index": 48,
+    "response": "The response provided maintains the core message of the original text, which is to introduce the official version of the game \"Warship World\" to the audience. However, there are some noticeable differences in sentence structure and vocabulary usage. For instance, the phrase \"关于战舰世界大脚 V2.0.0.2 官方版\" from the original text is simplified to \"战舰世界大脚V2.0.0.2官方版\" in the response. This slight alteration does not significantly impact the overall meaning but demonstrates a minor degree of structural change. Additionally, the use of \"小勒\" is consistent throughout both texts, indicating a retention of key elements from the original text. Despite these changes, the essence of the introduction remains intact. Therefore, according to the score rubric, this response would be rated as having acceptable quality because it retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      1,
+      2,
+      1
+    ]
+  },
+  {
+    "index": 49,
+    "response": "The response provided demonstrates a significant loss of original meaning. While the core message about the absence of guarantees for the company's convertible bonds remains intact, the sentence structure and word choice have been simplified excessively. This results in a less formal tone and a reduction in clarity compared to the original text. Additionally, the phrase \"无需提供担保\" could be interpreted as \"no need to provide guarantees,\" which might lead to confusion regarding the nature of the bond issuance. Therefore, although the basic idea is preserved, the response does not meet the requirements for a higher score due to its lack of structural and lexical variation from the original text. So the overall score is 2. [RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 50,
+    "response": "The response provided demonstrates a significant improvement over the original text. It maintains the core message of the original text, which is about a football game aimed at glory. However, there are notable changes in sentence structure and vocabulary that enhance the overall quality of the text. For instance, the phrase \"作为足球界的第一人\" from the original text is transformed into \"你要与世界各地的球员们一起续写激烈的比赛,\" which adds a dynamic element to the narrative by suggesting ongoing competition rather than a one-time event. Additionally, the use of \"一款\" instead of \"一种\" introduces a slight variation in word choice, contributing to the freshness of the text. Furthermore, the phrase \"足球界不可或缺的第一作\" effectively encapsulates the importance of the game within the broader context of the football world. These changes showcase a thoughtful approach to rewriting, ensuring that the original meaning is preserved while also introducing new elements to enrich the text. Therefore, according to the score rubric, this response exhibits a high level of quality in terms of both structural and lexical modifications. So the overall score is 5. [RESULT] 5",
+    "predicted_score": 5,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      4,
+      0,
+      0
+    ]
+  },
+  {
+    "index": 51,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. The sentence structure remains largely unchanged, and the choice of words does not significantly deviate from the original text. For instance, phrases like \"多次带她四处旅行\" and \"多次发表公开演讲\" closely mirror the original sentences without adding much newness or creativity. Additionally, the phrase \"十分精美，价值不菲\" is a direct translation of the original text's \"极其富有欣赏价值\", indicating a minimal effort in changing the vocabulary. Therefore, while the response retains the original meaning, it falls short in terms of structural and lexical diversity, which is crucial for achieving higher scores according to the rubric. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      1,
+      2,
+      1
+    ]
+  },
+  {
+    "index": 52,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, it falls short in terms of sentence structure and vocabulary diversity. While the overall message remains intact, the phrasing used is quite similar to the original text, lacking the creative and natural structural reformulation expected at higher levels of the score rubric. Additionally, the use of words such as \"发表\" and \"上述言论\" does not add significant value to the sentence, making the response feel somewhat repetitive. Therefore, although the response retains the original meaning, it could benefit from more varied sentence structures and a richer vocabulary to elevate its quality. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      0,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 53,
+    "response": "The response provided does not significantly deviate from the original text, which results in a lack of creativity and natural flow. While it retains the core meaning of the original question and answer, it fails to introduce substantial structural or lexical changes. For instance, phrases like \"正式交付\" and \"保时捷官方\" are direct translations from the original text without any attempt at rephrasing or adding new information. Additionally, the use of words such as \"规避\" and \"实际利润\" are too close to the original text, indicating a minimal level of word-for-word copying rather than a true rewrite. Therefore, the response falls short in terms of meeting the criteria for a higher score, as it does not fully preserve the original meaning with creative and natural structural reformulation and diverse vocabulary. So the overall score is 2. [RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 54,
+    "response": "The response provided does not significantly alter the sentence structure or vocabulary from the original text. It merely substitutes \"东西\" with \"东西的东西\" and \"疯了\" with \"精神错乱\", which are minor changes that do not contribute to a substantial rewrite. Furthermore, the phrase \"一些无关紧要的纸片什么的\" is replaced with \"一些不重要的纸张之类的\", which is a slight variation but still retains the original meaning. This indicates a minimal effort in changing the sentence structure and vocabulary, resulting in a rewrite that is quite similar to the original text. Therefore, according to the score rubric, this response would be rated as having poor quality due to significant loss of original meaning and minimal structural modification. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 1,
+    "avg_score": 1.0,
+    "annotator_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 55,
+    "response": "The response provided does not significantly deviate from the original text. It retains the core meaning of the original text, which is about using VIX see-up options as a protective measure and how it can be beneficial during market downturns. However, there is a noticeable lack of structural and lexical variation. The sentence structure remains largely unchanged, and the vocabulary used is quite similar to the original text. This results in a response that, while accurate, does not demonstrate a high level of creativity or linguistic diversity. Therefore, according to the score rubric, this response would receive a score of 3 because it retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 1,
+    "avg_score": 1.333,
+    "annotator_scores": [
+      0,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 56,
+    "response": "The response effectively maintains the core message of the original text, which is commendable. It retains the essence of the political stance, the importance of human life, and the need for effective disease control and economic development. However, there is a noticeable lack of structural and lexical variation compared to the original text. While the response does introduce some changes, such as replacing \"提高\" with \"提升\" and \"扎实谋划布局\" with \"制定具体规划\", these alterations are relatively minor and do not significantly enhance the overall quality of the text. Additionally, the use of phrases like \"落实中央政治局常委会会议的精神\" and \"坚持以人民为中心\" closely mirror the original phrasing, indicating a limited degree of creativity in the rewriting process. Therefore, although the response is generally accurate and coherent, it falls short of achieving a higher level of quality due to its limited structural and lexical modifications. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 57,
+    "response": "The response demonstrates a good understanding of the task by maintaining the core meaning of the original text. It successfully introduces a slight structural change by using \"二种文案写法\" instead of \"第二种文案写法\", which aligns with the requirement of sentence structure variation. Additionally, the choice of words like \"一群人\" and \"一种画面\" shows a reasonable level of vocabulary diversity. However, the response could have further enhanced its quality by incorporating more creative and natural language, such as using \"锁定\" instead of \"锁定了\". This would have added a touch of sophistication to the sentence. Despite this, the overall quality of the response is commendable, effectively preserving the original meaning while introducing meaningful structural and lexical changes. So the score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 58,
+    "response": "The response provided demonstrates a significant degree of linguistic creativity and structural variation from the original text. It successfully maintains the core meaning of the original text while introducing new sentence structures and vocabulary. For instance, the phrase \"东北亚地缘政治\" is changed to \"东北亚地缘政治和东南沿海局势\", which adds more context to the situation described. Additionally, the term \"中苏关系\" is replaced with \"中俄关系\", indicating a shift in geopolitical dynamics. Furthermore, the use of \"新生的中华人民共和国\" instead of \"新生的人民共和国\" introduces a more specific reference to China's political system. These changes contribute to a richer and more nuanced narrative. Moreover, the phrase \"外部压力极为巨大\" effectively conveys the magnitude of external pressures, enhancing the gravity of the situation. Therefore, this response exhibits a high level of quality in terms of preserving the original meaning while incorporating meaningful structural and lexical modifications. So the overall score is 5. \n[RESULT] 5",
+    "predicted_score": 5,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 59,
+    "response": "The response provided does not significantly alter the structure or vocabulary of the original text. It merely restates the information without adding new elements or changing the sentence structure in a way that enhances the message. While it retains the core meaning of the original text, it falls short in terms of creativity and natural flow. The use of phrases like \"工作定于\" and \"正式发布\" are direct translations from the original text, which indicates a lack of effort in rephrasing or restructuring the content. Therefore, according to the score rubric, this response would be rated as having acceptable quality because it maintains the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 60,
+    "response": "The response effectively retains the core meaning of the original text, which is about how the ODIN intelligent driving system from FREITAG uses soft-hardware integration and one-body technology to build a comprehensive sustainable platform. It also mentions the adaptability of FREITAG to market needs, helping businesses during the era of automotive intelligence. However, there are some minor issues with the sentence structure and vocabulary. For instance, \"全面覆盖\" could be more accurately translated as \"comprehensive coverage,\" and \"全生命周期\" might be better expressed as \"lifecycle.\" These slight deviations from the original text's phrasing do not significantly impact the overall understanding, but they do indicate room for improvement in terms of maintaining the original text's nuances. Despite these minor shortcomings, the response demonstrates a good grasp of the original text's meaning and presents it in a way that is mostly consistent with the original. Therefore, according to the score rubric, this response would receive a score of 4. \n[RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 2,
+    "avg_score": 1.667,
+    "annotator_scores": [
+      1,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 61,
+    "response": "The response provided does not significantly deviate from the original text, which results in a lack of creativity and structural variation. While the core meaning remains intact, the sentence structure and choice of words are largely unchanged. For instance, phrases like \"婚后李鸣对潘田非常好\" and \"潘田经常头疼\" are direct translations of the original text without any significant alteration. Additionally, the use of \"揉搓\" instead of \"按摩\" and \"洗脚水\" instead of \"接洗脚水\" are minor variations that do not contribute to a substantial change in the narrative. Therefore, the response falls short in terms of meeting the criteria for a higher score, as it lacks the necessary structural and lexical modifications to elevate its quality. So the overall score is 2. [RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 2,
+    "avg_score": 1.667,
+    "annotator_scores": [
+      1,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 62,
+    "response": "The response effectively maintains the core meaning of the original text, which is about the current state of gold prices and potential strategies for investors. However, there are some minor issues with sentence structure and word choice that prevent it from achieving a higher score. For instance, phrases like \"短线投资者可以考虑做空\" and \"一旦突破，可以考虑反手多头进场\" could be more concise and direct. Additionally, the use of \"特别是触及1700点\" seems slightly redundant and could have been phrased more efficiently. Despite these minor shortcomings, the overall quality of the response is still quite high, as it successfully introduces structural and lexical changes without losing the original meaning. Therefore, according to the score rubric, this response would receive a score of 4. \n[RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 63,
+    "response": "The response provided maintains the core meaning of the original text, which is about the importance of Load Tsen in understanding the affairs of the Cleansing Emperor's palace. However, there are some minor issues with the sentence structure and vocabulary usage. For instance, \"载涛\" was translated directly without considering the nuances of the term, which could be seen as a slight deviation from the original text. Additionally, the phrase \"可以称得上\" could have been more creatively expressed to better reflect the original tone. Despite these shortcomings, the overall message remains intact, and the response does introduce some structural and lexical changes. Therefore, according to the score rubric, this response would receive a score of 3 because it retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 64,
+    "response": "The response effectively captures the essence of the original text, maintaining its core meaning. It introduces a slight variation in sentence structure by using \"近期\" instead of \"近日\", which adds a touch of freshness without losing the original context. Additionally, the phrase \"错误点灯\" is a clever play on words, replacing \"羊了个羊\" with a metaphor that aligns well with the educational theme of the text. This choice of words demonstrates a creative approach to language use. Furthermore, the response successfully retains the original intent of the teacher's message, emphasizing the importance of learning history through gaming. The overall quality of the response is high, as it provides a natural and engaging narrative while preserving the original content. Therefore, according to the score rubric, this response exhibits excellent quality in terms of both structural reformulation and diverse vocabulary. \n[RESULT] 5",
+    "predicted_score": 5,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 65,
+    "response": "The response provided demonstrates a significant loss of original meaning, which is evident from the use of phrases like \"僵持阶段\" instead of \"相持的战略防御阶段\", and \"劲烈的炮火打击\" instead of \"猛烈的炮火攻击\". These changes result in a shift in tone and emphasis, moving away from the original's focus on strategic defensive warfare to one of stagnation and intense offensive firepower. Additionally, the phrase \"抵挡联军火力优势\" does not convey the same sense of urgency and criticality as \"成为了决定战争胜负的关键\". While there is some structural modification, such as the omission of \"此时的\", the overall quality of the rewrite is poor due to these substantial deviations from the original text. Therefore, according to the score rubric, this response would receive a score of 2. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 66,
+    "response": "The response provided maintains the core meaning of the original text, which is about the impact of \"色戒\" on Tang Wei's career. However, there are some noticeable differences in sentence structure and vocabulary usage. For instance, the phrase \"让汤唯一举成名\" is translated into \"let Tang Wei become unique and successful,\" which is a slight deviation from the original text's emphasis on her becoming \"unique and successful.\" Additionally, the phrase \"让刚达到顶峰的她迅速跌落谷底\" is translated into \"let Tang Wei reach the peak quickly fall into the valley,\" which is a more literal translation and does not capture the nuance of her swift decline after reaching the pinnacle. These changes result in a less natural flow and a slight loss of the original text's subtlety. Therefore, while the response retains most of the original meaning, it lacks sufficient structural or lexical variation, which is why it falls short of achieving a higher score according to the rubric. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 67,
+    "response": "The response provided does retain the core meaning of the original text, which is about the features of the 17th model of Lincoln MKT. However, there is a noticeable lack of structural and lexical variation compared to the original text. For instance, the phrase \"拥有三排座椅\" was translated directly into \"配备三排座椅\", without adding any new information or changing the sentence structure. Similarly, \"可进行多种选项调节\" was simplified to \"可以未动方向盘的情况下操控多种功能\", which doesn't add much value to the sentence. While the overall meaning remains intact, the response could have been improved by incorporating more varied sentence structures and vocabulary choices. Therefore, according to the score rubric, this response would be rated as having acceptable quality because it retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 68,
+    "response": "The response effectively maintains the core meaning of the original text, which is about Chongqing's reputation for its spicy food and its green spaces. However, there are some notable differences in sentence structure and vocabulary usage. For instance, \"重庆以其火辣的美食\" replaces \"山城重庆因热辣而出名,\" which shows a slight shift from the original phrase. Additionally, \"渝北的蔚蓝绿意洋溢而来\" is a more vivid description than \"渝北，浓厚的绿意扑面而来.\" This choice of words adds a touch of creativity to the response. Furthermore, the phrase \"绿色遍地、让全民共享\" is a more concise way to express the idea of widespread greenery and shared enjoyment by all citizens. These changes contribute to a more engaging and varied narrative without losing the essence of the original text. Therefore, according to the score rubric, this response demonstrates a good quality of rewriting, as it effectively preserves the original meaning while introducing meaningful structural and lexical changes. \n[RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 69,
+    "response": "The response provided does not significantly alter the sentence structure or vocabulary from the original text. It merely substitutes some words without changing the overall meaning or flow of the sentences. For instance, \"不过\" is replaced by \"乔哈真的\", which doesn't add much value to the sentence. Similarly, \"上赛季也是这样\" is changed to \"去年的季节也是一样\", which again does not contribute to the sentence's meaning or structure. Furthermore, phrases like \"不是被感冒，就是打不进\" and \"没有投篮机会就抓紧传出去\" are almost identical to their counterparts in the original text. This indicates a lack of creativity and natural language use. Therefore, according to the score rubric, this response falls short in terms of structural and lexical variation, resulting in a poor quality rewrite. So the overall score is 2. [RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 2,
+    "avg_score": 2.333,
+    "annotator_scores": [
+      3,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 70,
+    "response": "The response provided does not significantly alter the structure or vocabulary from the original text. It retains the core message about the story \"独一无二的你\" and the role of small six in explaining it. However, there is a noticeable absence of creativity and natural flow in the sentence construction. The use of phrases like \"很多人都不了解\" and \"小六就来给大家解答\" closely mirrors the original text without adding much value or variety in terms of language use. This results in a less engaging and somewhat repetitive narrative. Therefore, while the response maintains the original meaning, it falls short in offering a fresh perspective or enhancing the reader's experience through linguistic diversity. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 71,
+    "response": "The response maintains the core meaning of the original text, which is about the prediction of future events using ancient methods. However, there is a noticeable lack of structural and lexical variation compared to the original text. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance the readability and flow of the text. For instance, phrases like \"来聊一聊\" and \"传说当时\" could be replaced with more engaging alternatives. Additionally, the use of \"大家\" instead of \"我们\" slightly deviates from the original tone. Despite these minor issues, the overall quality of the response is satisfactory as it retains the essential information and does not significantly alter the original meaning. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 72,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, it falls short in terms of sentence structure and vocabulary diversity. While the essence of the original message is preserved, the sentence construction remains largely unchanged, and there's a noticeable absence of varied language use. This results in a somewhat monotonous tone that doesn't fully capture the nuances of the original text. Additionally, the phrase \"石贤在分享会上如是说\" at the end feels redundant and does not add value to the narrative. It would have been more effective if the response had incorporated a more dynamic and engaging style. Therefore, although the response retains the original meaning, it could benefit from more creative and varied sentence structures and vocabulary choices to enhance its quality. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 73,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. The sentence structure remains largely unchanged, and the choice of words does not significantly deviate from the original text. While the essence of the message is preserved, the response could have been improved by incorporating more varied sentence structures and a wider range of vocabulary. This would have added depth to the text and made it more engaging. Therefore, although the response retains the original meaning, it falls short in terms of creativity and linguistic diversity. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 74,
+    "response": "The response provided does not significantly alter the sentence structure or vocabulary from the original text. It merely restates the information without adding new insights or perspectives. While it retains the core meaning of the original text, it falls short in terms of creativity and linguistic diversity. The sentence \"汤唯遇到了即将成为下一位男友的胡景\" is a direct translation of the original phrase, showing little effort in changing the wording or sentence structure. Additionally, the phrase \"渐行渐远\" is a common idiom that doesn't add much value to the narrative. Therefore, although the response maintains the original meaning, it lacks the necessary structural and lexical variations that would elevate its quality. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 1.667,
+    "annotator_scores": [
+      1,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 75,
+    "response": "The response effectively maintains the core message of the original text, which is about the issue of rising fuel prices and its impact on public trust in the government's claim of energy sufficiency. However, there are some minor changes in sentence structure and vocabulary that make the response slightly different from the original. For instance, \"相关的问题\" is replaced by \"另一个相关的问题,\" which adds a slight variation in phrasing. Additionally, \"燃料价格高涨\" is changed to \"燃料价格暴涨,\" which introduces a more dramatic tone to describe the price increase. These modifications contribute to a more engaging narrative without significantly altering the original meaning. Therefore, according to the score rubric, this response demonstrates a good quality of rewriting, as it successfully preserves the original meaning while introducing meaningful structural and lexical changes. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 76,
+    "response": "The response provided demonstrates a significant loss of original meaning, which is evident from the phrase \"疑惑\" instead of \"疑问\", and \"取消前往西亚的行程\" instead of \"踏上西亚的航班\". These changes result in a shift in tone and context, leading to a misunderstanding of the original text's intent. Additionally, the sentence structure remains largely unchanged, indicating minimal structural modification. Furthermore, there is a noticeable reliance on word-for-word copying, particularly in phrases like \"身体恢复无法短时间完成\" and \"能上场实际机会不多\". This approach does not contribute to a creative or natural reformulation of the original text. Therefore, according to the score rubric, this response falls short of the expected quality, as it does not effectively preserve the original meaning nor introduce meaningful structural and lexical changes. So the overall score is 2. [RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      4,
+      1,
+      1
+    ]
+  },
+  {
+    "index": 77,
+    "response": "The response provided demonstrates a significant loss of original meaning, which is evident from the slight alteration of words such as \"自主思考能力\" instead of \"独立思想\", and \"愤怒\" instead of \"气愤\". This indicates a minimal structural modification, which does not fully capture the essence of the original text. Furthermore, the phrase \"会被以这种流氓方式征召\" is a direct translation of the original text without any creative or natural structural reformulation. Therefore, the response falls short in terms of preserving the original meaning and introducing meaningful structural and lexical changes. It also exhibits excessive word-for-word copying, which is not aligned with the requirement of the task. So the overall score is 2. [RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 78,
+    "response": "The response provided does maintain the core meaning of the original text, which is about the importance of understanding classical texts like \"三国志\" and \"资质通鉴\". However, there are some notable differences in sentence structure and vocabulary usage. For instance, the phrase \"不懂\" is replaced by \"不懂\", which doesn't add much value to the sentence. Additionally, the phrase \"不能出门的人\" is a direct translation from the original text without significant structural or lexical changes. While the overall message remains intact, the response could have been improved by incorporating more varied language and sentence structures to better reflect the essence of the original text. Therefore, according to the score rubric, this response would be rated as having acceptable quality because it retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 79,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. For instance, phrases like \"我们看到\" and \"杜凯琹被列为本届比赛的一号种子\" are quite similar to their counterparts in the original text. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance the quality of the rewrite. Additionally, the phrase \"杜香港名将也参加过澳门站冠军杯\" could be improved by adding more detail about her previous participation. Overall, the response does retain most of the original meaning but falls short in terms of structural and lexical creativity. Therefore, according to the score rubric, this response would receive a score of 3. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 80,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. While the sentence structure remains largely unchanged, the choice of words does not significantly deviate from the original text. For instance, \"披露公告\" and \"参与者\" are direct translations of the terms used in the original text. Additionally, the phrase \"筹得洛阳钼业24.68%的股份\" could have been more creatively expressed to enhance the quality of the rewrite. Therefore, although the response retains the original meaning, it falls short in terms of introducing meaningful structural and lexical changes. This results in a rewrite that, while accurate, lacks the depth and creativity expected at higher levels of the score rubric. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 81,
+    "response": "The response effectively maintains the core meaning of the original text, which is about the improvements made in the interior of a new car model. It retains the essential details such as the introduction of a large size floating screen, the removal of physical buttons in favor of touch controls, and the enhancement of the car's overall quality through improved materials. However, there is a noticeable lack of structural and lexical variation compared to the original text. For instance, phrases like \"搭载有一台\" and \"中控台取消了大部分实体按键\" from the original text have been simplified to \"配备了大尺寸悬浮式双联曲面屏\" and \"实体按键取消\", respectively. While these sentences convey the same information, they do so in a more straightforward manner without the same level of detail or complexity found in the original text. Additionally, the use of words like \"新车\" instead of \"新车中控台\" indicates a slight deviation from the original text's structure. Therefore, although the response does a commendable job at preserving the original meaning, it falls short in terms of structural and lexical creativity and diversity. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 82,
+    "response": "The response provided maintains the core meaning of the original text, which is about the potential impact of American policies on European car industry. However, there is a noticeable lack of structural and lexical variation. For instance, the sentence structure remains largely unchanged, and the choice of words does not significantly deviate from the original text. While the response does introduce some minor changes, such as \"谈及\" instead of \"对\", these alterations do not contribute significantly to enhancing the quality of the rewrite. Therefore, according to the score rubric, this response would be rated as having acceptable quality because it retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 83,
+    "response": "The response provided maintains the core meaning of the original text, which is about the management of confirmed cases within a small area rather than a city-wide approach. However, there are some minor issues with the sentence structure and vocabulary usage. For instance, \"实施\" could be replaced with \"执行\" to better match the original phrasing. Additionally, \"采取隔离措施\" might be more accurately translated as \"implement isolation measures,\" which would provide a clearer understanding of the actions being taken. Despite these minor shortcomings, the overall message remains intact and the response demonstrates a reasonable level of linguistic competence. Therefore, according to the score rubric, this response would receive a score of 3 due to its ability to retain most of the original meaning but lacking sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 1.667,
+    "annotator_scores": [
+      1,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 84,
+    "response": "The response maintains the core meaning of the original text, which is about the high regard the Japanese royal family places on the crown, starting from the reign of the Shōmei Emperor's queen. It also correctly identifies the significance of the crown in the coming-of-age ceremony for princesses. However, there is a slight deviation in the sentence structure, particularly in the phrase \"价值都达数百万元以上,\" which could be more naturally phrased as \"price values all exceed one hundred million yen.\" Additionally, the use of \"部分\" instead of \"少数\" slightly alters the nuance of the original text, indicating that fewer than all princesses receive crowns from the royal collection. These minor changes in sentence structure and vocabulary result in a less natural flow compared to the original text. Therefore, while the response retains most of the original meaning, it does not fully meet the criteria for a higher score due to its limited structural and lexical variations. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 1.667,
+    "annotator_scores": [
+      1,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 85,
+    "response": "The response demonstrates a good understanding of the original text and maintains its core meaning. It introduces some structural changes by using different sentence structures and varying the word choices slightly. However, the level of creativity and diversity in vocabulary could be improved. For instance, phrases like \"拥有\" and \"非常有利\" are direct translations from the original text and do not add much value in terms of linguistic variety. Additionally, the phrase \"蜿蜒\" used to describe the curvature of the coastline is less common than \"曲折\" and may not convey the same meaning to all readers. Despite these minor shortcomings, the overall quality of the rewrite is commendable, effectively preserving the original meaning while making meaningful modifications. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 2,
+    "avg_score": 1.667,
+    "annotator_scores": [
+      1,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 86,
+    "response": "The response maintains the core message of the original text, which is about the current state of the hair industry and its future prospects. However, there are some minor issues with sentence structure and vocabulary that affect the overall quality of the rewrite. For instance, \"头发头皮行业\" could be more naturally phrased as \"hair industry,\" and \"杨帆初发的阶段\" might be better expressed as \"Yangtze's early stage.\" Additionally, the phrase \"畅游国际市场\" could be improved by using a more common expression like \"exploring international markets.\" Despite these areas for improvement, the response does introduce some structural changes, such as the use of \"仍待耕耘不止\" instead of \"勤耕不辍,\" which adds variety to the language used. Therefore, while the response is not perfect, it demonstrates a reasonable level of creativity and linguistic variation, making it a satisfactory rewrite according to the score rubric. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 87,
+    "response": "The response maintains the core meaning of the original text, which is commendable. However, there are some areas where the quality could be improved. For instance, the sentence \"王姐微微侧身，嘴角弯起一个弧度\" was simplified to \"王姐把头偏向一边\", which loses some of the nuance present in the original text. Additionally, the phrase \"摸了摸无名指上一圈白色痕迹\" was reduced to \"抚摸着他无名指上白色的印痕\", which, although similar, does not convey the same level of detail. Furthermore, the sentence \"通过油墨技术的提升来降低行业印刷的能源消耗、减少碳排放\" was condensed into \"油墨技术的提升正逐步成为不可回避的选择\", which, while still accurate, does not fully capture the extent of the technological advancement's impact on the industry. These examples indicate that while the response retains most of the original meaning, it lacks sufficient structural or lexical variation. Therefore, according to the score rubric, the response would receive a score of 3. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 2,
+    "avg_score": 2.0,
+    "annotator_scores": [
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "index": 88,
+    "response": "The response provided maintains the core meaning of the original text, which is about the protagonist's concern over the future behavior of their landlord and the subsequent events. However, there are some issues with the sentence structure and vocabulary usage. For instance, \"自从我租下她家的房子之后\" could be more naturally phrased as \"Since I rented her family's house.\" Additionally, phrases like \"我也是因为担心未来的房东会恼羞成怒\" could be simplified to \"I was also worried about the future landlord's reaction.\" These changes would make the text more accessible and engaging for readers. Furthermore, the use of \"张姐的眼泪便不禁湿润了\" could be improved by using a more natural phrase such as \"Zhang sister's eyes began to water.\" Overall, while the response does retain the original meaning, it falls short in terms of structural and lexical variation, which is crucial for maintaining reader interest and comprehension. Therefore, according to the score rubric, this response would receive a score of 3. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 89,
+    "response": "The response provided does not significantly deviate from the original text. While there is some attempt at sentence structure variation, such as changing \"心疼\" to \"心痛\", the overall meaning remains largely unchanged. Additionally, the use of \"警惕性\" instead of \"警惕\" is a minor lexical alteration that does not contribute substantially to the overall quality of the rewrite. The phrase \"靠近还会嚎叫\" is also a direct translation of the original text without any significant structural or lexical modifications. Therefore, although the response retains the core meaning of the original text, it falls short in terms of structural and lexical creativity and diversity. This results in a rewrite that is more of a paraphrase than a creative reinterpretation. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 90,
+    "response": "The response maintains the core meaning of the original text, which is about the upcoming CBA basketball season and the anticipation surrounding the Beilin team's potential victory. However, there are some minor issues with sentence structure and vocabulary that prevent it from achieving a higher score. For instance, the phrase \"重新开赛\" could be more creatively expressed as \"重新 ignite the battle,\" which would better reflect the intensity of the competition. Additionally, the use of \"球迷\" instead of \"fans\" or \"supporters\" slightly deviates from the original text's tone. Despite these shortcomings, the response does introduce some structural changes, such as the inclusion of the phrase \"让球迷在盘算着,\" which adds depth to the narrative by emphasizing the fans' anticipation. Therefore, while the response is generally acceptable, it falls short of fully capturing the essence of the original text with creative and natural structural reformulation and diverse vocabulary. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 91,
+    "response": "The response provided does retain some elements from the original text, such as the mention of small production houses and their future implications. However, it falls short in terms of sentence structure and vocabulary diversity. The phrase \"从这句话中我们可以看出\" is a direct translation of the original text's \"从这一表述中我们不难看出,\" which indicates a lack of creativity in sentence construction. Additionally, the use of \"违规建筑的小产权房占一半\" is a simplification of the original text's more nuanced explanation about the distribution of legal and illegal buildings. Furthermore, the term \"代表性的小产权房\" is a literal translation of \"典型的代表,\" which suggests a limited vocabulary range. While the response does attempt to preserve the original meaning, it lacks the depth and variety found in the original text. Therefore, according to the score rubric, this response would be rated as having acceptable quality due to its retention of most of the original meaning but lack of sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 92,
+    "response": "The response provided maintains the core meaning of the original text, which is commendable. However, there is a noticeable lack of structural and lexical variation. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance the quality of the rewrite. For instance, phrases like \"成功进入四强\" and \"进入决赛\" could be rephrased to introduce more diversity in language use. Additionally, the repetition of \"英格兰队\" could have been avoided by using synonyms or alternative expressions. Despite these shortcomings, the response does succeed in conveying the same information as the original text, albeit in a less creative manner. Therefore, according to the score rubric, this response would receive a score of 3 due to its retention of most of the original meaning but lack of sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 93,
+    "response": "The response demonstrates a good understanding of the original text's core meaning and maintains its essence. It introduces some structural changes by altering the sentence structure and using different words to convey the same ideas. For instance, \"不知疲倦地\" replaces \"不吃不喝地,\" which adds variety to the language used. However, the response could have further enhanced the quality by incorporating more creative and natural structural reformulations and a wider range of vocabulary. While it does well in retaining the original meaning, there is room for improvement in terms of linguistic diversity and structural creativity. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 94,
+    "response": "The response provided demonstrates a significant improvement over the original text. It retains the core sentiment of gratitude towards God for allowing the dream to be realized, which aligns well with the original message. However, there are some minor issues that prevent it from achieving a perfect score. For instance, the phrase \"谢谢他！\" at the end feels slightly abrupt and does not flow naturally within the context of the sentence. Additionally, the use of \"他\" instead of \"上帝\" could be seen as a slight deviation from the original text's religious tone. Despite these small shortcomings, the overall structure and vocabulary used in the response show a commendable level of creativity and naturalness. Therefore, considering the rubric's emphasis on maintaining the original meaning while introducing meaningful structural and lexical changes, this response exhibits a high degree of quality. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 95,
+    "response": "The response demonstrates a good understanding of the original text's core meaning and attempts to modify the sentence structure and vocabulary. However, there are some minor issues that prevent it from achieving a higher score. For instance, the phrase \"此情此景\" is a direct translation of \"this situation this scene,\" which does not convey the same nuance as the original text. Additionally, the choice of words such as \"古怪的性格\" and \"抱在腰间\" slightly deviates from the original text's tone and intent. While these changes do not significantly alter the overall meaning, they do introduce a degree of variation that could be further refined for better alignment with the original text. Therefore, although the response maintains the essence of the original text, it falls short of fully capturing the creative and natural structural reformulation and diverse vocabulary expected at a higher level of proficiency. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 96,
+    "response": "The response demonstrates a significant loss of original meaning, which is evident from the use of phrases like \"秦朝先辈勇武英明\" and \"辛辛苦苦拼来的领地\". These phrases, although similar in structure to the original text, fail to convey the same depth of meaning. The phrase \"辛辛苦苦拼来的领地\" does not capture the essence of the original text's description of the hard work and struggle of the ancestors. Additionally, the term \"沙漠淹没\" is a less precise translation of \"historical sand dunes bury\", which slightly deviates from the original meaning. While there is some attempt at structural modification, such as changing \"葬送\" to \"徒劳无功地继承\", this does not significantly enhance the overall quality of the response. Therefore, according to the score rubric, the response falls into the category of poor quality due to its significant loss of original meaning and minimal structural modification. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 97,
+    "response": "This response maintains the core meaning of the original text, which is about a mother's desire to touch her child's hand and the child's reluctance. However, there is a noticeable lack of structural and lexical variation compared to the original text. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance the narrative. For instance, instead of using \"不肯\" and \"索性\", alternative phrases like \"不愿意\" and \"自己把手拿开\" could have been used to add variety to the language. Additionally, the phrase \"妈妈忍不住想要摸摸宝宝的小肉手\" could be rephrased to better reflect the emotional state of the mother. Despite these areas for improvement, the response does retain the original meaning and provides a coherent narrative. Therefore, according to the score rubric, this response would receive a score of 3 due to its acceptable quality in maintaining the original meaning but lacking sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 2.667,
+    "annotator_scores": [
+      2,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 98,
+    "response": "The response maintains the core meaning of the original text, which is about two people who were high school classmates, their relationship, and a significant event that occurred during a dance class. However, there are some minor issues with the sentence structure and vocabulary that prevent it from achieving a higher score. For instance, \"一开始就没有太多互动\" could be more naturally phrased as \"从一开始，他们没有太多互动\", and \" mistake hand\" is a literal translation that doesn't convey the intended meaning as effectively as \"mistake hand tsave up\". Additionally, \"口角\" is a less common term than \"unpleasant situation\", which might confuse readers unfamiliar with Chinese slang. Despite these shortcomings, the overall meaning remains intact, and the response does introduce some structural changes, such as the use of \"直到大学\" instead of \"until college\". Therefore, according to the score rubric, this response would receive a score of 3 because it retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 99,
+    "response": "The response demonstrates a significant loss of original meaning, which is evident from the phrase \"不再把一切掌握在他人手中\" which deviates from the original \"不再将话语权完全交给他人\". This change in phrasing leads to a misunderstanding of the original message about the total control over language. Additionally, the sentence \"俄罗斯的影响力也不再像以往一样巨大\" loses the nuance of the original text by simplifying the description of Russia's power. The structure of the sentences also remains largely unchanged, indicating minimal structural modification. Furthermore, there is excessive word-for-word copying, such as \"世界的面貌日新月异\", which does not add value to the original text. Therefore, according to the score rubric, this response falls into the category of poor quality due to its failure to preserve the original meaning effectively and its limited structural and lexical changes. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 100,
+    "response": "The response provided demonstrates a significant improvement over the original text. It retains the core meaning of the original sentence, which is about people in Guangzhou using electric bicycles and cars, and how this contributes to their happiness. However, there are notable differences in structure and vocabulary that enhance the quality of the response. For instance, the phrase \"有车一族\" introduces a more vivid image than the original \"多数家庭都有小汽车,\" and the use of \"广州人\" instead of \"花都人\" provides a more specific context. Additionally, the choice of words like \"广州\" and \"多辆\" adds variety to the language used. These changes contribute to a more engaging and descriptive narrative without losing the essence of the original text. Therefore, according to the score rubric, the response exhibits a high level of quality by effectively preserving the original meaning while introducing meaningful structural and lexical changes. So the overall score is 5. [RESULT] 5",
+    "predicted_score": 5,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 101,
+    "response": "In this response, there is a noticeable effort to maintain the core meaning of the original text. However, the sentence structure and vocabulary have been only slightly modified, which results in a less dynamic and engaging narrative. For instance, phrases like \"十分不满地\" and \"你觉得还不够么?\" are direct translations from the original text without significant alteration. Additionally, the use of \"你大嫂\" instead of \"你的大嫂\" introduces a minor change in word choice, but does not significantly enhance the overall quality of the text. While the response does attempt to introduce some variation, it falls short of achieving a higher level of creativity and naturalness in its reformulation. Therefore, according to the score rubric, the response demonstrates an acceptable quality, retaining most of the original meaning but lacking sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 102,
+    "response": "The response provided maintains the core meaning of the original text, which is crucial according to the score rubric. It successfully retains the essential information about the closure of the temple and the suspension of public access to the Buddhist site due to the pandemic situation. However, the sentence structure remains largely unchanged from the original, and there's a noticeable absence of varied vocabulary. While the response does not deviate significantly from the original text, it could benefit from more creative and natural language use to enhance its quality. Therefore, considering the rubric's emphasis on structural and lexical variations, the response falls short of achieving a higher score. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 103,
+    "response": "The response provided does not meet the requirements of the task. It merely restates the original text without making any significant changes in sentence structure or vocabulary. This results in a text that is almost identical to the original, failing to introduce any new elements or variations. Furthermore, there is no evidence of a deeper understanding or interpretation of the original text, which was a key requirement of the task. Therefore, this response falls short of the expectations outlined in the score rubric, particularly in terms of structural and lexical variation. As such, it would be scored as a 1 according to the rubric's criteria. \n[RESULT] 1",
+    "predicted_score": 1,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 104,
+    "response": "The response demonstrates a good understanding of the original text's core meaning and manages to convey it effectively. It maintains the essence of the original sentence by keeping the key elements intact. However, there is room for improvement in terms of structural and lexical variations. While the sentence structure remains similar to the original, the choice of words could be more varied to enhance the quality of the rewrite. For instance, instead of using \"鼓励\" and \"挑战\", alternative phrases like \"支持\" and \"抵抗\" could have been used to add variety and depth to the narrative. Additionally, the phrase \"挑战了当时守旧封建统治者的核心利益\" could have been rephrased to better reflect the complexity of the situation. Despite these areas for enhancement, the response successfully retains the original meaning and introduces some structural and lexical changes, which aligns well with the score rubric's criteria for a good quality rewrite. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 105,
+    "response": "The response provided maintains the core message of the original text, which is about the challenges faced by female celebrities from different generations due to advancements in beauty technology. However, there are some minor issues that prevent it from achieving a higher score. While the sentence structure remains largely unchanged, the choice of words could be more varied to better reflect the nuances of the topic. For instance, phrases like \"娱乐业的迅速发展\" and \"整容和美颜滤镜技术的日益成熟\" are slightly repetitive and could benefit from more creative phrasing. Additionally, the use of \"更加年轻\" and \"更加蓬勃\" does not add significant value to the discussion and could potentially confuse readers who may interpret these terms differently. Despite these shortcomings, the response still manages to convey the main idea effectively, making it a satisfactory rewrite. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 106,
+    "response": "The response provided does maintain the core meaning of the original text, which is about female celebrities being criticized due to their \"big mouths.\" However, there is a noticeable lack of structural and lexical variation compared to the original text. The sentence structure remains largely unchanged, and the choice of words is quite similar to the original text. While the essence of the message is preserved, the response could have been improved by incorporating more varied sentence structures and a wider range of vocabulary to better reflect the original text's tone and style. Therefore, according to the score rubric, this response would be rated as having acceptable quality because it retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 107,
+    "response": "The response effectively maintains the core message of the original text, indicating that knowledge divisionists must adhere to socialism or face a dead end. However, there is a noticeable lack of structural and lexical variation compared to the original text. While the sentence structure remains largely unchanged, the choice of words could be more varied to enhance the quality of the rewrite. For instance, \"深刻领悟\" could have been replaced with a more nuanced phrase like \"深刻地领悟\", which would add depth to the understanding conveyed. Additionally, the use of \"毫无出路可言\" is a direct translation from the original text, which does not showcase creativity in language use. Despite these shortcomings, the response still manages to retain the essence of the original text, making it a satisfactory rewrite. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 108,
+    "response": "The response provided does not significantly alter the structure or vocabulary of the original text. It merely restates the original sentence without adding new insights or perspectives. This results in a lack of creativity and natural flow in the language used. Furthermore, there is no substantial change in the sentence structure, which makes the response feel repetitive and uninspired. While the core meaning of the original text is preserved, the absence of significant structural or lexical modifications leads to a lower quality of the rewrite. Therefore, according to the score rubric, this response would be rated as having poor quality due to its minimal structural modification and excessive word-for-word copying. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 3,
+    "avg_score": 3.333,
+    "annotator_scores": [
+      4,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 109,
+    "response": "The response maintains the core message of the original text, which is about the struggle against the enemy and the sacrifices made by the heroes. However, there are some minor issues with the sentence structure and vocabulary. For instance, \"没有办法\" could be more creatively expressed as \"无法\" to better reflect the original's tone. Additionally, \"赠送任何礼品\" is a direct translation of \"give us any gift,\" which doesn't capture the nuance of \"giving us any gift\" as much as \"赠送任何礼品\" does. Furthermore, \"所谓“善意的表现”\" is a literal translation of \"any 'good intention'\" and could be improved upon for a more natural flow. Despite these shortcomings, the overall meaning remains intact, and the response demonstrates a reasonable level of linguistic creativity. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 110,
+    "response": "The response provided maintains the core meaning of the original text, which is about a woman who defames her ex-boyfriend online. However, there are some minor differences in sentence structure and vocabulary usage. For instance, \"分手不仅\" is a slight rephrasing of \"分手见人品,\" which adds a bit more context to the situation. Additionally, the phrase \"指名道姓\" is replaced with \"指名道姓,\" which doesn't significantly alter the meaning but does introduce a small degree of variation. Furthermore, the term \"渣男\" is used instead of \"渣, 男,\" which is a direct translation of the original text. This choice of words shows a slight deviation from the original text, yet it still conveys the intended message effectively. Overall, the response demonstrates a reasonable level of creativity and variation in sentence structure and vocabulary, without losing the essence of the original text. Therefore, according to the score rubric, this response would be rated as having good quality. \n[RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 3,
+    "avg_score": 3.333,
+    "annotator_scores": [
+      4,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 111,
+    "response": "The response provided does not significantly alter the sentence structure or vocabulary from the original text. It merely repeats the same information without adding any new insights or perspectives. This indicates a lack of creativity and natural flow in the rewriting process. Although the core meaning of the original text is preserved, there is no substantial structural or lexical variation present. Therefore, according to the score rubric, this response would be rated as having acceptable quality because it retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 112,
+    "response": "The response demonstrates a good understanding of the original text and maintains its core meaning. It successfully introduces structural and lexical changes, such as changing \"走进\" to \"一走进\" and \"紧绷着\" to \"紧张得僵硬\". These modifications contribute to a more vivid depiction of the scene. However, the phrase \"闯虎穴了\" could be considered a direct translation from the original text, which slightly reduces the creativity of the rewrite. Additionally, the use of \"心情也变得自信起来\" is a bit redundant since the mood shift was already implied by the previous sentence about the room's atmosphere. Despite these minor shortcomings, the overall quality of the response is commendable, effectively capturing the essence of the original text while incorporating some fresh elements. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 113,
+    "response": "The response effectively maintains the core message of the original text, which is about implementing a list system in various stages of construction to ensure timely completion and successful verification of the project. However, there is a noticeable lack of structural and lexical variation compared to the original text. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance the readability and flow of the text. For instance, phrases like \"全力配合\" and \"顺利竣工验收\" were repeated without much variation. Despite these shortcomings, the response does succeed in conveying the intended meaning, albeit in a less dynamic manner than the original text. Therefore, according to the score rubric, this response would be rated as having acceptable quality. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 3,
+    "avg_score": 3.0,
+    "annotator_scores": [
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 114,
+    "response": "The response demonstrates a good understanding of the original text's core message and maintains its essence. It introduces some structural changes, such as the use of \"受到外部因素的影响\" instead of \"受制于诸多外部因素\", which slightly alters the sentence structure. Additionally, the phrase \"恶劣的大环境\" replaces \"大环境\", adding a bit more descriptive language. However, the overall tone and content remain largely unchanged from the original text. While there is a noticeable effort to modify the language, the changes are not extensive enough to be considered highly creative or natural. Therefore, the response aligns well with the score rubric's description for a score of 4, effectively preserving the original meaning while introducing meaningful structural and lexical changes. \n[RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "index": 115,
+    "response": "The response demonstrates a significant loss of original meaning, which is evident from the repetitive use of phrases such as \"接连不断的伤病\" and \"让本已久等的观众忧心不已\". This indicates a lack of creativity and natural flow in sentence construction. Furthermore, there is minimal structural modification, as the sentences largely follow the same structure as the original text. The vocabulary used is also quite similar to the original, with only minor variations. These factors contribute to a poor quality rewrite, which does not meet the requirements of the task. Therefore, according to the score rubric, this response would receive a score of 2. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "index": 116,
+    "response": "The response provided maintains the core meaning of the original text, which is to ask for name suggestions for a newborn boy with \"木\" in his name. However, there is a noticeable lack of structural and lexical variation compared to the original text. While the request for recommendations is present, the phrasing is quite similar to the original, with only minor adjustments such as changing \"问题一\" to \"想为新生儿男孩\" and \"马烦大家推荐一个带有木字旁的名字\" to \"真诚希望大家能推荐几个\". These changes do not significantly alter the sentence structure or introduce new vocabulary. Therefore, although the response retains the original meaning, it does not fully meet the requirement for creative and natural structural reformulation and diverse vocabulary. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 4,
+    "avg_score": 3.667,
+    "annotator_scores": [
+      5,
+      3,
+      3
+    ]
+  },
+  {
+    "index": 117,
+    "response": "The response effectively captures the essence of the original text by maintaining its core message about the changing weather and the consumer's intention to purchase warm clothing. However, there are noticeable differences in sentence structure and vocabulary usage which contribute to the overall quality of the rewrite. For instance, the phrase \"天气变冷\" is a more direct translation of \"the weather turns cold,\" which simplifies the original text slightly. Additionally, the use of \"消费者纷纷挑选\" instead of \"consumers are shopping\" introduces a more dynamic and vivid description of the scene. Furthermore, the inclusion of \"全国各地的家庭\" and \"亲人们\" adds depth to the narrative by considering the broader implications of the consumer's actions. These elements demonstrate a good level of creativity and natural flow in the rewritten text. Therefore, according to the score rubric, this response exhibits a high degree of quality in terms of preserving the original meaning while introducing meaningful structural and lexical changes. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "index": 118,
+    "response": "The response demonstrates a good understanding of the original text's core meaning and effectively conveys it using different sentence structures and vocabulary. It maintains the essence of the original message by keeping the focus on Sun Hongbin's intention to develop low-level apartments into high-end residential areas and his future plans to concentrate on high-end properties in major cities. However, there is room for improvement in terms of creativity and variety in language use. While the response does introduce some structural changes, such as the use of \"将\" instead of \"属于\", it could further enhance its quality by incorporating more diverse vocabulary and creating a more engaging narrative. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "index": 119,
+    "response": "The response effectively captures the essence of the original text by maintaining its core meaning. It introduces a slight variation in sentence structure, which adds a touch of freshness without losing the original intent. However, the choice of words could be more varied to enhance the quality of the rewrite. For instance, \"翻滚倒地\" could have been replaced with a more descriptive phrase like \"扑倒地\" or \"捶地\". Additionally, the phrase \"用左脚的爆射\" could have been expressed more creatively. Despite these minor shortcomings, the overall quality of the rewrite is commendable, as it successfully conveys the excitement of the match and the celebratory action of the player. Therefore, according to the score rubric, this response would receive a score of 4 due to its effective preservation of the original meaning with some meaningful structural and lexical changes. \n[RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "index": 120,
+    "response": "The response effectively captures the essence of the original text, maintaining its core message about the importance of moral conduct and the role of art in society. However, there are some notable differences in sentence structure and vocabulary usage. For instance, \"颂扬\" replaces \"吹响了礼赞模范,\" which adds a more vivid description of the event's atmosphere. Additionally, \"熠熠热情\" is used instead of \"热潮,\" which conveys a stronger sense of enthusiasm. Furthermore, \"崇尚贤才\" and \"追求德行的热潮\" are more engaging phrases than their counterparts in the original text. These changes contribute to a more dynamic and expressive narrative. Despite these improvements, the response could have further diversified its vocabulary to enhance its creativity and natural flow. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "index": 121,
+    "response": "The response provided does maintain the core meaning of the original text, which is about showing care and support to a woman during difficult times. However, there is a noticeable lack of structural and lexical variation compared to the original text. For instance, phrases like \"给女人一些精神上的慰藉\" and \"在女人深陷困难的时候\" from the original text have been translated directly into English without much alteration. This results in a less engaging and somewhat repetitive sentence structure. Additionally, the use of words such as \"心灵的安慰\" and \"重视\" could be more creatively expressed to enhance the quality of the rewrite. Therefore, while the response retains the original meaning, it falls short in terms of structural and lexical creativity and diversity. So the overall score is 3. [RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "index": 122,
+    "response": "The response provided does retain some elements from the original text, such as the mention of 韫颖's childhood and his perception of money. However, there are significant losses in the original meaning. For instance, the phrase \"小时候从来没见过钱什么样子\" is changed to \"小时候完全没有对金钱的概念\", which loses the nuance of having never seen money before. Additionally, the sentence structure remains largely unchanged, and the vocabulary used is quite similar to the original text, indicating a lack of creativity and diversity in language use. While the response does attempt to modify the original text, these modifications fall short of enhancing the overall quality of the rewrite. Therefore, according to the score rubric, this response would be rated as having poor quality due to its significant loss of original meaning and minimal structural modification. \n[RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "index": 123,
+    "response": "The response provided maintains the core meaning of the original text, which is that the city of Behelson is strategically important to the Russian army and they will not easily surrender. However, there is a noticeable lack of structural and lexical variation compared to the original text. While the sentence structure remains largely unchanged, the choice of words could have been more varied to enhance the quality of the rewrite. For instance, instead of using \"表示\" and \"考虑\", alternative phrases such as \"认为\" and \"观察\" could have been employed to introduce some variety. Additionally, the phrase \"从战略角度考虑\" could be replaced with a more dynamic expression like \"从战略角度出发\". These minor improvements would have elevated the quality of the rewrite closer to the level of a score 5 response. Therefore, considering these aspects, the response is deemed to have acceptable quality. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      5,
+      3,
+      4
+    ]
+  },
+  {
+    "index": 124,
+    "response": "The response effectively maintains the core meaning of the original text, which is about the lack of information regarding Song Beihang's parents and the estimated wealth derived from his career as an actor. However, there are some minor improvements in sentence structure and vocabulary usage. For instance, \"据网上搜索\" replaces \"有关宋轶父母的资料网上并没有任何报道,\" which adds a slight variation in phrasing. Additionally, \"估计身价已达数亿元\" is a more concise way to express the same idea as \"身价估计有数亿元.\" These changes contribute to a more natural flow of language without significantly altering the original message. Therefore, the response demonstrates a good level of quality by preserving the original meaning while introducing meaningful structural and lexical changes. So the overall score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "index": 125,
+    "response": "The response maintains the core message of the original text, which is about the uncertainty surrounding the impeachment of President Biden and his viewpoint on the situation. However, there are some minor issues with the sentence structure and word choice that affect its overall quality. For instance, the phrase \"表示\" could be more naturally phrased as \"expressing,\" and \"声称\" might be better replaced with \"alleged.\" Additionally, the use of \"相信\" instead of \"trust\" slightly deviates from the original tone. Despite these minor shortcomings, the response does introduce some structural changes, such as the rephrasing of \"you will see clearly\" to \"can all see out.\" These changes contribute to a slight improvement in the flow and readability of the text. Therefore, considering the score rubric's emphasis on maintaining the original meaning while introducing meaningful structural and lexical changes, this response achieves a score of 3. It retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 4,
+    "avg_score": 4.0,
+    "annotator_scores": [
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "index": 126,
+    "response": "The response maintains the core meaning of the original text, which is about a girl's life being mundane and her desire for something different. However, there are some minor issues with sentence structure and word choice that affect its overall quality. For instance, \"上小学、中学、大学\" could be more variedly expressed as \"在小学、中学、大学\" or \"在学校中\". Additionally, the phrase \"按部就班地度日\" is slightly less natural than \"循规蹈矩地生活着\", which might be considered a more accurate translation of the original text. Despite these small shortcomings, the response does introduce some structural and lexical changes, such as replacing \"极其平凡\" with \"非常普通\" and \"循规蹈矩地生活着\" with \"按部就班地度日\". These changes contribute to a slight variation from the original text, although they don't significantly enhance the quality of the response. Therefore, according to the score rubric, this response would receive a score of 3 because it retains most of the original meaning but lacks sufficient structural or lexical variation. \n[RESULT] 3",
+    "predicted_score": 3,
+    "consensus_score": 5,
+    "avg_score": 5.0,
+    "annotator_scores": [
+      5,
+      5,
+      5
+    ]
+  },
+  {
+    "index": 127,
+    "response": "The response effectively captures the essence of the original text by maintaining its core meaning. It introduces some structural changes such as altering the sentence structure and using different words to describe the same elements. For instance, \"爬山虎\" is changed to \"爬山虎叶片,\" which adds a layer of detail about the subject. Additionally, \"爬上了寺庙的院墙\" is transformed into \"爬上寺庙围墙时,\" which provides context to the action. The use of \"曼妙秀美\" instead of \"婀娜着身姿\" also contributes to the richness of the description. However, there could be more creativity in the choice of words and phrases to further enhance the quality of the rewrite. Despite these minor shortcomings, the overall quality of the response is commendable. So the score is 4. [RESULT] 4",
+    "predicted_score": 4,
+    "consensus_score": 5,
+    "avg_score": 5.0,
+    "annotator_scores": [
+      5,
+      5,
+      5
+    ]
+  },
+  {
+    "index": 128,
+    "response": "The response demonstrates a significant loss of original meaning, which is evident from the phrase \"多特旗下的\" which does not convey the same sense as \"此役\" in the original text. Additionally, the use of \"表现低迷\" instead of \"状态低迷\" alters the tone and context of the sentence. Furthermore, the phrase \"被搞砸\" is a direct translation of \"废了\", which does not capture the essence of the original text. The term \"战败\" also deviates from the original meaning of \"输球\". Lastly, the phrase \"靠仗老庇苦\" is a literal translation of \"倚老卖老\", which does not maintain the original sentiment. These factors contribute to a poor quality rewrite, as per the score rubric. Therefore, the overall score is 2. [RESULT] 2",
+    "predicted_score": 2,
+    "consensus_score": 5,
+    "avg_score": 5.0,
+    "annotator_scores": [
+      5,
+      5,
+      5
+    ]
+  }
+]

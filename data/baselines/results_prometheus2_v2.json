@@ -1,0 +1,29 @@
+{
+  "model": "prometheus-eval/prometheus-7b-v2.0",
+  "metrics_vs_avg_score": {
+    "spearman_rho": 0.1243,
+    "pearson_r": 0.1111,
+    "kendall_tau": 0.1031,
+    "mae": 1.5219,
+    "rmse": 1.8918,
+    "exact_agreement": 0.1783,
+    "within_1_pct": 0.4806,
+    "within_2_pct": 0.7442,
+    "num_valid": 129,
+    "num_total": 129,
+    "parse_failures": 0
+  },
+  "metrics_vs_consensus_score": {
+    "spearman_rho": 0.1175,
+    "pearson_r": 0.1058,
+    "kendall_tau": 0.1009,
+    "mae": 1.5039,
+    "rmse": 1.8884,
+    "exact_agreement": 0.2171,
+    "within_1_pct": 0.5194,
+    "within_2_pct": 0.8217,
+    "num_valid": 129,
+    "num_total": 129,
+    "parse_failures": 0
+  }
+}
