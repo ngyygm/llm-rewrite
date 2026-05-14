@@ -26,32 +26,32 @@ SOURCE_CATEGORIES = {
     "news": {
         "description": "新闻报道类文本",
         "prompt": "请生成一段中文新闻报道文本，包含具体事件、人物、地点等细节。长度在50-150字之间。内容可以是社会、科技、体育、国际等新闻类型。",
-        "count": 500,
+        "count": 75,
     },
     "wikipedia": {
         "description": "百科知识类文本",
         "prompt": "请生成一段中文百科全书风格的文本，介绍一个概念、历史事件或科学原理。长度在50-150字之间。内容准确客观。",
-        "count": 400,
+        "count": 60,
     },
     "social_media": {
         "description": "社交媒体类文本",
         "prompt": "请生成一段中文社交媒体风格的文本，如微博、知乎回答或论坛帖子。长度在30-120字之间。语气自然口语化。",
-        "count": 400,
+        "count": 60,
     },
     "scientific": {
         "description": "科技论文摘要类文本",
         "prompt": "请生成一段中文科技论文摘要风格的文本，描述某项研究成果。长度在80-200字之间。使用学术化但清晰的中文。",
-        "count": 300,
+        "count": 45,
     },
     "literature": {
         "description": "文学散文类文本",
         "prompt": "请生成一段中文文学散文风格的文本，可以是描写、叙事或议论。长度在50-150字之间。语言优美有表现力。",
-        "count": 200,
+        "count": 30,
     },
     "business": {
         "description": "商业财经类文本",
         "prompt": "请生成一段中文商业财经类文本，如公司公告、市场分析或财经新闻。长度在50-150字之间。专业但易懂。",
-        "count": 200,
+        "count": 30,
     },
 }
 
@@ -73,49 +73,75 @@ def check_overlap(text: str, existing_hashes: set) -> bool:
     return text_hash in existing_hashes
 
 
-def generate_source_texts_via_api(api_url: str, total_target: int = 2000, existing_hashes: Optional[set] = None):
-    """Generate source texts using a local LLM API.
+def _make_headers(api_keys: list, idx: int) -> dict:
+    """Round-robin select an API key by request index."""
+    if not api_keys:
+        return {}
+    key = api_keys[idx % len(api_keys)]
+    return {"Authorization": f"Bearer {key}"} if key else {}
+
+
+def generate_source_texts_via_api(api_url: str, total_target: int = 2000, existing_hashes: Optional[set] = None, api_model: str = "", api_key: str = "", max_workers: int = 16):
+    """Generate source texts using a local LLM API (parallel).
 
     Uses vLLM or OpenAI-compatible API endpoint.
+    Supports multiple API keys via comma-separated api_key string.
     """
     import requests
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    import threading
 
     if existing_hashes is None:
         existing_hashes = set()
 
-    all_texts = []
-    seen_hashes = set()
+    api_keys = [k.strip() for k in api_key.split(",") if k.strip()] if api_key else []
+    batch_size = 10
 
+    # Build all tasks: (task_idx, category, prompt, n_to_generate)
+    tasks = []
     for category, config in SOURCE_CATEGORIES.items():
         count = config["count"]
-        print(f"  Generating {count} texts for category: {category} ({config['description']})")
+        n_batches = (count + batch_size - 1) // batch_size
+        for b in range(n_batches):
+            n = min(batch_size, count - b * batch_size)
+            prompt = f"请一次性生成{n}段独立的中文文本。每段文本之间用'---'分隔。\n\n{config['prompt']}\n\n注意：每段文本必须是完全不同的内容。"
+            tasks.append((len(tasks), category, prompt))
 
-        generated = 0
-        batch_size = 10  # Generate in batches for efficiency
+    all_texts = []
+    seen_hashes = set()
+    lock = threading.Lock()
+    counter = [0]
 
-        while generated < count:
-            # Generate batch prompt
-            batch_prompt = f"请一次性生成{min(batch_size, count - generated)}段独立的中文文本。每段文本之间用'---'分隔。\n\n{config['prompt']}\n\n注意：每段文本必须是完全不同的内容。"
+    def process_one(task):
+        idx, category, prompt = task
+        headers = _make_headers(api_keys, idx)
+        try:
+            url = api_url if api_url.endswith("/chat/completions") else f"{api_url.rstrip('/')}/chat/completions"
+            response = requests.post(
+                url,
+                headers=headers,
+                json={
+                    "model": api_model,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "temperature": 0.9,
+                    "max_tokens": 2048,
+                },
+                timeout=120,
+            )
+            content = response.json()["choices"][0]["message"]["content"]
+            return category, [t.strip() for t in content.split("---") if t.strip()]
+        except Exception as e:
+            print(f"    Error ({category}): {e}")
+            return category, []
 
-            try:
-                response = requests.post(
-                    f"{api_url}/v1/chat/completions",
-                    json={
-                        "model": "/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen3-8B",
-                        "messages": [{"role": "user", "content": batch_prompt}],
-                        "temperature": 0.9,
-                        "max_tokens": 2048,
-                    },
-                    timeout=120,
-                )
-                result = response.json()
-                content = result["choices"][0]["message"]["content"]
-
-                # Split by separator and process each text
-                texts = [t.strip() for t in content.split("---") if t.strip()]
-
+    print(f"  Submitting {len(tasks)} batches with {max_workers} workers...")
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(process_one, t): t for t in tasks}
+        for future in as_completed(futures):
+            category, texts = future.result()
+            with lock:
                 for text in texts:
-                    if len(text) < 20:  # Skip very short texts
+                    if len(text) < 20:
                         continue
                     text_hash = hashlib.md5(text.encode("utf-8")).hexdigest()
                     if text_hash not in seen_hashes and text_hash not in existing_hashes:
@@ -125,22 +151,19 @@ def generate_source_texts_via_api(api_url: str, total_target: int = 2000, existi
                             "category": category,
                             "source_hash": text_hash,
                         })
-                        generated += 1
-                        if generated >= count:
-                            break
-
-            except Exception as e:
-                print(f"    Error generating for {category}: {e}")
-                continue
-
-        print(f"    Generated {generated}/{count} texts for {category}")
+                counter[0] += 1
+                if counter[0] % 20 == 0:
+                    print(f"  Progress: {counter[0]}/{len(tasks)} batches done, {len(all_texts)} texts collected")
 
     print(f"\nTotal source texts generated: {len(all_texts)}")
     return all_texts
 
 
-def generate_rewrites_via_api(source_texts: list, api_url: str, output_dir: Path, max_workers: int = 32):
-    """Generate 3 rewrites per source text (low/medium/high quality), in parallel."""
+def generate_rewrites_via_api(source_texts: list, api_url: str, output_dir: Path, max_workers: int = 32, api_model: str = "", api_key: str = ""):
+    """Generate 3 rewrites per source text (low/medium/high quality), in parallel.
+
+    Supports multiple API keys via comma-separated api_key string (round-robin).
+    """
     import requests
     from concurrent.futures import ThreadPoolExecutor, as_completed
     import threading
@@ -151,7 +174,7 @@ def generate_rewrites_via_api(source_texts: list, api_url: str, output_dir: Path
         "high": "请对以下中文文本进行高质量改写。要求：完整保留原文语义，使用不同的词汇和句式表达，保持原文风格。\n\n原文：{text}",
     }
 
-    model_name = "/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen3-8B"
+    api_keys = [k.strip() for k in api_key.split(",") if k.strip()] if api_key else []
 
     def process_one(args):
         i, source, quality, prompt_template = args
@@ -159,10 +182,12 @@ def generate_rewrites_via_api(source_texts: list, api_url: str, output_dir: Path
         source_hash = source["source_hash"]
         prompt = prompt_template.format(text=source_text)
         try:
+            url = api_url if api_url.endswith("/chat/completions") else f"{api_url.rstrip('/')}/chat/completions"
             response = requests.post(
-                f"{api_url}/v1/chat/completions",
+                url,
+                headers=_make_headers(api_keys, i),
                 json={
-                    "model": model_name,
+                    "model": api_model,
                     "messages": [{"role": "user", "content": prompt}],
                     "temperature": 0.8 if quality != "high" else 0.6,
                     "max_tokens": 512,
@@ -298,6 +323,12 @@ def main():
                         help="Generation mode: api (vLLM), local (transformers), file (import from file)")
     parser.add_argument("--api_url", type=str, default="http://localhost:8000",
                         help="vLLM API URL for API mode")
+    parser.add_argument("--api_model", type=str, default="",
+                        help="Model name for API mode (e.g. deepseek-chat, gpt-4o)")
+    parser.add_argument("--api_key", type=str, default="",
+                        help="API key(s) for authentication, comma-separated for multiple keys (optional for local vLLM)")
+    parser.add_argument("--max_workers", type=int, default=16,
+                        help="Number of parallel workers for API requests")
     parser.add_argument("--model_path", type=str, default="",
                         help="Model path for local mode")
     parser.add_argument("--text_file", type=str, default="",
@@ -334,7 +365,7 @@ def main():
     else:
         print("Generating source texts...")
         if args.mode == "api":
-            source_texts = generate_source_texts_via_api(args.api_url, 2000, eval_hashes)
+            source_texts = generate_source_texts_via_api(args.api_url, 2000, eval_hashes, api_model=args.api_model, api_key=args.api_key, max_workers=args.max_workers)
         elif args.mode == "local":
             print("Local mode: please provide --text_file for source texts, or use API mode")
             return
@@ -351,7 +382,7 @@ def main():
     else:
         print(f"\nGenerating rewrites for {len(source_texts)} source texts...")
         if args.mode == "api":
-            all_rewrites = generate_rewrites_via_api(source_texts, args.api_url, output_dir)
+            all_rewrites = generate_rewrites_via_api(source_texts, args.api_url, output_dir, max_workers=args.max_workers, api_model=args.api_model, api_key=args.api_key)
         elif args.mode == "local" and args.model_path:
             all_rewrites = generate_rewrites_local_model(
                 source_texts, args.model_path, args.model_path, output_dir

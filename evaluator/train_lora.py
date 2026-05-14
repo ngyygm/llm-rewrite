@@ -38,18 +38,26 @@ import sys
 import time
 from pathlib import Path
 
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
 # Block broken apex from interfering with transformers/trl imports
 sys.modules['apex'] = None  # type: ignore
+sys.modules['liger_kernel'] = None  # type: ignore
+sys.modules['torchvision'] = None  # type: ignore
+sys.modules['flash_attn'] = None  # type: ignore
 
->>>>>>> my local backup before merging
-=======
-# Block broken apex from interfering with transformers/trl imports
-sys.modules['apex'] = None  # type: ignore
+# Patch transformers loss_utils to fix device mismatch with device_map="auto"
+try:
+    import transformers.loss.loss_utils as _loss_utils
+    _orig_fixed_cross_entropy = _loss_utils.fixed_cross_entropy
 
->>>>>>> Stashed changes
+    def _patched_fixed_cross_entropy(source, target, num_items_in_batch=None, ignore_index=-100, **kwargs):
+        if num_items_in_batch is not None and hasattr(num_items_in_batch, 'device'):
+            num_items_in_batch = num_items_in_batch.to(source.device)
+        return _orig_fixed_cross_entropy(source, target, num_items_in_batch, ignore_index, **kwargs)
+
+    _loss_utils.fixed_cross_entropy = _patched_fixed_cross_entropy
+except Exception:
+    pass
+
 import numpy as np
 import torch
 
@@ -58,7 +66,11 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from evaluator.prompts import SYSTEM_PROMPT_SCORE_ONLY, SYSTEM_PROMPT_MULTI_SCORE
+from evaluator.prompts import (
+    SCORE_ONLY_PROMPT_VARIANTS,
+    SYSTEM_PROMPT_MULTI_SCORE,
+    get_score_only_system_prompt,
+)
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -130,7 +142,11 @@ def load_training_data(data_path: str) -> list[dict]:
     return data
 
 
-def load_eval_data_for_training(eval_path: str, mode: str = "score_only") -> list[dict]:
+def load_eval_data_for_training(
+    eval_path: str,
+    mode: str = "score_only",
+    prompt_variant: str = "original",
+) -> list[dict]:
     """Load eval.json and convert to messages format for validation during training.
 
     This converts the eval format (input/output/annotator_scores) into the
@@ -139,7 +155,11 @@ def load_eval_data_for_training(eval_path: str, mode: str = "score_only") -> lis
     with open(eval_path, "r", encoding="utf-8") as f:
         eval_data = json.load(f)
 
-    system_prompt = SYSTEM_PROMPT_SCORE_ONLY if mode == "score_only" else SYSTEM_PROMPT_MULTI_SCORE
+    system_prompt = (
+        get_score_only_system_prompt(prompt_variant)
+        if mode == "score_only"
+        else SYSTEM_PROMPT_MULTI_SCORE
+    )
 
     converted = []
     for item in eval_data:
@@ -236,6 +256,12 @@ def main():
         help="Training mode: score_only or multi_score.",
     )
     parser.add_argument(
+        "--prompt_variant", type=str, default="original",
+        choices=list(SCORE_ONLY_PROMPT_VARIANTS),
+        help="score_only: system prompt variant for held-out eval.json during training "
+        "(must match training data when comparing loss). Ignored for multi_score.",
+    )
+    parser.add_argument(
         "--subset_size", type=int, default=None,
         help="Subset size for learning curve (e.g. 50, 100, 200, 400).",
     )
@@ -288,6 +314,7 @@ def main():
     logger.info("=" * 70)
     logger.info(f"Base model       : {args.base_model}")
     logger.info(f"Mode             : {args.mode}")
+    logger.info(f"Prompt variant   : {args.prompt_variant}")
     logger.info(f"Subset size      : {args.subset_size or 'full'}")
     logger.info(f"Data path        : {args.data_path}")
     logger.info(f"Eval data path   : {args.eval_data_path}")
@@ -313,7 +340,9 @@ def main():
     logger.info(f"  Training samples: {len(train_data)}")
 
     logger.info("Loading and converting eval data...")
-    eval_data = load_eval_data_for_training(args.eval_data_path, args.mode)
+    eval_data = load_eval_data_for_training(
+        args.eval_data_path, args.mode, args.prompt_variant
+    )
     logger.info(f"  Eval samples: {len(eval_data)}")
 
     # ------------------------------------------------------------------
@@ -324,7 +353,7 @@ def main():
     from transformers import (
         AutoModelForCausalLM,
         AutoTokenizer,
-        # BitsAndBytesConfig,
+        BitsAndBytesConfig,
         TrainingArguments,
     )
     from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training, TaskType
@@ -333,13 +362,13 @@ def main():
     # ------------------------------------------------------------------
     # Quantization & Tokenizer
     # ------------------------------------------------------------------
-    # logger.info("Initializing 4-bit quantization config...")
-    # bnb_config = BitsAndBytesConfig(
-    #     load_in_4bit=True,
-    #     bnb_4bit_quant_type="nf4",
-    #     bnb_4bit_compute_dtype=torch.bfloat16,
-    #     bnb_4bit_use_double_quant=True,
-    # )
+    logger.info("Initializing 4-bit quantization config...")
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_use_double_quant=True,
+    )
 
     logger.info(f"Loading tokenizer from {args.base_model}...")
     tokenizer = AutoTokenizer.from_pretrained(
@@ -355,16 +384,18 @@ def main():
     # ------------------------------------------------------------------
     # Model
     # ------------------------------------------------------------------
-    logger.info(f"Loading base model in bf16 (no quantization)...")
+    logger.info(f"Loading base model with 4-bit quantization...")
     model = AutoModelForCausalLM.from_pretrained(
         args.base_model,
-        # quantization_config=bnb_config,
+        quantization_config=bnb_config,
         device_map="auto",
         trust_remote_code=True,
         torch_dtype=torch.bfloat16,
-        # attn_implementation="sdpa",
     )
     model.config.pretraining_tp = 1
+    # Fix device mismatch when using device_map="auto" with multiple GPUs
+    if hasattr(model, "hf_device_map") and len(set(model.hf_device_map.values())) > 1:
+        model.config.use_cache = False
 
     # Prepare model for k-bit training
     # logger.info("Preparing model for k-bit training...")
@@ -404,14 +435,87 @@ def main():
     output_path = Path(args.output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
 
-    # Check if early_stopping is available
-    try:
-        from transformers import EarlyStoppingCallback
-        callbacks = [EarlyStoppingCallback(early_stopping_patience=5)]
-        logger.info("Early stopping enabled (patience=5)")
-    except ImportError:
-        callbacks = []
-        logger.warning("EarlyStoppingCallback not available, skipping early stopping")
+    # Load raw eval data for Spearman callback
+    with open(args.eval_data_path, "r", encoding="utf-8") as f:
+        raw_eval_data = json.load(f)
+
+    # Custom callback: compute Spearman rho after each epoch and save best model
+    from transformers import TrainerCallback, TrainerState, TrainerControl
+    class SpearmanCheckpointCallback(TrainerCallback):
+        """After all epochs, run eval_evaluator.py on each checkpoint-*, copy best to best_spearman_checkpoint/."""
+
+        def __init__(
+            self,
+            eval_data_path,
+            output_dir,
+            base_model,
+            mode="score_only",
+            prompt_variant="original",
+        ):
+            self.eval_data_path = eval_data_path
+            self.output_dir = Path(output_dir)
+            self.base_model = base_model
+            self.mode = mode
+            self.prompt_variant = prompt_variant
+
+        def on_train_end(self, args, state: TrainerState, control: TrainerControl, **kwargs):
+            import shutil
+            import subprocess
+
+            ckpt_dirs = sorted(self.output_dir.glob("checkpoint-*"), key=lambda p: int(p.name.split("-")[1]))
+            if not ckpt_dirs:
+                logger.warning("[SpearmanCallback] No checkpoint-* dirs found.")
+                return control
+
+            logger.info(f"[SpearmanCallback] Evaluating {len(ckpt_dirs)} checkpoints after training...")
+            ckpt_results = []
+
+            for ckpt_path in ckpt_dirs:
+                results_path = ckpt_path / "eval_results_spearman.json"
+                logger.info(f"[SpearmanCallback] Running eval_evaluator.py on {ckpt_path.name} ...")
+                cmd = [
+                    "python3", str(PROJECT_ROOT / "evaluator" / "eval_evaluator.py"),
+                    "--model_path", str(ckpt_path),
+                    "--eval_data_path", self.eval_data_path,
+                    "--base_model", self.base_model,
+                    "--mode", self.mode,
+                    "--prompt_variant", self.prompt_variant,
+                    "--results_path", str(results_path),
+                    "--save_predictions",
+                ]
+                ret = subprocess.run(cmd)
+                if ret.returncode != 0:
+                    logger.warning(f"[SpearmanCallback] eval_evaluator.py failed on {ckpt_path.name}")
+                    continue
+
+                with open(str(results_path)) as f:
+                    res = json.load(f)
+                rho = res.get("metrics_vs_avg_score", {}).get("spearman_rho", 0.0)
+                ckpt_results.append((ckpt_path, rho))
+                logger.info(f"[SpearmanCallback] {ckpt_path.name} | Spearman rho={rho:.4f}")
+                state.log_history.append({"checkpoint": ckpt_path.name, "eval_spearman": round(rho, 4)})
+
+            if not ckpt_results:
+                logger.warning("[SpearmanCallback] All evaluations failed.")
+                return control
+
+            best_ckpt, best_rho = max(ckpt_results, key=lambda x: x[1])
+            best_path = self.output_dir / "best_spearman_checkpoint"
+            if best_path.exists():
+                shutil.rmtree(str(best_path))
+            shutil.copytree(str(best_ckpt), str(best_path))
+            logger.info(f"[SpearmanCallback] Best: {best_ckpt.name} | rho={best_rho:.4f} → {best_path}")
+            return control
+
+    spearman_callback = SpearmanCheckpointCallback(
+        eval_data_path=args.eval_data_path,
+        output_dir=args.output_dir,
+        base_model=args.base_model,
+        mode=args.mode,
+        prompt_variant=args.prompt_variant,
+    )
+    callbacks = [spearman_callback]
+    logger.info("Spearman-based checkpoint callback enabled (runs eval_evaluator.py after each epoch)")
 
     sft_config = SFTConfig(
         # Data
@@ -432,6 +536,8 @@ def main():
         # Optimizer
         # optim="paged_adamw_8bit",
         optim="adamw_torch",
+        # Fix device mismatch with device_map="auto" multi-GPU
+        average_tokens_across_devices=False,
         # Gradient checkpointing is already enabled on model
         gradient_checkpointing=False,
         # Logging
@@ -443,7 +549,7 @@ def main():
         save_strategy="epoch",
         save_total_limit=3,
         eval_strategy="epoch",
-        load_best_model_at_end=True,
+        load_best_model_at_end=False,
         metric_for_best_model="eval_loss",
         greater_is_better=False,
         # Data loading
@@ -470,6 +576,7 @@ def main():
             example["messages"],
             tokenize=False,
             add_generation_prompt=False,
+            enable_thinking=False,
         )
         return {"text": text}
 

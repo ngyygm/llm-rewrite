@@ -7,6 +7,12 @@ Loads the best LoRA model (balanced_simple) and scores all rewrite pairs.
 EMNLP 2026
 """
 
+import sys
+sys.modules['apex'] = None  # type: ignore
+sys.modules['liger_kernel'] = None  # type: ignore
+sys.modules['torchvision'] = None  # type: ignore
+sys.modules['flash_attn'] = None  # type: ignore
+
 import argparse
 import json
 import time
@@ -27,6 +33,9 @@ def main():
                         default=str(PROJECT_ROOT / "evaluator" / "checkpoints" / "balanced_simple"))
     parser.add_argument("--base_model", type=str, default="/home/linkco/exa/models/Qwen2.5-7B-Instruct")
     parser.add_argument("--output_path", type=str, default=str(GENERATED_DIR / "scored_rewrites.json"))
+    parser.add_argument("--prompt_variant", type=str, default="original",
+                        choices=["original", "simple", "detail"],
+                        help="System prompt variant for scoring.")
     parser.add_argument("--temperature", type=float, default=0.1)
     parser.add_argument("--max_new_tokens", type=int, default=256)
     parser.add_argument("--batch_size", type=int, default=1)  # Sequential for now
@@ -85,7 +94,7 @@ def main():
         source_text = item["source_text"]
         rewrite_text = item["rewrite_text"]
 
-        messages = build_eval_messages(source_text, rewrite_text, mode="score_only")
+        messages = build_eval_messages(source_text, rewrite_text, mode="score_only", prompt_variant=args.prompt_variant)
         text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         inputs = tokenizer(text, return_tensors="pt", truncation=True,
                            max_length=2048 - args.max_new_tokens).to(model.device)

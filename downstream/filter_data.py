@@ -30,15 +30,18 @@ def load_rewrites(rewrites_path: Optional[str] = None) -> List[Dict]:
 
 
 def load_evaluator_scores(scores_path: str) -> Dict[str, float]:
-    """Load evaluator scores (source_hash -> score mapping)."""
+    """Load evaluator scores, building a (source_hash, rewrite_text) -> score mapping."""
     with open(scores_path, "r", encoding="utf-8") as f:
         data = json.load(f)
-    # Build hash -> score mapping
+    items = data if isinstance(data, list) else data.get("results", [])
     scores = {}
-    for item in data.get("results", data if isinstance(data, list) else []):
-        key = item.get("source_hash", item.get("hash", ""))
-        if key:
-            scores[key] = item.get("score", item.get("predicted_score", 0))
+    for item in items:
+        # Key by (source_text + rewrite_text) hash to match filter_data._score_key
+        source = item.get("source_text", "")
+        rewrite = item.get("rewrite_text", "")
+        if source and rewrite:
+            key = hashlib.md5((source + rewrite).encode("utf-8")).hexdigest()
+            scores[key] = item.get("predicted_score", item.get("score", 0)) or 0
     return scores
 
 
@@ -68,16 +71,23 @@ def compute_bleu(hypothesis: str, reference: str) -> float:
 import math
 
 
+def _score_key(r: Dict) -> str:
+    """Compute the same hash key used when building the scores dict."""
+    return hashlib.md5(
+        (r["source_text"] + r["rewrite_text"]).encode("utf-8")
+    ).hexdigest()
+
+
 def filter_top_k(rewrites: List[Dict], scores: Dict[str, float], k: int) -> List[Dict]:
     """Select top K rewrites by evaluator score."""
-    scored = [(r, scores.get(r["source_hash"], 0)) for r in rewrites]
+    scored = [(r, scores.get(_score_key(r), 0)) for r in rewrites]
     scored.sort(key=lambda x: x[1], reverse=True)
     return [r for r, s in scored[:k]]
 
 
 def filter_by_threshold(rewrites: List[Dict], scores: Dict[str, float], threshold: float) -> List[Dict]:
     """Select rewrites with score >= threshold."""
-    return [r for r in rewrites if scores.get(r["source_hash"], 0) >= threshold]
+    return [r for r in rewrites if scores.get(_score_key(r), 0) >= threshold]
 
 
 def filter_random(rewrites: List[Dict], k: int, seed: int = SEED) -> List[Dict]:
@@ -164,7 +174,7 @@ def main():
     strategies = {}
 
     if args.strategy in ["all", "random"]:
-        strategies["random_2000"] = filter_random(rewrites, 2000)
+        strategies[f"random_{args.k}"] = filter_random(rewrites, args.k)
 
     if args.strategy in ["all", "bleu"]:
         strategies["bleu_filtered"] = filter_by_bleu_range(rewrites)

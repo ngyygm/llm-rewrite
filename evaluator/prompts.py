@@ -5,6 +5,9 @@ quality evaluator.
 EMNLP 2026 - LoRA Fine-tuned Evaluator for Chinese Text Rewriting
 """
 
+# Valid values for ``prompt_variant`` in score_only mode (train + eval).
+SCORE_ONLY_PROMPT_VARIANTS = ("original", "simple", "detail")
+
 # =============================================================================
 # System Prompts
 # =============================================================================
@@ -27,6 +30,20 @@ SYSTEM_PROMPT_SCORE_ONLY = """你是一个专业的中文文本改写质量评�
 
 请先简要分析，然后给出最终综合评分（0-5分的整数）。"""
 
+SYSTEM_PROMPT_SCORE_SIMPLE = (
+    "请帮我评判输入文本和输出文本重写的质量，并给出最终综合评分（0-5分的整数）。"
+)
+
+SYSTEM_PROMPT_SCORE_DETAIL = (
+    "请帮我判断输入文本与输出文本是否满足以下要求:\n"
+    "要求 1. 在保持原文含义不变的前提下，用原文不同的文字进行表达，不额外新增、删减会严重影响语义的内容。\n"
+    "要求 2. 在保证逻辑正确、语序通顺的前提下，变换实体、短语、概念出现的前后顺序、结构关系；顺序变换幅度越小，分数越低。\n"
+    "要求 3. 在保证特殊实体、引用、解释、特定语句不变的前提下，使用同义词替换；同义词替换越少，分数越低；\n"
+    "要求 4. 保持与原文语言风格一致，字数长度变化合理；语言风格差距越大，分数越低。\n"
+    "要求 5. 改写综合评分要非常严格，同时考虑上述 4 个要求；在保证语义一致（要求 1）的前提下，（要求 2,3）变化越大越好，字数越接近越好（要求 4）；如果存在大量长字段完全复制，则给 0 分。\n"
+    "评分准则，每个要求最低 0 分，满分均为 5 分，评分要尽可能严格。"
+)
+
 SYSTEM_PROMPT_MULTI_SCORE = """你是一个专业的中文文本改写质量评估专家。请根据以下5个维度对中文文本改写质量进行评分（0-5分）：
 
 1. 语义一致性（要求1）：改写是否保留了原文的核心语义，没有添加、删除或扭曲重要信息。
@@ -38,6 +55,21 @@ SYSTEM_PROMPT_MULTI_SCORE = """你是一个专业的中文文本改写质量评�
 评分标准：0-5分整数。
 
 请以JSON格式返回：[{{"要求1": "理由", "score": X}}, ..., {{"要求5": "综合理由", "score": Y}}]"""
+
+
+def get_score_only_system_prompt(prompt_variant: str = "original") -> str:
+    """Return the system prompt for score_only training/eval by variant."""
+    if prompt_variant == "original":
+        return SYSTEM_PROMPT_SCORE_ONLY
+    if prompt_variant == "simple":
+        return SYSTEM_PROMPT_SCORE_SIMPLE
+    if prompt_variant == "detail":
+        return SYSTEM_PROMPT_SCORE_DETAIL
+    raise ValueError(
+        f"Unknown prompt_variant: {prompt_variant!r}. "
+        f"Expected one of {SCORE_ONLY_PROMPT_VARIANTS}."
+    )
+
 
 # =============================================================================
 # User Prompt Builders
@@ -87,6 +119,7 @@ def build_eval_messages(
     source_text: str,
     rewrite_text: str,
     mode: str = "score_only",
+    prompt_variant: str = "original",
 ) -> list[dict]:
     """Build full message list for evaluation inference.
 
@@ -99,6 +132,9 @@ def build_eval_messages(
         source_text: The original Chinese text.
         rewrite_text: The rewritten Chinese text.
         mode: Either "score_only" or "multi_score".
+        prompt_variant: For ``score_only`` only: ``original`` (维度说明版),
+            ``simple``, or ``detail`` (与仓库内对应训练 JSON 的 system 一致).
+            Ignored when ``mode`` is ``multi_score``.
 
     Returns:
         List of message dicts with "role" and "content" keys.
@@ -107,7 +143,7 @@ def build_eval_messages(
         ValueError: If mode is not recognized.
     """
     if mode == "score_only":
-        system_prompt = SYSTEM_PROMPT_SCORE_ONLY
+        system_prompt = get_score_only_system_prompt(prompt_variant)
         user_prompt = build_score_only_user_prompt(source_text, rewrite_text)
     elif mode == "multi_score":
         system_prompt = SYSTEM_PROMPT_MULTI_SCORE

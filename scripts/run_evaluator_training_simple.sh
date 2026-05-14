@@ -9,7 +9,6 @@ export PYTHONPATH=/home/hadoop-ai-search/.local/lib/python3.12/site-packages:${P
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_DIR"
 
-
 BASE_MODEL="${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen3-8B}"
 EVAL_DATA="$PROJECT_DIR/data/human_eval/eval.json"
 MODEL_NAME="${MODEL_NAME:-qwen3-8b}"
@@ -32,11 +31,11 @@ mkdir -p "$CHECKPOINT_DIR" "$RESULTS_DIR"
 # =============================================================================
 echo "[Step 1/4] Training balanced score_only model (1008 samples)..."
 CUDA_VISIBLE_DEVICES=${CUDA_DEVICES:-0} python3 evaluator/train_lora.py \
-    --data_path "$PROJECT_DIR/data/human_eval/train_score_only_detail_balanced.json" \
-    --output_dir "$CHECKPOINT_DIR/score_only_detail_balanced_full" \
+    --data_path "$PROJECT_DIR/data/human_eval/train_score_only_simple_balanced.json" \
+    --output_dir "$CHECKPOINT_DIR/score_only_simple_balanced_full" \
     --base_model "$BASE_MODEL" \
     --eval_data_path "$EVAL_DATA" \
-    --prompt_variant detail \
+    --prompt_variant simple \
     --mode score_only \
     --epochs 3 \
     --lr 2e-4 \
@@ -48,27 +47,27 @@ echo ""
 # Step 1 评估
 echo "[Step 1 Eval] Evaluating balanced score_only model..."
 python3 evaluator/eval_evaluator.py \
-    --model_path "$CHECKPOINT_DIR/score_only_detail_balanced_full" \
+    --model_path "$CHECKPOINT_DIR/score_only_simple_balanced_full" \
     --eval_data_path "$EVAL_DATA" \
     --base_model "$BASE_MODEL" \
     --mode score_only \
-    --results_path "$RESULTS_DIR/results_lora_score_only_detail_balanced_full.json" \
-    --prompt_variant detail \
+    --results_path "$RESULTS_DIR/results_lora_score_only_simple_balanced_full.json" \
+    --prompt_variant simple \
     --save_predictions
 
 echo ""
 
-# =============================================================================
-# Step 2: 未平衡版 score_only 完整训练（对照实验，600条）
-# =============================================================================
+# # =============================================================================
+# # Step 2: 未平衡版 score_only 完整训练（对照实验，600条）
+# # =============================================================================
 echo "[Step 2/4] Training unbalanced score_only model (600 samples)..."
 CUDA_VISIBLE_DEVICES=${CUDA_DEVICES:-0} python3 evaluator/train_lora.py \
-    --data_path "$PROJECT_DIR/data/human_eval/train_score_only_detail.json" \
+    --data_path "$PROJECT_DIR/data/human_eval/train_score_only_simple.json" \
     --eval_data_path "$EVAL_DATA" \
-    --output_dir "$CHECKPOINT_DIR/score_only_detail_unbalanced_full" \
+    --output_dir "$CHECKPOINT_DIR/score_only_simple_unbalanced_full" \
     --base_model "$BASE_MODEL" \
     --mode score_only \
-    --prompt_variant detail \
+    --prompt_variant simple \
     --epochs 3 \
     --lr 2e-4 \
     --batch_size 4 \
@@ -79,12 +78,12 @@ CUDA_VISIBLE_DEVICES=${CUDA_DEVICES:-0} python3 evaluator/train_lora.py \
 # # # Step 2 评估
 echo "[Step 2 Eval] Evaluating unbalanced score_only model..."
 python3 evaluator/eval_evaluator.py \
-    --model_path "$CHECKPOINT_DIR/score_only_detail_unbalanced_full" \
+    --model_path "$CHECKPOINT_DIR/score_only_simple_unbalanced_full" \
     --eval_data_path "$EVAL_DATA" \
     --base_model "$BASE_MODEL" \
-    --prompt_variant detail \
+    --prompt_variant simple \
     --mode score_only \
-    --results_path "$RESULTS_DIR/results_lora_score_only_detail_unbalanced_full.json" \
+    --results_path "$RESULTS_DIR/results_lora_score_only_simple_unbalanced_full.json" \
     --save_predictions
 
 echo ""
@@ -94,8 +93,8 @@ echo ""
 # =============================================================================
 echo "[Step 3/4] Learning curve training..."
 
-# SUBSETS=(50 100 200 400)
-SUBSETS=(200)
+SUBSETS=(50 100 200 400)
+# SUBSETS=(400)
 LEARNING_CURVE_DATA="$RESULTS_DIR/learning_curves.json"
 echo "[" > "$LEARNING_CURVE_DATA"
 echo "  {\"subset_size\": 0, \"method\": \"zero_shot_7b\", \"spearman\": 0}" >> "$LEARNING_CURVE_DATA"
@@ -104,34 +103,31 @@ for SIZE in "${SUBSETS[@]}"; do
     echo ""
     echo "[Learning Curve] Training on $SIZE samples..."
     CUDA_VISIBLE_DEVICES=${CUDA_DEVICES:-0} python3 evaluator/train_lora.py \
-        --data_path "$PROJECT_DIR/data/human_eval/train_score_only_detail_balanced_${SIZE}.json" \
+        --data_path "$PROJECT_DIR/data/human_eval/train_score_only_simple_balanced_${SIZE}.json" \
         --eval_data_path "$EVAL_DATA" \
-        --output_dir "$CHECKPOINT_DIR/score_only_detail_balanced_${SIZE}" \
+        --output_dir "$CHECKPOINT_DIR/score_only_simple_balanced_${SIZE}" \
         --base_model "$BASE_MODEL" \
         --mode score_only \
-        --prompt_variant detail \
+        --prompt_variant simple \
         --epochs 3 \
         --lr 2e-4 \
         --batch_size 4 \
         --grad_accum 4 \
         --subset_size $SIZE
 
-
-            # --model_path "$CHECKPOINT_DIR/score_only_detail_balanced_${SIZE}" \
-
     echo "[Learning Curve] Evaluating $SIZE subset..."
     python3 evaluator/eval_evaluator.py \
-        --model_path "$CHECKPOINT_DIR/score_only_detail_balanced_${SIZE}" \
+        --model_path "$CHECKPOINT_DIR/score_only_simple_balanced_${SIZE}" \
         --eval_data_path "$EVAL_DATA" \
         --base_model "$BASE_MODEL" \
-        --prompt_variant detail \
+        --prompt_variant simple \
         --mode score_only \
-        --results_path "$RESULTS_DIR/results_lora_score_only_detail_balanced_${SIZE}.json" \
+        --results_path "$RESULTS_DIR/results_lora_score_only_simple_balanced_${SIZE}.json" \
         --save_predictions
 
     SPEARMAN=$(python3 -c "
 import json
-d = json.load(open('$CHECKPOINT_DIR/score_only_detail_balanced_${SIZE}/best_spearman_checkpoint/eval_results_spearman.json'))
+d = json.load(open('$CHECKPOINT_DIR/score_only_simple_balanced_${SIZE}/best_spearman_checkpoint/eval_results_spearman.json'))
 print(d['metrics_vs_avg_score']['spearman_rho'])
 ")
     echo ", {\"subset_size\": $SIZE, \"method\": \"lora_7b\", \"spearman\": $SPEARMAN}" >> "$LEARNING_CURVE_DATA"
@@ -175,12 +171,12 @@ echo ""
 # =============================================================================
 echo "[Step 5] Training reasoning prefix model..."
 CUDA_VISIBLE_DEVICES=${CUDA_DEVICES:-0} python3 evaluator/train_lora.py \
-    --data_path "$PROJECT_DIR/data/human_eval/train_score_detail_reasoning.json" \
+    --data_path "$PROJECT_DIR/data/human_eval/train_score_simple_reasoning.json" \
     --eval_data_path "$EVAL_DATA" \
-    --output_dir "$CHECKPOINT_DIR/score_detail_reasoning_full" \
+    --output_dir "$CHECKPOINT_DIR/score_only_simple_reasoning_full" \
     --base_model "$BASE_MODEL" \
     --mode score_only \
-    --prompt_variant detail \
+    --prompt_variant simple \
     --epochs 3 \
     --lr 2e-4 \
     --batch_size 4 \
@@ -188,12 +184,12 @@ CUDA_VISIBLE_DEVICES=${CUDA_DEVICES:-0} python3 evaluator/train_lora.py \
 
 echo "[Step 5 Eval] Evaluating reasoning prefix model..."
 python3 evaluator/eval_evaluator.py \
-    --model_path "$CHECKPOINT_DIR/score_detail_reasoning_full/best_spearman_checkpoint" \
+    --model_path "$CHECKPOINT_DIR/score_only_simple_reasoning_full/best_spearman_checkpoint" \
     --eval_data_path "$EVAL_DATA" \
     --base_model "$BASE_MODEL" \
-    --prompt_variant detail \
+    --prompt_variant simple \
     --mode score_only \
-    --results_path "$RESULTS_DIR/results_lora_score_detail_reasoning_full.json" \
+    --results_path "$RESULTS_DIR/results_lora_score_only_simple_reasoning_full.json" \
     --save_predictions
 
 echo ""

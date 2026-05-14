@@ -8,14 +8,19 @@ build/
 
 # Training checkpoints (too large for GitHub)
 evaluator/checkpoints/
+evaluator/checkpoints_1/
 
-<<<<<<< HEAD
-# Data files
-# data/ -- now tracked in git
-=======
 # Data files (uploaded to HuggingFace)
 data/
->>>>>>> my local backup before merging
+
+analysis/qwen3-8B/
+analysis/qwen3-8B_original/
+analysis/old_result/
+analysis/figures/
+analysis/results/
+
+downstream/checkpoints/
+downstream/checkpoints_old/
 
 # LaTeX intermediates
 *.aux

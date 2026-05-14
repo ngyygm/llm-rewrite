@@ -6,6 +6,12 @@ Evaluates rewrite quality on held-out data using:
 - LLM-based evaluation (optional)
 - Human evaluation (optional, 100 sample subset)
 """
+import sys
+sys.modules['apex'] = None  # type: ignore
+sys.modules['liger_kernel'] = None  # type: ignore
+sys.modules['torchvision'] = None  # type: ignore
+sys.modules['flash_attn'] = None  # type: ignore
+
 import argparse
 import json
 import os
@@ -27,7 +33,7 @@ def generate_rewrite(model, tokenizer, source_text: str, max_new_tokens: int = 2
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": f"请改写以下文本：\n{source_text}"},
     ]
-    text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+    text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, enable_thinking=False)
     inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=1024).to(model.device)
 
     with torch.no_grad():
@@ -166,7 +172,7 @@ def evaluate_model(
 
     for i, item in enumerate(eval_data):
         source = item.get("source_text", item.get("input", ""))
-        reference = item.get("reference", item.get("gold_rewrite", item.get("output", "")))
+        reference = item.get("reference", item.get("gold_rewrite", item.get("output", item.get("rewrite_text", ""))))
 
         # Generate rewrite
         rewrite = generate_rewrite(model, tokenizer, source)

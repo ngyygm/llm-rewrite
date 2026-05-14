@@ -139,7 +139,10 @@ def generate_synthetic_baseline_results(eval_data, seed=42):
     result = {}
     for src_key, dst_key in key_map.items():
         if src_key in all_results:
-            result[dst_key] = [float(s) if s >= 0 else float("nan") for s in all_results[src_key]]
+            scores = all_results[src_key]
+            valid = [float(s) for s in scores if s >= 0]
+            fill = float(np.median(valid)) if valid else 2.5
+            result[dst_key] = [float(s) if s >= 0 else fill for s in scores]
 
     # Add synthetic char_overlap and length_heuristic
     rng = np.random.default_rng(seed)

@@ -40,6 +40,10 @@ import argparse
 import json
 import logging
 import sys
+sys.modules['apex'] = None  # type: ignore
+sys.modules['liger_kernel'] = None  # type: ignore
+sys.modules['torchvision'] = None  # type: ignore
+sys.modules['flash_attn'] = None  # type: ignore
 import time
 from collections import defaultdict
 from itertools import combinations
@@ -204,13 +208,15 @@ def load_model_and_tokenizer(
     base_model: str,
     checkpoint: str,
     logger: logging.Logger,
+    no_lora: bool = False,
 ):
-    """Load base model with 4-bit quantization and LoRA adapter.
+    """Load base model with 4-bit quantization and optional LoRA adapter.
 
     Args:
         base_model: Base model name or local path.
-        checkpoint: LoRA adapter directory path.
+        checkpoint: LoRA adapter directory path (ignored if no_lora=True).
         logger: Logger instance.
+        no_lora: If True, load base model only (zero-shot mode).
 
     Returns:
         Tuple of (model, tokenizer).
@@ -243,9 +249,14 @@ def load_model_and_tokenizer(
         torch_dtype=torch.bfloat16,
     )
 
-    logger.info(f"Loading LoRA adapter from {checkpoint}...")
-    model = PeftModel.from_pretrained(base, checkpoint)
-    model.eval()
+    if no_lora:
+        logger.info("Zero-shot mode: skipping LoRA adapter.")
+        base.eval()
+        model = base
+    else:
+        logger.info(f"Loading LoRA adapter from {checkpoint}...")
+        model = PeftModel.from_pretrained(base, checkpoint)
+        model.eval()
 
     if torch.cuda.is_available():
         gpu_mem = torch.cuda.get_device_properties(0).total_memory / 1024**3
@@ -717,6 +728,50 @@ def eval_same_source(
 # Cross-Source Evaluation
 # ---------------------------------------------------------------------------
 
+def generate_batch(
+    model,
+    tokenizer,
+    texts: list,
+    max_new_tokens: int = 50,
+    temperature: float = 0.1,
+) -> list:
+    """Run batched generation on a list of pre-formatted prompt strings.
+
+    Returns list of decoded response strings.
+    """
+    original_padding_side = tokenizer.padding_side
+    tokenizer.padding_side = "left"
+
+    inputs = tokenizer(
+        texts,
+        return_tensors="pt",
+        padding=True,
+        truncation=True,
+        max_length=2048 - max_new_tokens,
+    ).to(model.device)
+
+    with torch.no_grad():
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            temperature=temperature,
+            top_p=0.9,
+            repetition_penalty=1.1,
+            do_sample=temperature > 0,
+            pad_token_id=tokenizer.pad_token_id,
+            eos_token_id=tokenizer.eos_token_id,
+        )
+
+    tokenizer.padding_side = original_padding_side
+
+    input_len = inputs["input_ids"].shape[1]
+    responses = []
+    for output in outputs:
+        generated_ids = output[input_len:]
+        responses.append(tokenizer.decode(generated_ids, skip_special_tokens=True))
+    return responses
+
+
 def eval_cross_source(
     model,
     tokenizer,
@@ -726,6 +781,7 @@ def eval_cross_source(
     max_new_tokens: int,
     temperature: float,
     logger: logging.Logger,
+    batch_size: int = 1,
 ) -> dict:
     """Evaluate pairwise model on cross-source comparisons.
 
@@ -795,7 +851,34 @@ def eval_cross_source(
     hard_correct = 0   # 0.5 <= diff < 1
     hard_total = 0
 
-    logger.info(f"Running cross-source pairwise evaluation on {len(pairs)} pairs...")
+    logger.info(f"Running cross-source pairwise evaluation on {len(pairs)} pairs... (batch_size={batch_size})")
+
+    # Pre-build all prompts for batched inference
+    all_texts_ab = []
+    all_texts_ba = []
+    for i, j, _ in pairs:
+        sample_a = eval_data[i]
+        sample_b = eval_data[j]
+        msgs_ab = build_cross_source_messages(
+            sample_a["input"], sample_a["output"],
+            sample_b["input"], sample_b["output"],
+        )
+        msgs_ba = build_cross_source_messages(
+            sample_b["input"], sample_b["output"],
+            sample_a["input"], sample_a["output"],
+        )
+        all_texts_ab.append(tokenizer.apply_chat_template(msgs_ab, tokenize=False, add_generation_prompt=True, enable_thinking=False))
+        all_texts_ba.append(tokenizer.apply_chat_template(msgs_ba, tokenize=False, add_generation_prompt=True, enable_thinking=False))
+
+    # Batched inference for all AB and BA prompts
+    all_responses_ab = []
+    all_responses_ba = []
+    for start in tqdm(range(0, len(pairs), batch_size), desc="Cross-source (AB)", leave=False):
+        batch = all_texts_ab[start:start + batch_size]
+        all_responses_ab.extend(generate_batch(model, tokenizer, batch, max_new_tokens, temperature))
+    for start in tqdm(range(0, len(pairs), batch_size), desc="Cross-source (BA)", leave=False):
+        batch = all_texts_ba[start:start + batch_size]
+        all_responses_ba.extend(generate_batch(model, tokenizer, batch, max_new_tokens, temperature))
 
     for pair_idx, (i, j, a_should_win) in enumerate(tqdm(
         pairs, desc="Cross-source", leave=False
@@ -803,19 +886,24 @@ def eval_cross_source(
         sample_a = eval_data[i]
         sample_b = eval_data[j]
 
-        source_a = sample_a["input"]
-        rewrite_a = sample_a["output"]
         score_a = sample_a["avg_score"]
-
-        source_b = sample_b["input"]
-        rewrite_b = sample_b["output"]
         score_b = sample_b["avg_score"]
 
-        result = generate_cross_with_position_swap(
-            model, tokenizer,
-            source_a, rewrite_a, source_b, rewrite_b,
-            max_new_tokens=max_new_tokens, temperature=temperature,
-        )
+        resp_ab = all_responses_ab[pair_idx]
+        resp_ba = all_responses_ba[pair_idx]
+        pref_ab = parse_pairwise_output(resp_ab)
+        pref_ba = parse_pairwise_output(resp_ba)
+        parse_ok = (pref_ab >= 0) and (pref_ba >= 0)
+        avg_preference = (pref_ab + (1.0 - pref_ba)) / 2.0 if parse_ok else -1.0
+
+        result = {
+            "response_ab": resp_ab,
+            "response_ba": resp_ba,
+            "pref_ab": pref_ab,
+            "pref_ba": pref_ba,
+            "avg_preference": avg_preference,
+            "parse_ok": parse_ok,
+        }
 
         score_diff = abs(score_a - score_b)
         if score_diff >= 2:
@@ -956,8 +1044,12 @@ def main():
         description="Evaluate pairwise LoRA fine-tuned Chinese rewriting evaluator"
     )
     parser.add_argument(
-        "--checkpoint", type=str, required=True,
+        "--checkpoint", type=str, default=None,
         help="Path to the trained pairwise LoRA adapter directory.",
+    )
+    parser.add_argument(
+        "--no_lora", action="store_true",
+        help="Zero-shot mode: skip LoRA adapter, use base model directly.",
     )
     parser.add_argument(
         "--base_model", type=str,
@@ -1004,6 +1096,10 @@ def main():
         "--seed", type=int, default=42,
         help="Random seed.",
     )
+    parser.add_argument(
+        "--batch_size", type=int, default=1,
+        help="Batch size for inference (higher = faster but more GPU memory).",
+    )
     args = parser.parse_args()
 
     # ------------------------------------------------------------------
@@ -1016,7 +1112,7 @@ def main():
     logger.info("Evaluation: Pairwise LoRA Rewriting Quality Evaluator")
     logger.info("=" * 70)
     logger.info(f"Base model      : {args.base_model}")
-    logger.info(f"LoRA checkpoint : {args.checkpoint}")
+    logger.info(f"LoRA checkpoint : {'(zero-shot, no LoRA)' if args.no_lora else args.checkpoint}")
     logger.info(f"Eval mode       : {args.eval_mode}")
     logger.info(f"Temperature     : {args.temperature}")
     logger.info(f"Max new tokens  : {args.max_new_tokens}")
@@ -1026,8 +1122,11 @@ def main():
     # ------------------------------------------------------------------
     # Load model
     # ------------------------------------------------------------------
+    if not args.no_lora and args.checkpoint is None:
+        parser.error("--checkpoint is required unless --no_lora is specified.")
+
     model, tokenizer = load_model_and_tokenizer(
-        args.base_model, args.checkpoint, logger
+        args.base_model, args.checkpoint, logger, no_lora=args.no_lora
     )
 
     output = {
@@ -1091,6 +1190,7 @@ def main():
             max_new_tokens=args.max_new_tokens,
             temperature=args.temperature,
             logger=logger,
+            batch_size=args.batch_size,
         )
         elapsed = time.time() - start
 

@@ -24,10 +24,11 @@ echo "GPU count: $(python3 -c 'import torch; print(torch.cuda.device_count())' 2
 echo ""
 
 # Configuration (override with environment variables)
-export LOCAL_MODEL_PATH="${LOCAL_MODEL_PATH:-Qwen/Qwen2.5-7B-Instruct}"
-export PROMETHEUS_MODEL_PATH="${PROMETHEUS_MODEL_PATH:-prometheus-eval/prometheus-7b-v2.0}"
+# export LOCAL_MODEL_PATH="${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen2.5-7B-Instruct}"
+export LOCAL_MODEL_PATH="${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen3-8B}"
+export PROMETHEUS_MODEL_PATH="${PROMETHEUS_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/baokailin/train_model/prometheus-7b-v2.0}"
 export API_URL="${API_URL:-http://localhost:8000}"
-export EVALUATOR_ADAPTER="${EVALUATOR_ADAPTER:-$PROJECT_DIR/evaluator/checkpoints/score_only_full}"
+export EVALUATOR_ADAPTER="${EVALUATOR_ADAPTER:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/baokailin/github.com/ngyygm/llm-rewrite.git/evaluator/checkpoints/balanced_simple/checkpoint-189}"
 
 # Track total time
 START_TIME=$(date +%s)
@@ -36,11 +37,7 @@ START_TIME=$(date +%s)
 # Step 0: Verify data preparation
 # ==========================================================================
 echo "[Step 0] Verifying data preparation..."
-<<<<<<< HEAD
-if [ ! -f "data/human_eval/train_score_only.json" ] || [ ! -f "data/human_eval/eval.json" ]; then
-=======
 if [ ! -f "data/human_eval/train_score_only_balanced.json" ] || [ ! -f "data/human_eval/eval.json" ]; then
->>>>>>> my local backup before merging
     echo "  Running data conversion..."
     python3 scripts/convert_data.py
 else
@@ -76,22 +73,30 @@ echo "[Step 4/5] Generating analysis and figures..."
 mkdir -p analysis/results analysis/figures
 
 python3 analysis/correlation_analysis.py \
-    --results_dir data/baselines \
-    --output_dir analysis/results
+    --eval-data data/human_eval/eval.json \
+    --all-results data/baselines/all_results.json \
+    --metadata data/baselines/method_metadata.json \
+    --output-dir analysis/results
 
 python3 analysis/learning_curves.py \
-    --data_path data/baselines/learning_curves.json \
-    --output_dir analysis/figures
+    --all-results data/baselines/all_results.json \
+    --metadata data/baselines/method_metadata.json \
+    --eval-data data/human_eval/eval.json \
+    --output-dir analysis/figures
 
 python3 analysis/bias_analysis.py \
-    --eval_data data/human_eval/eval.json \
-    --evaluator_results data/baselines/results_lora_score_only_full.json \
-    --output_dir analysis/figures
+    --eval-data data/human_eval/eval.json \
+    --figures-dir analysis/figures \
+    --results-dir analysis/results
 
 python3 analysis/generate_figures.py \
-    --results_dir analysis/results \
-    --output_dir analysis/figures
-echo ""
+    --eval-data data/human_eval/eval.json \
+    --all-results data/baselines/all_results.json \
+    --metadata data/baselines/method_metadata.json \
+    --trad-results data/baselines/all_results_traditional.json \
+    --figures-dir analysis/qwen3-8B/figures \
+    --tables-dir analysis/qwen3-8B/results
+# echo ""
 
 # ==========================================================================
 # Step 5: Summary

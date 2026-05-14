@@ -13,7 +13,18 @@ Usage:
     python baselines/run_traditional.py
 """
 
+import os
 import sys
+
+# Set before PyTorch / tokenizers load (avoids many cluster segfaults from OpenMP/MKL).
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
+# Headless / broken CUDA stacks: default to CPU unless user already set CUDA_VISIBLE_DEVICES.
+if "CUDA_VISIBLE_DEVICES" not in os.environ:
+    os.environ["CUDA_VISIBLE_DEVICES"] = ""
+
 sys.modules['apex'] = None  # type: ignore
 
 import json
@@ -22,7 +33,7 @@ import warnings
 import numpy as np
 from pathlib import Path
 from collections import Counter
-from typing import List, Dict, Tuple
+from typing import Dict, List, Optional, Tuple
 
 # Suppress warnings from third-party libraries
 warnings.filterwarnings("ignore")
@@ -127,22 +138,15 @@ def compute_jaccard_word(input_text: str, output_text: str) -> float:
 # BLEU Score
 # ============================================================
 
-def _tokenize_chinese(text: str) -> str:
-    """Tokenize Chinese text by inserting spaces between characters."""
-    return " ".join(list(text.strip()))
-
-
 def compute_bleu(input_text: str, output_text: str) -> float:
     """Compute BLEU score using sacrebleu.
 
     Treats the input as the reference and output as the hypothesis.
-    Uses character-level tokenization for Chinese.
     """
     try:
         import sacrebleu
-        ref = _tokenize_chinese(input_text)
-        hyp = _tokenize_chinese(output_text)
-        bleu = sacrebleu.sentence_bleu(hyp, [ref])
+        # sacrebleu expects list of refs (list of lists) and list of hyps
+        bleu = sacrebleu.sentence_bleu(output_text, [input_text])
         return bleu.score / 100.0  # Normalize to [0, 1]
     except Exception as e:
         warnings.warn(f"BLEU computation failed: {e}")
@@ -157,14 +161,11 @@ def compute_rouge_l(input_text: str, output_text: str) -> float:
     """Compute ROUGE-L F1 score using rouge_score.
 
     Treats the input as the reference and output as the hypothesis.
-    Uses character-level tokenization for Chinese.
     """
     try:
         from rouge_score import rouge_scorer
         scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=False)
-        ref = _tokenize_chinese(input_text)
-        hyp = _tokenize_chinese(output_text)
-        scores = scorer.score(ref, hyp)
+        scores = scorer.score(input_text, output_text)
         return scores["rougeL"].fmeasure
     except Exception as e:
         warnings.warn(f"ROUGE-L computation failed: {e}")
@@ -245,43 +246,65 @@ class TFIDFSimilarity:
 # ============================================================
 
 class EmbeddingSimilarity:
-    """Compute embedding-based cosine similarity using sentence-transformers."""
+    """Compute embedding-based cosine similarity using transformers (mean pooling)."""
 
-    def __init__(self, model_name: str = "paraphrase-multilingual-MiniLM-L12-v2"):
+    def __init__(
+        self,
+        model_name: str = "paraphrase-multilingual-MiniLM-L12-v2",
+        device: Optional[str] = None,
+    ):
         self.model_name = model_name
+        self.device = device or os.environ.get("ST_EMBEDDING_DEVICE", "cpu")
         self.model = None
+        self.tokenizer = None
         self._loaded = False
 
     def load_model(self):
-        """Lazy-load the sentence-transformer model."""
+        """Lazy-load the model via transformers (avoids sentence_transformers segfault)."""
         if self._loaded:
             return
-        try:
-            from sentence_transformers import SentenceTransformer
-            print(f"  Loading model: {self.model_name} ...")
-            self.model = SentenceTransformer(self.model_name)
-            self._loaded = True
-        except Exception as e:
-            raise RuntimeError(f"Failed to load model {self.model_name}: {e}")
+        from transformers import AutoTokenizer, AutoModel
+        print(f"  Loading model: {self.model_name} (device={self.device}) ...")
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        self.model = AutoModel.from_pretrained(self.model_name)
+        self.model.to(self.device)
+        self.model.eval()
+        self._loaded = True
+
+    def _encode(self, texts: List[str]) -> np.ndarray:
+        import torch
+        encoded = self.tokenizer(
+            texts, padding=True, truncation=True, max_length=512, return_tensors="pt"
+        )
+        encoded = {k: v.to(self.device) for k, v in encoded.items()}
+        with torch.no_grad():
+            output = self.model(**encoded)
+        token_embeddings = output.last_hidden_state
+        attention_mask = encoded["attention_mask"]
+        mask_expanded = attention_mask.unsqueeze(-1).float()
+        sum_embeddings = (token_embeddings * mask_expanded).sum(dim=1)
+        sum_mask = mask_expanded.sum(dim=1).clamp(min=1e-9)
+        return (sum_embeddings / sum_mask).cpu().numpy()
 
     def similarity(self, text_a: str, text_b: str) -> float:
-        """Compute cosine similarity between two texts."""
         if not self._loaded:
             self.load_model()
-
-        embeddings = self.model.encode([text_a, text_b])
+        embeddings = self._encode([text_a, text_b])
         cos_sim = np.dot(embeddings[0], embeddings[1]) / (
             np.linalg.norm(embeddings[0]) * np.linalg.norm(embeddings[1])
         )
         return float(cos_sim)
 
     def similarity_batch(self, texts_a: List[str], texts_b: List[str]) -> List[float]:
-        """Compute cosine similarities for a batch of text pairs."""
         if not self._loaded:
             self.load_model()
 
         all_texts = texts_a + texts_b
-        embeddings = self.model.encode(all_texts)
+        all_embeddings = []
+        for i in range(0, len(all_texts), 32):
+            all_embeddings.append(self._encode(all_texts[i:i+32]))
+        embeddings = np.concatenate(all_embeddings, axis=0)
+
         n = len(texts_a)
         similarities = []
         for i in range(n):

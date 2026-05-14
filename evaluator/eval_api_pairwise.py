@@ -123,16 +123,29 @@ def parse_pairwise_output(text: str) -> float:
 # API Client
 # ---------------------------------------------------------------------------
 
-API_BASE_URL = "https://api.siliconflow.cn/v1/chat/completions"
+DEFAULT_API_BASE_URL = "https://api.siliconflow.cn/v1/chat/completions"
+
+# Thread-local key rotation state
+_key_state = threading.local()
 
 
-def call_api(messages, model, api_key, max_tokens=50, temperature=0.1,
-             max_retries=5, retry_delay=2.0):
-    """Call SiliconFlow API with retry logic."""
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json",
-    }
+def get_next_key(api_keys: list) -> str:
+    """Round-robin API key rotation (thread-local counter)."""
+    if not hasattr(_key_state, "idx"):
+        _key_state.idx = 0
+    key = api_keys[_key_state.idx % len(api_keys)]
+    _key_state.idx += 1
+    return key
+
+
+def call_api(messages, model, api_keys, max_tokens=50, temperature=0.1,
+             max_retries=5, retry_delay=2.0, api_base_url=None):
+    """Call API with retry logic and round-robin key rotation."""
+    url = api_base_url or DEFAULT_API_BASE_URL
+    # api_keys can be a single string or a list
+    if isinstance(api_keys, str):
+        api_keys = [api_keys]
+
     payload = {
         "model": model,
         "messages": messages,
@@ -141,8 +154,13 @@ def call_api(messages, model, api_key, max_tokens=50, temperature=0.1,
     }
 
     for attempt in range(max_retries):
+        api_key = get_next_key(api_keys)
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        }
         try:
-            resp = requests.post(API_BASE_URL, headers=headers, json=payload, timeout=120)
+            resp = requests.post(url, headers=headers, json=payload, timeout=120)
             if resp.status_code == 429:
                 time.sleep(retry_delay * (2 ** attempt))
                 continue
@@ -181,7 +199,7 @@ def process_pair(args_tuple):
     """Process a single pair. Returns (pair_idx, result_dict)."""
     (pair_idx, i, j, a_should_win, score_a, score_b,
      source_a, rewrite_a, source_b, rewrite_b,
-     model, api_key, max_tokens, temperature, skip_swap) = args_tuple
+     model, api_keys, max_tokens, temperature, skip_swap, api_base_url) = args_tuple
 
     score_diff = abs(score_a - score_b)
 
@@ -196,7 +214,7 @@ def process_pair(args_tuple):
     ]
 
     # Forward call
-    resp_ab = call_api(messages, model, api_key, max_tokens, temperature)
+    resp_ab = call_api(messages, model, api_keys, max_tokens, temperature, api_base_url=api_base_url)
     pref_ab = parse_pairwise_output(resp_ab)
 
     if skip_swap:
@@ -222,7 +240,7 @@ def process_pair(args_tuple):
             {"role": "system", "content": SYSTEM_PROMPT_PAIRWISE},
             {"role": "user", "content": user_swap},
         ]
-        resp_ba = call_api(messages_swap, model, api_key, max_tokens, temperature)
+        resp_ba = call_api(messages_swap, model, api_keys, max_tokens, temperature, api_base_url=api_base_url)
         pref_ba = parse_pairwise_output(resp_ba)
 
         parse_ok = (pref_ab >= 0) and (pref_ba >= 0)
@@ -341,7 +359,12 @@ def compute_metrics(pair_results, eval_data, min_score_diff, skip_swap):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", type=str, required=True)
-    parser.add_argument("--api_key", type=str, default=None)
+    parser.add_argument("--api_key", type=str, default=None,
+                        help="Single API key (or use --api_keys for multiple).")
+    parser.add_argument("--api_keys", type=str, nargs="+", default=None,
+                        help="Multiple API keys for round-robin rotation.")
+    parser.add_argument("--api_base_url", type=str, default=None,
+                        help="Custom API base URL (default: SiliconFlow).")
     parser.add_argument("--eval_data_path", type=str,
                         default=str(PROJECT_ROOT / "data" / "human_eval" / "eval.json"))
     parser.add_argument("--min_score_diff", type=float, default=1.0)
@@ -355,9 +378,18 @@ def main():
                         help="Save checkpoint every N completed pairs")
     args = parser.parse_args()
 
-    api_key = args.api_key or os.environ.get("SILICONFLOW_API_KEY", "")
-    if not api_key:
-        print("Error: API key required.")
+    # Collect API keys: --api_keys > --api_key > env var
+    # All sources support comma-separated keys
+    if args.api_keys:
+        # --api_keys can be space-separated or comma-separated
+        api_keys = [k.strip() for keys in args.api_keys for k in keys.split(",") if k.strip()]
+    elif args.api_key:
+        api_keys = [k.strip() for k in args.api_key.split(",") if k.strip()]
+    else:
+        env_key = os.environ.get("SILICONFLOW_API_KEY", "")
+        api_keys = [k.strip() for k in env_key.split(",") if k.strip()]
+    if not api_keys:
+        print("Error: API key required (--api_key, --api_keys, or SILICONFLOW_API_KEY env var).")
         sys.exit(1)
 
     logger = setup_logging()
@@ -375,6 +407,8 @@ def main():
     logger.info("API Pairwise Cross-Source Evaluation (Multi-threaded)")
     logger.info("=" * 70)
     logger.info(f"Model: {args.model}")
+    logger.info(f"API URL: {args.api_base_url or DEFAULT_API_BASE_URL}")
+    logger.info(f"API keys: {len(api_keys)} key(s)")
     logger.info(f"Workers: {args.workers}")
     logger.info(f"Skip swap: {args.skip_swap}")
     logger.info(f"Output: {output_path}")
@@ -413,8 +447,8 @@ def main():
             pair_idx, i, j, a_should_win, sa, sb,
             eval_data[i]["input"], eval_data[i]["output"],
             eval_data[j]["input"], eval_data[j]["output"],
-            args.model, api_key, args.max_tokens, args.temperature,
-            args.skip_swap,
+            args.model, api_keys, args.max_tokens, args.temperature,
+            args.skip_swap, args.api_base_url,
         ))
 
     if not work_items:

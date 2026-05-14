@@ -15,9 +15,18 @@ Usage:
     python baselines/run_fine_tuned_evaluators.py --model prometheus-eval/prometheus-7b-v2.0
 """
 
+import sys
+
+# Text-only eval: block optional / broken native deps before torch & transformers import.
+# Matches evaluator/eval_evaluator.py — avoids broken torch↔torchvision ABI aborting
+# transformers (e.g. MistralForCausalLM import chain via image_utils).
+sys.modules["apex"] = None  # type: ignore[assignment]
+sys.modules["liger_kernel"] = None  # type: ignore[assignment]
+sys.modules["torchvision"] = None  # type: ignore[assignment]
+sys.modules["flash_attn"] = None  # type: ignore[assignment]
+
 import json
 import re
-import sys
 import torch
 import warnings
 import numpy as np
@@ -379,10 +388,10 @@ def run_prometheus_evaluator(
     del tokenizer
     torch.cuda.empty_cache()
 
-    # Correlations
-    gt_scores = [d["consensus_score"] for d in eval_data]
+    # Correlations (exclude parse failures, do not fill)
+    gt_scores = [d["avg_score"] for d in eval_data]
     correlations = compute_correlations(
-        eval_results["filled_predictions"],
+        eval_results["predictions"],
         gt_scores,
         method_label,
         round_predictions=True,
@@ -392,7 +401,7 @@ def run_prometheus_evaluator(
 
     # Per-level analysis
     level_analysis = per_score_level_analysis(
-        eval_results["filled_predictions"],
+        eval_results["predictions"],
         gt_scores,
         method_label,
     )
@@ -404,6 +413,7 @@ def run_prometheus_evaluator(
         sample_results.append({
             "idx": i,
             "consensus_score": d["consensus_score"],
+            "avg_score": d["avg_score"],
             "predicted_score": eval_results["predictions"][i],
             "raw_response": eval_results["raw_responses"][i][:300],
         })
@@ -428,14 +438,7 @@ def run_prometheus_evaluator(
 
 def run_all_fine_tuned(
     data: List[Dict],
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
     model_name: str = DEFAULT_MODEL,
->>>>>>> my local backup before merging
-=======
-    model_name: str = DEFAULT_MODEL,
->>>>>>> Stashed changes
     temperature: float = 0.1,
     load_in_4bit: bool = True,
     max_samples: Optional[int] = None,
@@ -463,15 +466,7 @@ def run_all_fine_tuned(
     print("=" * 60)
 
     result_prometheus = run_prometheus_evaluator(
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-        model_name=DEFAULT_MODEL,
-=======
         model_name=model_name,
->>>>>>> my local backup before merging
-=======
-        model_name=model_name,
->>>>>>> Stashed changes
         data=data,
         method_label="Prometheus-2-7B",
         rubric=SCORE_RUBRIC_ZH,
@@ -492,15 +487,7 @@ def run_all_fine_tuned(
     mprompt_reference = REFERENCE_ANSWER_ZH + "\n\n请用中文进行评估并给出评分。"
 
     result_mprometheus = run_prometheus_evaluator(
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-        model_name=DEFAULT_MODEL,
-=======
         model_name=model_name,
->>>>>>> my local backup before merging
-=======
-        model_name=model_name,
->>>>>>> Stashed changes
         data=data,
         method_label="M-Prometheus-7B",
         rubric=SCORE_RUBRIC_ZH,
@@ -566,14 +553,7 @@ def main():
     else:
         results = run_all_fine_tuned(
             data,
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
             model_name=args.model,
->>>>>>> my local backup before merging
-=======
-            model_name=args.model,
->>>>>>> Stashed changes
             temperature=args.temperature,
             load_in_4bit=not args.no_4bit,
             max_samples=args.max_samples,

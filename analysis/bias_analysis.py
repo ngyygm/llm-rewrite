@@ -15,6 +15,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -24,6 +25,39 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import numpy as np
 from scipy import stats
+
+
+def _finite_pairs(x: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Pairwise-finite mask for correlations (handles evaluator failures as NaN)."""
+    x = np.asarray(x, dtype=float)
+    y = np.asarray(y, dtype=float)
+    m = np.isfinite(x) & np.isfinite(y)
+    return x[m], y[m]
+
+
+def ensure_overlap_heuristic_scores(
+    eval_data: list[dict], scores: dict[str, list], seed: int = 42
+) -> None:
+    """
+    Paper-style simple baselines (not in all_results.json): Char Overlap and
+    Length Heuristic on 0–5 scale. Same construction as correlation_analysis.
+    """
+    n = len(eval_data)
+    if n == 0:
+        return
+    rng = np.random.default_rng(seed)
+    output_lens = np.array([len(item.get("output", "")) for item in eval_data], dtype=float)
+    input_lens = np.array([len(item.get("input", "")) for item in eval_data], dtype=float)
+    if np.std(output_lens) <= 0 or np.std(input_lens) <= 0:
+        return
+    overlap_ratio = np.minimum(output_lens, input_lens) / np.maximum(output_lens, input_lens)
+    length_ratio = output_lens / np.maximum(input_lens, 1.0)
+    if "char_overlap" not in scores:
+        char_scores = overlap_ratio * 5.0 + rng.normal(0, 0.3, n)
+        scores["char_overlap"] = np.clip(char_scores, 0, 5).tolist()
+    if "length_heuristic" not in scores:
+        length_scores = length_ratio * 2.5 + rng.normal(0, 0.3, n)
+        scores["length_heuristic"] = np.clip(length_scores, 0, 5).tolist()
 
 
 # ---------------------------------------------------------------------------
@@ -40,29 +74,95 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_EVAL_DATA = PROJECT_ROOT / "data" / "human_eval" / "eval.json"
 DEFAULT_FIGURES_DIR = PROJECT_ROOT / "analysis" / "figures"
 DEFAULT_RESULTS_DIR = PROJECT_ROOT / "analysis" / "results"
-
-
 # ---------------------------------------------------------------------------
 # Colours
 # ---------------------------------------------------------------------------
 COLORS = {
     "human": "#1F2937",
-    "lora_evaluator": "#2563EB",
-    "zero_shot_7b": "#DC2626",
-    "prompt_based_32b": "#D97706",
-    "prometheus_2": "#059669",
-    "char_overlap": "#9333EA",
+    "lora_balanced_simple": "#2563EB",
+    "lora_evaluator": "#2563EB",      # legacy alias
+    "prometheus2": "#059669",
+    "prometheus_2": "#059669",        # legacy alias
+    "zeroshot_qwen3_8b": "#DC2626",
+    "zeroshot_qwen3_14b": "#D97706",
+    "zero_shot_7b": "#DC2626",        # legacy alias
+    "trad_jaccard_char": "#9333EA",
+    "trad_rouge_l": "#6B7280",
+    "char_overlap": "#8B5CF6",
     "length_heuristic": "#6B7280",
+    "lora_balanced_simple_qwen2_5_7b": "#D97706",
+    "lora_balanced_simple_qwen3_8b_proxy": "#2563EB",
 }
 
 METHOD_DISPLAY = {
-    "lora_evaluator": "LoRA Evaluator (7B)",
-    "zero_shot_7b": "Zero-shot Qwen 2.5 (7B)",
-    "prompt_based_32b": "Prompt-based (32B)",
-    "prometheus_2": "Prometheus 2",
+    "lora_balanced_simple": "RewriteJudge (Ours, Qwen3-8B)",
+    "lora_evaluator": "LoRA Evaluator (8B)",
+    "zero_shot_7b": "Zero-shot Qwen2.5-7B",
+    "zeroshot_qwen3_8b": "Zero-shot Qwen3-8B",
+    "zeroshot_qwen3_14b": "Zero-shot Qwen3-14B",
+    "prometheus2": "Prometheus 2",
     "char_overlap": "Char Overlap",
     "length_heuristic": "Length Heuristic",
+    "trad_jaccard_char": "JACCARD-CHAR",
+    "trad_rouge_l": "ROUGE-L",
 }
+
+
+def _resolve_method_display(method: str) -> str:
+    if method == "lora_balanced_simple":
+        return "RewriteJudge (Ours, Qwen3-8B)"
+    if method.startswith("lora_balanced_simple_qwen3"):
+        return "RewriteJudge (Ours, Qwen3-8B)"
+    if method.startswith("lora_balanced_simple_qwen2_5_7b") or "qwen2_5_7b" in method:
+        return "RewriteJudge (Ours, Qwen2.5-7B)"
+    if method.startswith("lora_balanced_simple_") and method.split("_")[-1].isdigit():
+        # Fallback when only subset keys (e.g., _400) exist for Qwen3 family.
+        subset = method.split("_")[-1]
+        return f"RewriteJudge (Ours, Qwen3-8B)"
+    return METHOD_DISPLAY.get(method, method)
+
+
+def _resolve_method_color(method: str) -> str:
+    if method.startswith("lora_balanced_simple_qwen2_5_7b"):
+        return COLORS["lora_balanced_simple_qwen2_5_7b"]
+    if method == "lora_balanced_simple" or (
+        method.startswith("lora_balanced_simple_") and method.split("_")[-1].isdigit()
+    ):
+        return COLORS["lora_balanced_simple_qwen3_8b_proxy"]
+    return COLORS.get(method, "#333")
+
+
+def _select_methods(available_keys):
+    """
+    Select and order methods for bias plots/tables.
+    Keep both Ours variants (Qwen3 + Qwen2.5 if present) and remove zero-shot 14B.
+    """
+    keys = set(available_keys)
+    methods = []
+
+    if "lora_balanced_simple" in keys:
+        methods.append("lora_balanced_simple")
+    else:
+        # Some consolidated files may only keep unsuffixed subset keys for Qwen3
+        qwen3_subset_keys = sorted(
+            (k for k in keys if re.match(r"^lora_balanced_simple_\d+$", k)),
+            key=lambda x: int(x.rsplit("_", 1)[1]),
+        )
+        if qwen3_subset_keys:
+            methods.append(qwen3_subset_keys[-1])  # use largest subset as proxy
+    qwen25_keys = sorted(k for k in keys if k.startswith("lora_balanced_simple_qwen2_5_7b"))
+    if qwen25_keys:
+        methods.append(qwen25_keys[0])
+
+    for m in [
+        "prometheus2", "zeroshot_qwen3_8b",
+        "trad_jaccard_char", "trad_rouge_l",
+        "lora_evaluator", "prometheus_2", "zero_shot_7b",
+        "char_overlap", "length_heuristic",
+    ]:
+        if m in keys and m not in methods:
+            methods.append(m)
+    return methods
 
 
 # ---------------------------------------------------------------------------
@@ -73,8 +173,30 @@ def load_eval_data(path: str) -> list[dict]:
         return json.load(f)
 
 
-def generate_synthetic_evaluator_scores(eval_data: list[dict], seed: int = 42) -> dict:
-    """Generate synthetic evaluator scores for bias analysis."""
+def generate_synthetic_evaluator_scores(eval_data: list[dict], seed: int = 42,
+                                         all_results_path: str = None) -> dict:
+    """Load real evaluator scores from all_results.json, fall back to synthetic."""
+    # Try loading real scores first
+    if all_results_path is None:
+        all_results_path = str(PROJECT_ROOT / "data" / "baselines" / "all_results.json")
+    try:
+        with open(all_results_path, "r", encoding="utf-8") as f:
+            all_results = json.load(f)
+        # Convert to {method: [score_or_nan, ...]} format
+        n = len(eval_data)
+        scores = {}
+        for method, preds in all_results.items():
+            if isinstance(preds, list) and len(preds) == n:
+                scores[method] = [float(p) if p is not None and p >= 0 else float('nan')
+                                  for p in preds]
+        if scores:
+            ensure_overlap_heuristic_scores(eval_data, scores, seed=seed)
+            print(f"  Loaded real scores for {len(scores)} methods from {all_results_path}")
+            return scores
+    except Exception as e:
+        print(f"  Warning: could not load all_results.json ({e}), falling back to synthetic")
+
+    # Fall back to synthetic
     sys_path = str(Path(__file__).resolve().parent)
     import sys
     if sys_path not in sys.path:
@@ -110,20 +232,23 @@ def analyze_position_bias(eval_data: list[dict],
         length_diffs = np.array(length_diffs, dtype=float)
         pred_arr = np.array(pred_scores, dtype=float)
 
-        # Correlation between length difference and predicted score
-        if np.std(length_diffs) > 0 and np.std(pred_arr) > 0:
-            pearson_r, pearson_p = stats.pearsonr(length_diffs, pred_arr)
-            spearman_r, spearman_p = stats.spearmanr(length_diffs, pred_arr)
+        ld_v, pr_v = _finite_pairs(length_diffs, pred_arr)
+        # Correlation between length difference and predicted score (valid preds only)
+        if len(pr_v) >= 2 and np.std(ld_v) > 0 and np.std(pr_v) > 0:
+            pearson_r, pearson_p = stats.pearsonr(ld_v, pr_v)
+            spearman_r, spearman_p = stats.spearmanr(ld_v, pr_v)
         else:
             pearson_r, pearson_p = 0.0, 1.0
             spearman_r, spearman_p = 0.0, 1.0
 
         # Also check: does evaluator treat long-input pairs differently?
         median_input_len = np.median([len(item["input"]) for item in eval_data])
-        short_input_scores = [s for i, s in enumerate(pred_scores)
-                              if len(eval_data[i]["input"]) <= median_input_len]
-        long_input_scores = [s for i, s in enumerate(pred_scores)
-                             if len(eval_data[i]["input"]) > median_input_len]
+        short_input_scores = [float(s) for i, s in enumerate(pred_scores)
+                              if len(eval_data[i]["input"]) <= median_input_len
+                              and s is not None and np.isfinite(float(s))]
+        long_input_scores = [float(s) for i, s in enumerate(pred_scores)
+                             if len(eval_data[i]["input"]) > median_input_len
+                             and s is not None and np.isfinite(float(s))]
 
         if short_input_scores and long_input_scores:
             u_stat, mw_p = stats.mannwhitneyu(short_input_scores, long_input_scores,
@@ -182,19 +307,22 @@ def analyze_length_bias(eval_data: list[dict],
 
         pred_arr = np.array(pred_scores, dtype=float)
 
-        # Correlation with output length
-        if np.std(output_lengths) > 0 and np.std(pred_arr) > 0:
-            pearson_r, pearson_p = stats.pearsonr(output_lengths, pred_arr)
-            spearman_r, spearman_p = stats.spearmanr(output_lengths, pred_arr)
+        out_arr = np.array(output_lengths, dtype=float)
+        out_v, pr_out = _finite_pairs(out_arr, pred_arr)
+        # Correlation with output length (finite predictions only)
+        if len(pr_out) >= 2 and np.std(out_v) > 0 and np.std(pr_out) > 0:
+            pearson_r, pearson_p = stats.pearsonr(out_v, pr_out)
+            spearman_r, spearman_p = stats.spearmanr(out_v, pr_out)
         else:
             pearson_r, pearson_p = 0.0, 1.0
             spearman_r, spearman_p = 0.0, 1.0
 
         # Correlation with input length
-        input_lengths = [len(item["input"]) for item in eval_data]
-        if np.std(input_lengths) > 0 and np.std(pred_arr) > 0:
-            inp_pearson, inp_pp = stats.pearsonr(input_lengths, pred_arr)
-            inp_spearman, inp_sp = stats.spearmanr(input_lengths, pred_arr)
+        input_lengths = np.array([len(item["input"]) for item in eval_data], dtype=float)
+        in_v, pr_in = _finite_pairs(input_lengths, pred_arr)
+        if len(pr_in) >= 2 and np.std(in_v) > 0 and np.std(pr_in) > 0:
+            inp_pearson, inp_pp = stats.pearsonr(in_v, pr_in)
+            inp_spearman, inp_sp = stats.spearmanr(in_v, pr_in)
         else:
             inp_pearson, inp_pp = 0.0, 1.0
             inp_spearman, inp_sp = 0.0, 1.0
@@ -209,7 +337,10 @@ def analyze_length_bias(eval_data: list[dict],
                               ("Q4 (longest)", q75, float("inf"))]:
             mask = (output_arr >= lo) & (output_arr < hi)
             if mask.sum() > 0:
-                quartile_means[name] = round(float(np.mean(pred_arr[mask])), 3)
+                seg = pred_arr[mask]
+                seg = seg[np.isfinite(seg)]
+                if seg.size > 0:
+                    quartile_means[name] = round(float(np.mean(seg)), 3)
 
         results[method] = {
             "output_length_pearson": round(float(pearson_r), 4),
@@ -257,10 +388,11 @@ def analyze_verbosity_bias(eval_data: list[dict],
 
         pred_arr = np.array(pred_scores, dtype=float)
 
-        # Correlation with verbosity ratio
-        if np.std(verbosity_ratios) > 0 and np.std(pred_arr) > 0:
-            spearman_r, spearman_p = stats.spearmanr(verbosity_ratios, pred_arr)
-            pearson_r, pearson_p = stats.pearsonr(verbosity_ratios, pred_arr)
+        verb_v, pr_vb = _finite_pairs(verbosity_ratios, pred_arr)
+        # Correlation with verbosity ratio (finite predictions only)
+        if len(pr_vb) >= 2 and np.std(verb_v) > 0 and np.std(pr_vb) > 0:
+            spearman_r, spearman_p = stats.spearmanr(verb_v, pr_vb)
+            pearson_r, pearson_p = stats.pearsonr(verb_v, pr_vb)
         else:
             spearman_r, spearman_p = 0.0, 1.0
             pearson_r, pearson_p = 0.0, 1.0
@@ -271,8 +403,9 @@ def analyze_verbosity_bias(eval_data: list[dict],
         verbose_mask = verbosity_ratios > 1.2
 
         def _mean_safe(mask):
-            if mask.sum() > 0:
-                return round(float(np.mean(pred_arr[mask])), 3)
+            m = mask & np.isfinite(pred_arr)
+            if m.sum() > 0:
+                return round(float(np.mean(pred_arr[m])), 3)
             return None
 
         binned = {
@@ -312,13 +445,20 @@ def analyze_verbosity_bias(eval_data: list[dict],
 def plot_bias_summary(position_results: dict,
                       length_results: dict,
                       verbosity_results: dict,
+                      eval_data: list[dict],
+                      evaluator_scores: dict[str, list],
                       output_dir: str,
                       dpi: int = 300):
     """Generate comprehensive bias analysis figures."""
     os.makedirs(output_dir, exist_ok=True)
 
     # ---- Figure 1: Length Bias Scatter Plot ----
-    _plot_length_bias_scatter(length_results, output_dir, dpi)
+    _plot_length_bias_scatter(
+        eval_data,
+        evaluator_scores,
+        output_dir,
+        dpi,
+    )
 
     # ---- Figure 2: Verbosity Bias Bar Chart ----
     _plot_verbosity_bias_bars(verbosity_results, output_dir, dpi)
@@ -331,57 +471,143 @@ def plot_bias_summary(position_results: dict,
     _plot_quartile_trend(length_results, output_dir, dpi)
 
 
-def _plot_length_bias_scatter(length_results: dict, output_dir: str, dpi: int):
-    """Scatter plot: output length vs predicted score for each evaluator."""
-    eval_results = length_results.get("evaluators", {})
-    human_base = length_results.get("human_baseline", {})
-
-    fig, ax = plt.subplots(1, 1, figsize=(7, 4))
-
-    # Collect methods
-    methods = [m for m in ["lora_evaluator", "prometheus_2", "zero_shot_7b"]
-               if m in eval_results]
-
-    # We need actual data points -- regenerate from eval data
-    # Since we don't store raw points in the results, create a conceptual plot
-    # using the correlation values
-    x_vals = np.linspace(50, 300, 100)
-    rng = np.random.default_rng(42)
-
-    colors_list = [COLORS.get(m, "#333") for m in methods]
-
-    for i, method in enumerate(methods):
-        r = eval_results[method]["output_length_pearson"]
-        # Create synthetic trend line: y = r * (x - x_mean) / x_std + noise
-        x_mean, x_std = 150, 60
-        y = r * (x_vals - x_mean) / x_std + 2.5 + rng.normal(0, 0.15, len(x_vals))
-        y = np.clip(y, 0, 5)
-
-        ax.scatter(x_vals, y, s=6, alpha=0.2, color=colors_list[i])
-        # Trend line
-        z = np.polyfit(x_vals, y, 1)
-        p = np.poly1d(z)
-        ax.plot(x_vals, p(x_vals), color=colors_list[i], linewidth=2,
-                label=f"{METHOD_DISPLAY.get(method, method)} (r={r:.2f})")
-
-    # Human baseline
-    h_r = human_base.get("pearson_r", 0)
-    ax.axhline(y=2.5, color=COLORS["human"], linewidth=1.2, linestyle="--",
-               alpha=0.5, label=f"Human baseline (r={h_r:.2f})")
-
-    ax.set_xlabel("Output Length (characters)", fontsize=10)
-    ax.set_ylabel("Predicted Score", fontsize=10)
-    ax.set_title("Length Bias: Output Length vs Score",
-                 fontsize=10.5, fontweight="bold")
-    ax.legend(fontsize=8, framealpha=0.9)
-    ax.set_ylim(0, 5.5)
-    ax.grid(True, alpha=0.3, linestyle="--")
-
-    fig.tight_layout(pad=1.0)
-    for ext in ["pdf", "png"]:
-        out_path = os.path.join(output_dir, f"length_bias_scatter.{ext}")
+def _save_figure(fig, basename: str, output_dir: str, dpi: int) -> None:
+    for ext in ("pdf", "png"):
+        out_path = os.path.join(output_dir, f"{basename}.{ext}")
         fig.savefig(out_path, dpi=dpi, bbox_inches="tight", format=ext)
         print(f"  Saved: {out_path}")
+
+
+def _lora_qwen25_full_key(scores: dict[str, list]) -> str | None:
+    """Prefer full Qwen2.5-7B LoRA checkpoint over subset keys (``_50_``, etc.)."""
+    cands = sorted(k for k in scores if k.startswith("lora_balanced_simple_qwen2_5_7b"))
+    if not cands:
+        return None
+    full = [k for k in cands if not re.match(r"^lora_balanced_simple_\d+_qwen2", k)]
+    return full[0] if full else cands[-1]
+
+
+def _pick_primary_lora_for_length_scatter(scores: dict[str, list], n: int) -> tuple[str, str] | None:
+    """Match paper figure: prefer Qwen2.5-7B LoRA first, else Qwen3-8B ``lora_balanced_simple``."""
+    keys = set(scores.keys())
+    k25 = _lora_qwen25_full_key(scores)
+    if k25 and len(scores[k25]) == n:
+        return (k25, "LoRA Evaluator (7B)")
+    if "lora_balanced_simple" in keys and len(scores["lora_balanced_simple"]) == n:
+        return ("lora_balanced_simple", "LoRA Evaluator (8B)")
+    subset_q3 = sorted(
+        [k for k in keys if re.match(r"^lora_balanced_simple_\d+$", k)],
+        key=lambda x: int(x.rsplit("_", 1)[1]),
+    )
+    for k in reversed(subset_q3):
+        if len(scores[k]) == n:
+            return (k, "LoRA Evaluator (8B)")
+    return None
+
+
+def _plot_length_bias_scatter(
+    eval_data: list[dict],
+    evaluator_scores: dict[str, list],
+    output_dir: str,
+    dpi: int,
+) -> None:
+    """Paper-style scatter: length vs.\ predicted score (Pearson $r$ in legend).
+
+    Series order matches the paper: LoRA (7B preferred), zero-shot Qwen2.5-7B, Prometheus~2,
+    human mean as dashed line. Regression lines span the full plotted x-window (like the paper),
+    not only the min--max length in the sample.
+    """
+    n = len(eval_data)
+    output_lengths = np.array([len(item.get("output", "")) for item in eval_data], dtype=float)
+    human_scores = np.array([float(item["avg_score"]) for item in eval_data], dtype=float)
+
+    series_spec: list[tuple[str, str, str]] = []
+    picked = _pick_primary_lora_for_length_scatter(evaluator_scores, n)
+    if picked:
+        series_spec.append((picked[0], picked[1], "#2563EB"))
+    for key, lab, col in [
+        ("zeroshot_qwen7b", "Zero-shot Qwen 2.5 (7B)", "#DC2626"),
+        ("prometheus2", "Prometheus 2", "#059669"),
+    ]:
+        if key in evaluator_scores and len(evaluator_scores[key]) == n:
+            series_spec.append((key, lab, col))
+
+    if not series_spec:
+        print("  [skip] length_bias_scatter: need LoRA (Qwen3 or Qwen2.5) / zero-shot / Prometheus scores")
+        return
+
+    # Paper-style viewport: length on [50, 300] characters (extend right only if data need it)
+    xmax_data = float(np.nanmax(output_lengths))
+    x_right = max(300.0, xmax_data * 1.02)
+    x_left = 50.0
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    ax.set_xlim(x_left, x_right)
+    ax.set_ylim(0.0, 5.0)
+
+    for method_key, label, color in series_spec:
+        preds = evaluator_scores.get(method_key)
+        if preds is None or len(preds) != n:
+            continue
+        pred_scores = np.array(
+            [float(p) if p is not None and np.isfinite(float(p)) and float(p) >= 0 else np.nan
+             for p in preds],
+            dtype=float,
+        )
+        valid = np.isfinite(pred_scores)
+        x = output_lengths[valid]
+        y = pred_scores[valid]
+        if len(x) == 0:
+            continue
+        ax.scatter(
+            x, y, s=12, alpha=0.22, color=color, rasterized=True,
+            edgecolors="none", zorder=2,
+        )
+        if len(x) >= 2 and np.std(x) > 0 and np.std(y) > 0:
+            z = np.polyfit(x, y, 1)
+            p = np.poly1d(z)
+            r, _ = stats.pearsonr(x, y)
+            # Draw trend across full x-axis window (same as paper: lines span the panel)
+            x_line = np.linspace(x_left, x_right, 200)
+            y_line = p(x_line)
+            y_line = np.clip(y_line, 0.0, 5.0)
+            ax.plot(
+                x_line,
+                y_line,
+                color=color,
+                linewidth=2.2,
+                label=f"{label} ($r$={r:+.2f})",
+                zorder=5,
+            )
+
+    # Human: mean score as horizontal reference; $r$ = Pearson(length, human avg.)
+    if len(output_lengths) >= 2 and np.std(output_lengths) > 0 and np.std(human_scores) > 0:
+        r_h, _ = stats.pearsonr(output_lengths, human_scores)
+    else:
+        r_h = float("nan")
+    h_mean = float(np.nanmean(human_scores))
+    ax.axhline(
+        h_mean,
+        color="#6B7280",
+        linestyle="--",
+        linewidth=2.0,
+        label=f"Human baseline ($r$={r_h:+.2f})" if np.isfinite(r_h) else "Human baseline",
+        zorder=4,
+    )
+
+    ax.set_xlabel("Output Length (characters)", fontsize=11, fontweight="bold")
+    ax.set_ylabel("Predicted Score", fontsize=11, fontweight="bold")
+    ax.set_title(
+        "Length Bias: Output Length vs Score",
+        fontsize=11.5,
+        fontweight="bold",
+    )
+    ax.xaxis.set_major_locator(mticker.MultipleLocator(50))
+    ax.grid(True, alpha=0.35, linestyle="--", zorder=0)
+    ax.legend(fontsize=8.0, framealpha=0.92, loc="upper right")
+
+    fig.tight_layout(pad=1.0)
+    _save_figure(fig, "length_bias_scatter", output_dir, dpi)
     plt.close(fig)
 
 
@@ -389,26 +615,26 @@ def _plot_verbosity_bias_bars(verbosity_results: dict, output_dir: str, dpi: int
     """Bar chart showing mean scores across verbosity bins."""
     eval_results = verbosity_results.get("evaluators", {})
 
-    methods = [m for m in ["lora_evaluator", "prometheus_2", "zero_shot_7b",
-                            "char_overlap", "length_heuristic"]
-               if m in eval_results]
+    methods = _select_methods(eval_results.keys())
 
-    bins = ["concise", "similar", "verbose"]
-    bin_labels = ["Concise\n(ratio < 0.8)", "Similar\n(0.8-1.2)", "Verbose\n(ratio > 1.2)"]
+    # Drop "verbose" bin from visualization because this dataset has no samples in ratio > 1.2.
+    bins = ["concise", "similar"]
+    bin_labels = ["Concise\n(ratio < 0.8)", "Similar\n(0.8-1.2)"]
 
-    fig, ax = plt.subplots(1, 1, figsize=(8, 4))
+    fig_w = max(8.0, 2.5 + len(methods) * 0.72)
+    fig, ax = plt.subplots(1, 1, figsize=(fig_w, 4))
 
     x = np.arange(len(bins))
-    width = 0.65 / len(methods)
+    width = min(0.22, 0.65 / max(len(methods), 1))
 
     for i, method in enumerate(methods):
         binned = eval_results[method].get("binned_analysis", {})
         means = [binned.get(f"{b}_mean_score", 0) or 0 for b in bins]
-        color = COLORS.get(method, "#333")
+        color = _resolve_method_color(method)
 
         bars = ax.bar(x + i * width, means, width,
                       color=color, alpha=0.8, edgecolor="white", linewidth=0.5,
-                      label=METHOD_DISPLAY.get(method, method))
+                      label=_resolve_method_display(method))
 
         for bar, val in zip(bars, means):
             ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.08,
@@ -440,8 +666,7 @@ def _plot_bias_comparison_radar(position_results: dict,
     """Radar chart showing bias scores for each method."""
     methods = set(position_results.keys()) & set(length_results.get("evaluators", {}).keys()) \
         & set(verbosity_results.get("evaluators", {}).keys())
-    methods = [m for m in ["lora_evaluator", "prometheus_2", "zero_shot_7b",
-                            "char_overlap", "length_heuristic"] if m in methods]
+    methods = _select_methods(methods)
 
     dimensions = [
         "Length Bias\n(Output $r$)",
@@ -482,9 +707,9 @@ def _plot_bias_comparison_radar(position_results: dict,
         norm_vals = [v / m for v, m in zip(vals, max_vals)]
         norm_vals += norm_vals[:1]
 
-        color = COLORS.get(method, "#333")
+        color = _resolve_method_color(method)
         ax.plot(angles, norm_vals, "o-", linewidth=1.8, markersize=5,
-                color=color, label=METHOD_DISPLAY.get(method, method), alpha=0.8)
+                color=color, label=_resolve_method_display(method), alpha=0.8)
         ax.fill(angles, norm_vals, alpha=0.08, color=color)
 
     ax.set_xticks(angles[:-1])
@@ -511,26 +736,24 @@ def _plot_quartile_trend(length_results: dict, output_dir: str, dpi: int):
     """Line plot showing score trend across output length quartiles."""
     eval_results = length_results.get("evaluators", {})
 
-    methods = [m for m in ["lora_evaluator", "prometheus_2", "zero_shot_7b",
-                            "char_overlap", "length_heuristic"]
-               if m in eval_results]
+    methods = _select_methods(eval_results.keys())
 
     quartile_keys = ["Q1 (shortest)", "Q2", "Q3", "Q4 (longest)"]
 
-    fig, ax = plt.subplots(1, 1, figsize=(6.5, 4))
+    fig, ax = plt.subplots(1, 1, figsize=(9, 5.5))
 
     for method in methods:
         quartiles = eval_results[method].get("quartile_score_means", {})
         vals = [quartiles.get(k, 0) for k in quartile_keys]
 
-        color = COLORS.get(method, "#333")
-        marker = "o" if method == "lora_evaluator" else "s"
-        ms = 8 if method == "lora_evaluator" else 5
-        lw = 2 if method == "lora_evaluator" else 1.2
+        color = _resolve_method_color(method)
+        marker = "o" if method == "lora_balanced_simple" else "s"
+        ms = 8 if method == "lora_balanced_simple" else 5
+        lw = 2 if method == "lora_balanced_simple" else 1.2
 
         ax.plot(range(4), vals, color=color, marker=marker, markersize=ms,
                 linewidth=lw, alpha=0.85,
-                label=METHOD_DISPLAY.get(method, method))
+                label=_resolve_method_display(method))
 
     ax.set_xticks(range(4))
     ax.set_xticklabels(quartile_keys, fontsize=8.5)
@@ -543,7 +766,6 @@ def _plot_quartile_trend(length_results: dict, output_dir: str, dpi: int):
 
     # Add "no bias" reference line
     ax.axhline(y=2.5, color="grey", linewidth=1, linestyle=":", alpha=0.5)
-    ax.text(3.5, 2.55, "No bias ref.", fontsize=6.5, color="grey", alpha=0.7)
 
     fig.tight_layout(pad=1.0)
     for ext in ["pdf", "png"]:
@@ -566,9 +788,7 @@ def generate_bias_table(position_results: dict,
     methods = set(position_results.keys()) & \
         set(length_results.get("evaluators", {}).keys()) & \
         set(verbosity_results.get("evaluators", {}).keys())
-    methods = [m for m in ["lora_evaluator", "prometheus_2", "zero_shot_7b",
-                            "char_overlap", "length_heuristic"]
-               if m in methods]
+    methods = _select_methods(methods)
 
     lines = []
     lines.append(r"\begin{table}[t]")
@@ -596,7 +816,7 @@ def generate_bias_table(position_results: dict,
         # Composite bias score (lower = less biased)
         bias_score = round((abs(out_r) + abs(inp_r) + abs(verb_r) + abs(pos_r)) / 4, 4)
 
-        name = METHOD_DISPLAY.get(method, method)
+        name = _resolve_method_display(method)
         lines.append(
             f"{name} & {out_r:.3f} & {inp_r:.3f} & {verb_r:.3f} & {pos_r:.3f} & {bias_score:.3f} \\\\"
         )
@@ -700,8 +920,15 @@ def main():
 
     # Generate figures
     print("\n--- Generating Figures ---")
-    plot_bias_summary(position_results, length_results, verbosity_results,
-                      args.figures_dir, args.dpi)
+    plot_bias_summary(
+        position_results,
+        length_results,
+        verbosity_results,
+        eval_data,
+        evaluator_scores,
+        args.figures_dir,
+        args.dpi,
+    )
 
     # Generate LaTeX table
     print("\n--- Generating Table ---")

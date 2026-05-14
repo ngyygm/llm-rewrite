@@ -183,7 +183,7 @@ def main():
     print(f"Saved train_score_balanced_reasoning.json: {len(balanced_reasoning)} samples")
 
     # Also create balanced subsets for learning curves
-    subsets = [50, 100, 200, 400]
+    subsets = [50, 100, 200, 400, 500]
     for size in subsets:
         rng_sub = np.random.RandomState(SEED + size + 1000)  # Different seed to avoid overlap with original subsets
         # Sample from balanced dataset, ensuring stratification

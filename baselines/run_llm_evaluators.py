@@ -15,6 +15,10 @@ Usage:
 import json
 import re
 import sys
+sys.modules['apex'] = None  # type: ignore
+sys.modules['liger_kernel'] = None  # type: ignore
+sys.modules['torchvision'] = None  # type: ignore
+sys.modules['flash_attn'] = None  # type: ignore
 import torch
 import warnings
 import numpy as np
@@ -251,6 +255,7 @@ def run_geval(
             messages,
             tokenize=False,
             add_generation_prompt=True,
+            enable_thinking=False,
         )
     except Exception:
         # Fallback for models without chat template
@@ -318,6 +323,7 @@ def run_zero_shot(
             messages,
             tokenize=False,
             add_generation_prompt=True,
+            enable_thinking=False,
         )
     except Exception:
         text = f"系统：{SYSTEM_PROMPT_EVAL}\n\n用户：{user_content}\n\n助手："
@@ -367,7 +373,7 @@ def evaluate_dataset(
         Dict with predictions, raw responses, and metadata.
     """
     n = len(data)
-    gt_scores = [d["consensus_score"] for d in data]
+    gt_scores = [d["avg_score"] for d in data]
 
     predictions = []
     raw_responses = []
@@ -485,9 +491,9 @@ def run_llm_evaluator(
     torch.cuda.empty_cache()
 
     # Compute correlations
-    gt_scores = [d["consensus_score"] for d in eval_data]
+    gt_scores = [d["avg_score"] for d in eval_data]
     correlations = compute_correlations(
-        eval_results["filled_predictions"],
+        eval_results["predictions"],
         gt_scores,
         method_name,
         round_predictions=True,
@@ -497,7 +503,7 @@ def run_llm_evaluator(
 
     # Per-score-level analysis
     level_analysis = per_score_level_analysis(
-        eval_results["filled_predictions"],
+        eval_results["predictions"],
         gt_scores,
         method_name,
     )
@@ -509,6 +515,7 @@ def run_llm_evaluator(
         sample_results.append({
             "idx": i,
             "consensus_score": d["consensus_score"],
+            "avg_score": d["avg_score"],
             "predicted_score": eval_results["predictions"][i],
             "raw_response": eval_results["raw_responses"][i][:300],
         })

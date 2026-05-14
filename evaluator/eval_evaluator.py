@@ -33,10 +33,15 @@ EMNLP 2026
 """
 
 import argparse
+import sys
+sys.modules['apex'] = None  # type: ignore
+sys.modules['liger_kernel'] = None  # type: ignore
+sys.modules['torchvision'] = None  # type: ignore
+sys.modules['flash_attn'] = None  # type: ignore
+
 import json
 import logging
 import os
-import sys
 import time
 from pathlib import Path
 
@@ -49,7 +54,11 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from evaluator.prompts import build_eval_messages, parse_score_from_response
+from evaluator.prompts import (
+    SCORE_ONLY_PROMPT_VARIANTS,
+    build_eval_messages,
+    parse_score_from_response,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -168,58 +177,44 @@ def run_inference(
     tokenizer,
     eval_data: list[dict],
     mode: str,
+    prompt_variant: str,
     temperature: float,
     max_new_tokens: int,
     top_p: float,
     repetition_penalty: float,
     logger: logging.Logger,
+    batch_size: int = 16,
 ) -> list[dict]:
-    """Run inference on evaluation data.
-
-    Args:
-        model: The PEFT model (LoRA on base).
-        tokenizer: The tokenizer.
-        eval_data: List of eval samples (input/output/consensus_score/...).
-        mode: "score_only" or "multi_score".
-        temperature: Generation temperature.
-        max_new_tokens: Maximum tokens to generate.
-        top_p: Top-p (nucleus) sampling.
-        repetition_penalty: Repetition penalty.
-        logger: Logger instance.
-
-    Returns:
-        List of result dicts with prediction info.
-    """
+    """Run batched inference on evaluation data."""
     model.eval()
 
-    results = []
-    parse_failures = 0
-
-    for idx, sample in enumerate(tqdm(eval_data, desc="Inference", leave=False)):
-        source_text = sample["input"]
-        rewrite_text = sample["output"]
-        consensus_score = sample["consensus_score"]
-        avg_score = sample["avg_score"]
-
-        # Build messages
-        messages = build_eval_messages(source_text, rewrite_text, mode=mode)
-
-        # Apply chat template
-        text = tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=True,
+    # Pre-format all prompts
+    texts = []
+    for sample in eval_data:
+        messages = build_eval_messages(
+            sample["input"],
+            sample["output"],
+            mode=mode,
+            prompt_variant=prompt_variant,
         )
+        text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, enable_thinking=False)
+        texts.append(text)
 
-        # Tokenize
+    # Batch inference requires left padding
+    original_padding_side = tokenizer.padding_side
+    tokenizer.padding_side = "left"
+
+    all_responses = []
+    for i in tqdm(range(0, len(texts), batch_size), desc="Inference (batched)"):
+        batch_texts = texts[i:i + batch_size]
         inputs = tokenizer(
-            text,
+            batch_texts,
             return_tensors="pt",
+            padding=True,
             truncation=True,
             max_length=2048 - max_new_tokens,
         ).to(model.device)
 
-        # Generate
         with torch.no_grad():
             outputs = model.generate(
                 **inputs,
@@ -232,27 +227,30 @@ def run_inference(
                 eos_token_id=tokenizer.eos_token_id,
             )
 
-        # Decode only the generated part (skip input tokens)
-        generated_ids = outputs[0][inputs["input_ids"].shape[1]:]
-        response_text = tokenizer.decode(generated_ids, skip_special_tokens=True)
+        input_len = inputs["input_ids"].shape[1]
+        for output in outputs:
+            generated_ids = output[input_len:]
+            response_text = tokenizer.decode(generated_ids, skip_special_tokens=True)
+            all_responses.append(response_text)
 
-        # Parse score
+    tokenizer.padding_side = original_padding_side
+
+    # Parse scores and assemble results
+    results = []
+    parse_failures = 0
+    for idx, (sample, response_text) in enumerate(zip(eval_data, all_responses)):
         predicted_score = parse_score_from_response(response_text, mode=mode)
-
         if predicted_score is None:
             parse_failures += 1
-            logger.debug(
-                f"  [Sample {idx}] Parse failure. Response: {response_text[:200]}"
-            )
-
+            logger.debug(f"  [Sample {idx}] Parse failure. Response: {response_text[:200]}")
         results.append({
             "index": idx,
-            "source_text": source_text[:200],  # Truncate for storage
-            "rewrite_text": rewrite_text[:200],
+            "source_text": sample["input"][:200],
+            "rewrite_text": sample["output"][:200],
             "response": response_text,
             "predicted_score": predicted_score,
-            "consensus_score": consensus_score,
-            "avg_score": avg_score,
+            "consensus_score": sample["consensus_score"],
+            "avg_score": sample["avg_score"],
             "annotator_scores": sample["annotator_scores"],
         })
 
@@ -287,8 +285,15 @@ def main():
         help="Evaluation mode: score_only or multi_score.",
     )
     parser.add_argument(
-        "--temperature", type=float, default=0.1,
-        help="Generation temperature (0.1 = near-deterministic).",
+        "--prompt_variant", type=str, default="original",
+        choices=list(SCORE_ONLY_PROMPT_VARIANTS),
+        help="score_only system prompt style: original (维度说明), simple, detail. "
+        "Ignored for multi_score.",
+    )
+    parser.add_argument(
+        "--temperature", type=float, default=0.0,
+        help="Generation temperature. Use 0 for greedy decoding so metrics match "
+        "across re-runs and with train_lora Spearman callback (default was 0.1 with sampling).",
     )
     parser.add_argument(
         "--max_new_tokens", type=int, default=256,
@@ -312,6 +317,10 @@ def main():
         help="Random seed.",
     )
     parser.add_argument(
+        "--batch_size", type=int, default=16,
+        help="Batch size for inference.",
+    )
+    parser.add_argument(
         "--save_predictions", action="store_true",
         help="Save individual predictions to a separate file.",
     )
@@ -330,6 +339,7 @@ def main():
     logger.info(f"LoRA adapter    : {args.model_path}")
     logger.info(f"Eval data       : {args.eval_data_path}")
     logger.info(f"Mode            : {args.mode}")
+    logger.info(f"Prompt variant  : {args.prompt_variant}")
     logger.info(f"Temperature     : {args.temperature}")
     logger.info(f"Max new tokens  : {args.max_new_tokens}")
     logger.info(f"Results path    : {args.results_path}")
@@ -395,11 +405,13 @@ def main():
         tokenizer=tokenizer,
         eval_data=eval_data,
         mode=args.mode,
+        prompt_variant=args.prompt_variant,
         temperature=args.temperature,
         max_new_tokens=args.max_new_tokens,
         top_p=args.top_p,
         repetition_penalty=args.repetition_penalty,
         logger=logger,
+        batch_size=args.batch_size,
     )
 
     elapsed = time.time() - start_time
@@ -466,6 +478,7 @@ def main():
         "model": args.base_model,
         "adapter_path": str(args.model_path),
         "mode": args.mode,
+        "prompt_variant": args.prompt_variant,
         "inference_params": {
             "temperature": args.temperature,
             "max_new_tokens": args.max_new_tokens,

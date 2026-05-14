@@ -4,26 +4,20 @@
 # EMNLP 2026
 # =============================================================================
 set -euo pipefail
+export PYTHONPATH=/home/hadoop-ai-search/.local/lib/python3.12/site-packages:${PYTHONPATH:-}
 
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_DIR"
-
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-BASE_MODEL="${LOCAL_MODEL_PATH:-Qwen/Qwen2.5-7B-Instruct}"
-=======
-BASE_MODEL="${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen2.5-7B-Instruct }"
->>>>>>> my local backup before merging
-=======
-BASE_MODEL="${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen2.5-7B-Instruct}"
->>>>>>> Stashed changes
+MODEL_NAME="qwen3-8b"
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+BASE_MODEL="${LOCAL_MODEL_PATH:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/deepsearch_files_ssd/LLMbasemodels/huggingface.co/Qwen/Qwen3-8B}"
+EVALUATOR_CHECKPOINT="${EVALUATOR_ADAPTER:-/mnt/dolphinfs/ssd_pool/docker/user/hadoop-ai-search/baokailin/github.com/ngyygm/llm-rewrite.git/evaluator/checkpoints/qwen3-8b_20260511_154259/score_only_detail_balanced_full}"
+API_MODEL="${API_MODEL:-gpt-4.1}"
 GENERATED_DIR="$PROJECT_DIR/data/generated_rewrites"
-FILTERED_DIR="$GENERATED_DIR/filtered"
-SFT_DIR="$PROJECT_DIR/downstream/checkpoints"
-EVAL_RESULTS_DIR="$PROJECT_DIR/data/downstream_results"
-
-EVALUATOR_CHECKPOINT="${EVALUATOR_ADAPTER:-$PROJECT_DIR/evaluator/checkpoints/score_only_full}"
-API_URL="${API_URL:-http://33.32.20.98:30002}"
+FILTERED_DIR="$GENERATED_DIR/${API_MODEL}/filtered"
+SFT_DIR="$PROJECT_DIR/downstream/checkpoints/${MODEL_NAME}_20260412_160923"
+EVAL_RESULTS_DIR="$PROJECT_DIR/data/downstream_results/${MODEL_NAME}_${TIMESTAMP}"
+MAX_WORKERS="${MAX_WORKERS:-10}"
 
 echo "============================================"
 echo "EMNLP 2026: Downstream SFT Validation"
@@ -41,23 +35,31 @@ echo "[Phase 1] Generating SFT training data..."
 echo ""
 
 # Step 1a: Generate source texts
-if [ ! -f "$GENERATED_DIR/source_texts.json" ]; then
-    echo "  [1a] Generating 2000 source texts via API ($API_URL)..."
+SOURCE_COUNT=$(python3 -c "import json; print(len(json.load(open('$GENERATED_DIR/${API_MODEL}/source_texts.json'))))" 2>/dev/null || echo "0")
+if [ ! -f "$GENERATED_DIR/${API_MODEL}/source_texts.json" ] || [ "$SOURCE_COUNT" -eq 0 ]; then
+    echo "  [1a] Generating 300 source texts via API ($API_URL, model: $API_MODEL)..."
     python3 downstream/generate_data.py \
         --mode api \
         --api_url "$API_URL" \
-        --output_dir "$GENERATED_DIR"
+        --api_model "$API_MODEL" \
+        --api_key "$API_KEY" \
+        --max_workers "$MAX_WORKERS" \
+        --output_dir "$GENERATED_DIR/${API_MODEL}"
 else
     echo "  [1a] Source texts already exist, skipping"
 fi
 
-# Step 1b: Generate rewrites
-if [ ! -f "$GENERATED_DIR/all_rewrites.json" ]; then
-    echo "  [1b] Generating 6000 rewrites (3 per source) via API..."
+# # Step 1b: Generate rewrites
+REWRITE_COUNT=$(python3 -c "import json; print(len(json.load(open('$GENERATED_DIR/${API_MODEL}/all_rewrites.json'))))" 2>/dev/null || echo "0")
+if [ ! -f "$GENERATED_DIR/${API_MODEL}/all_rewrites.json" ] || [ "$REWRITE_COUNT" -eq 0 ]; then
+    echo "  [1b] Generating 900 rewrites (3 per source) via API..."
     python3 downstream/generate_data.py \
         --mode api \
         --api_url "$API_URL" \
-        --output_dir "$GENERATED_DIR" \
+        --api_model "$API_MODEL" \
+        --api_key "$API_KEY" \
+        --max_workers "$MAX_WORKERS" \
+        --output_dir "$GENERATED_DIR/${API_MODEL}" \
         --skip_source_gen
 else
     echo "  [1b] Rewrites already exist, skipping"
@@ -66,17 +68,32 @@ fi
 echo ""
 
 # =============================================================================
-# Phase 2: Filter data using evaluator
+# Phase 2: Score rewrites with evaluator, then filter
 # =============================================================================
-echo "[Phase 2] Filtering data using evaluator scores..."
+echo "[Phase 2] Scoring and filtering data..."
 echo ""
 
-# Use quality_level as proxy if evaluator hasn't scored the data yet
-# (In practice, you'd first run the evaluator on all 6000 pairs)
+# Step 2a: Score all 900 rewrites with RewriteJudge
+SCORED_PATH="$GENERATED_DIR/${API_MODEL}/scored_rewrites_new.json"
+if [ ! -f "$SCORED_PATH" ]; then
+    echo "  [2a] Scoring 900 rewrites with RewriteJudge..."
+    python3 downstream/score_rewrites.py \
+        --evaluator_path "$EVALUATOR_CHECKPOINT" \
+        --base_model "$BASE_MODEL" \
+        --rewrites_path "$GENERATED_DIR/${API_MODEL}/all_rewrites.json" \
+        --prompt_variant detail \
+        --output_path "$SCORED_PATH"
+else
+    echo "  [2a] Scored rewrites already exist, skipping"
+fi
+
+Step 2b: Filter using all strategies (k=450 = top 50% of 900)
+echo "  [2b] Filtering with all strategies..."
 python3 downstream/filter_data.py \
-    --rewrites_path "$GENERATED_DIR/all_rewrites.json" \
+    --rewrites_path "$GENERATED_DIR/${API_MODEL}/all_rewrites.json" \
+    --scores_path "$SCORED_PATH" \
     --strategy all \
-    --k 2000 \
+    --k 450 \
     --threshold 3.0 \
     --output_dir "$FILTERED_DIR"
 
@@ -88,13 +105,20 @@ echo ""
 echo "[Phase 3] SFT training..."
 echo ""
 
-STRATEGIES=("random_2000" "bleu_filtered" "top_2000" "threshold_3.0")
+STRATEGIES=("random_450" "bleu_filtered" "top_450" "threshold_3.0")
 
 for STRATEGY in "${STRATEGIES[@]}"; do
     SFT_DATA="$FILTERED_DIR/sft_${STRATEGY}.json"
 
     if [ ! -f "$SFT_DATA" ]; then
         echo "  [!] SFT data not found: $SFT_DATA, skipping"
+        continue
+    fi
+
+    # Skip empty datasets
+    N=$(python3 -c "import json; print(len(json.load(open('$SFT_DATA'))))")
+    if [ "$N" -eq 0 ]; then
+        echo "  [!] SFT data is empty: $SFT_DATA, skipping"
         continue
     fi
 
@@ -115,20 +139,22 @@ echo ""
 # =============================================================================
 # Phase 4: Downstream evaluation
 # =============================================================================
+STRATEGIES=("random_450" "bleu_filtered" "top_450" "threshold_3.0")
+
 echo "[Phase 4] Downstream evaluation..."
 echo ""
 
 # Create a held-out eval set for downstream tasks
 # (In practice, this would be a separate test set)
-EVAL_SET="$GENERATED_DIR/eval_set.json"
+EVAL_SET="$GENERATED_DIR/${API_MODEL}/eval_set.json"
 
 if [ ! -f "$EVAL_SET" ]; then
     echo "  Creating downstream eval set from generated data..."
     python3 -c "
 import json
-data = json.load(open('$GENERATED_DIR/all_rewrites.json'))
-# Use every 10th item as eval (roughly 600 samples)
-eval_items = data[::10][:100]  # Use 100 for quick eval
+data = json.load(open('$GENERATED_DIR/${API_MODEL}/all_rewrites.json'))
+# Use every 10th item as eval (90 samples from 900)
+eval_items = data[::10]
 with open('$EVAL_SET', 'w') as f:
     json.dump(eval_items, f, ensure_ascii=False, indent=2)
 print(f'Created eval set with {len(eval_items)} samples')
