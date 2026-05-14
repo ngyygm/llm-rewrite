@@ -12,6 +12,7 @@
 \usepackage{amssymb}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{stfloats}
 \usepackage{appendix}
 \usepackage{enumitem}
 \usepackage{tcolorbox}
@@ -28,7 +29,6 @@
   coltitle=white,          % 标题：纯白文字
   fonttitle=\bfseries\small,
   title={#1},              % �� 标题文字：读取第一个大括号的文字
-  breakable,
   boxrule=0.4pt,
   left=6pt, right=6pt, top=4pt, bottom=4pt,
   toptitle=4pt, bottomtitle=4pt,
@@ -79,7 +79,7 @@ In this work, we systematically investigate Chinese rewriting evaluation and fin
 \label{fig:framework}
 \end{figure}
 
-To address this, we present RewritingBench (Figure~\ref{fig:framework}), the first human-annotated benchmark for Chinese rewriting quality. Our contributions are fourfold. First, we provide 730 annotated pairs (0--5 scale) with high agreement ($\rho \approx 0.86$). Second, we show that seven traditional text-overlap metrics systematically fail to capture quality ($p < 0.001$). Third, our pairwise preference learning approach (LoRA-tuned 8B) achieves $\rho=0.688$, substantially outperforming absolute scoring ($\rho=0.645$), zero-shot models up to 235B ($\rho \leq 0.406$), and Prometheus~2 ($\rho=0.124$). Fourth, evaluator-guided filtering improves mean rewrite quality by 47\% over random selection, demonstrating its real-world utility.
+To address this, we present RewritingBench (Figure~\ref{fig:framework}), the first human-annotated benchmark for Chinese rewriting quality. Our contributions are fourfold. First, we provide 730 annotated pairs (0--5 scale) with high agreement ($\rho \approx 0.86$). Second, we show that seven traditional text-overlap metrics systematically fail to capture quality ($p < 0.001$). Third, our pairwise preference learning approach (LoRA-tuned 8B) achieves $\rho=0.688$, substantially outperforming absolute scoring ($\rho=0.645$), zero-shot models up to 235B ($\rho \leq 0.406$), and Prometheus~2 ($\rho=0.145$). Fourth, evaluator-guided filtering improves mean rewrite quality by 47\% over random selection, demonstrating its real-world utility.
 
 % Figure~\ref{fig:framework} provides an overview of the RewritingBench framework, from data collection through diagnostic analysis to pairwise preference learning and downstream validation.
 
@@ -178,14 +178,14 @@ $+$Reasoning prefix & Fine-tuned (8B) & $+$0.360 & $+$0.374 & $+$0.312 & 1.07 & 
 Unbalanced training (Qwen3-8B) & Fine-tuned (8B) & $+$0.337 & $+$0.344 & $+$0.289 & 1.12 & 1.43 & 14.0 / 70.5 / 90.7 \\
 RewriteJudge (Ours, Qwen2.5-7B) & Fine-tuned (7B) & $+$0.580 & $+$0.580 & $+$0.470 & 0.94 & 1.25 & 24.8 / 75.2 / 93.0 \\
 Unbalanced training (Qwen2.5-7B) & Fine-tuned (7B) & $+$0.287 & $+$0.246 & $+$0.238 & 1.10 & 1.40 & 14.0 / 72.1 / 91.5 \\
-Prometheus~2 & Fine-tuned (7B) & $+$0.124 & $+$0.111 & $+$0.103 & 1.50 & 1.89 & 21.7 / 51.9 / 82.2 \\
+Prometheus~2 & Fine-tuned (7B) & $+$0.145 & $+$0.126 & $+$0.120 & 1.54 & 1.95 & 17.0 / 53.8 / 75.5 \\
 \midrule  
-Zero-shot (Qwen3-14B) & Zero-shot (14B) & $+$0.105 & $+$0.163 & $+$0.091 & 2.02 & 2.36 & 12.4 / 36.4 / 62.0 \\
-Zero-shot (Qwen2.5-14B) & Zero-shot (14B) & $+$0.071 & $+$0.076 & $+$0.060 & 2.08 & 2.41 & 12.1 / 33.6 / 59.8 \\
-Zero-shot (Qwen3-8B) & Zero-shot (8B) & $+$0.106 & $+$0.176 & $+$0.093 & 1.85 & 2.22 & 16.3 / 41.1 / 69.0 \\
-Zero-shot (Qwen2.5-7B) & Zero-shot (7B) & $-$0.019 & $+$0.075 & $-$0.016 & 2.02 & 2.37 & 11.6 / 38.0 / 61.2 \\
-G-Eval (Qwen3-8B) & Zero-shot (8B) & $+$0.090 & $+$0.159 & $+$0.077 & 1.79 & 2.17 & 16.3 / 46.5 / 66.7 \\
-G-Eval (Qwen2.5-7B) & Zero-shot (7B) & $-$0.057 & $+$0.007 & $-$0.048 & 2.18 & 2.56 & 13.2 / 31.0 / 58.9 \\
+Zero-shot (Qwen3-14B) & Zero-shot (14B) & $+$0.129 & $+$0.180 & $+$0.112 & 2.03 & 2.37 & 10.9 / 35.7 / 56.6 \\
+Zero-shot (Qwen2.5-14B) & Zero-shot (14B) & $+$0.058 & $+$0.105 & $+$0.046 & 2.14 & 2.49 & 11.6 / 30.2 / 56.6 \\
+Zero-shot (Qwen3-8B) & Zero-shot (8B) & $+$0.106 & $+$0.176 & $+$0.093 & 1.86 & 2.23 & 15.5 / 40.3 / 62.8 \\
+Zero-shot (Qwen2.5-7B) & Zero-shot (7B) & $-$0.019 & $+$0.079 & $-$0.016 & 2.04 & 2.38 & 10.1 / 37.2 / 56.6 \\
+G-Eval (Qwen3-8B) & Zero-shot (8B) & $+$0.041 & $+$0.089 & $+$0.033 & 1.85 & 2.22 & 16.3 / 41.1 / 58.1 \\
+G-Eval (Qwen2.5-7B) & Zero-shot (7B) & $-$0.145 & $-$0.064 & $-$0.121 & 2.22 & 2.62 & 12.4 / 33.3 / 52.7 \\
 \midrule
 SBERT-COSINE & Traditional & $-$0.280 & $-$0.072 & $-$0.199 & - & - & - \\
 BLEU & Traditional & $-$0.294 & $-$0.211 & $-$0.243 & - & - & - \\
@@ -243,21 +243,39 @@ We evaluate 19 methods across four categories: \textbf{traditional metrics} (BLE
 
 
 
-\begin{figure*}[h]
+% \begin{figure*}[h]
+% \centering
+% \includegraphics[width=0.8\textwidth]{figures/qwen3-8b_and_qwen2.5-7b/method_comparison.pdf}
+% \caption{Spearman $\rho$ comparison across all evaluation methods. RewriteJudge (ours) substantially outperforms all baselines. All traditional metrics (right) show negative correlation.}
+% \label{fig:method_comparison}
+% \end{figure*}
+
+
+
+
+Table~\ref{tab:main_results} summarizes evaluation results. RewriteJudge achieves the highest correlation with human judgments (Spearman $\rho=0.645$, $p<0.001$), capturing ~75\% of inter-annotator agreement ($\rho \approx 0.86$).
+
+
+
+\textbf{Traditional metrics fail.} As shown in Figure~\ref{fig:method_comparison_traditional}, all seven traditional metrics show a negative correlation with human judgment, peaking at $\rho$=$-0.595$ (JACCARD-CHAR). This occurs because quality rewrites inherently diverge from the source, which overlap-based metrics penalize. Even SBERT-COSINE ($\rho$=$-0.28$) fails, as semantic similarity does not guarantee writing quality.
+
+\begin{figure}[h]
 \centering
-\includegraphics[width=0.8\textwidth]{figures/qwen3-8b_and_qwen2.5-7b/method_comparison.pdf}
-\caption{Spearman $\rho$ comparison across all evaluation methods. RewriteJudge (ours) substantially outperforms all baselines. All traditional metrics (right) show negative correlation.}
-\label{fig:method_comparison}
-\end{figure*}
+\includegraphics[width=0.7\columnwidth]{figures/qwen3-8b_and_qwen2.5-7b/method_comparison_traditional.pdf}
+\caption{Spearman $\rho$ for traditional metrics. All seven metrics show negative correlation with human judgment.}
+\label{fig:method_comparison_traditional}
+\end{figure}
 
+\textbf{General-purpose LLM evaluators underperform.} As shown in Figure~\ref{fig:method_comparison_llm}, we tested Prometheus~2~\citep{kim2024prometheus2} ($\rho=0.145$) and G-Eval~\citep{liu2024geval} ($\rho=0.041$), as well as zero-shot Qwen3-14B ($\rho=0.129$). All perform far below our fine-tuned 8B model, indicating that general-purpose tuning—regardless of model scale—lacks the specialized linguistic sensitivity and criteria alignment necessary for nuanced Chinese rewriting assessment.
 
-Table~\ref{tab:main_results} and Figure~\ref{fig:method_comparison} summarize evaluation results. RewriteJudge achieves the highest correlation with human judgments (Spearman $\rho=0.645$, $p<0.001$), capturing ~75\% of inter-annotator agreement ($\rho \approx 0.86$).
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/qwen3-8b_and_qwen2.5-7b/method_comparison_llm.pdf}
+\caption{Spearman $\rho$ for LLM-based evaluators. RewriteJudge substantially outperforms all baselines, including fine-tuned and zero-shot models.}
+\label{fig:method_comparison_llm}
+\end{figure}
 
-\textbf{Traditional metrics fail.} All seven traditional metrics show a negative correlation with human judgment, peaking at $\rho$=-0.595 (JACCARD-CHAR). This occurs because quality rewrites inherently diverge from the source, which overlap-based metrics penalize. Even SBERT-COSINE ($\rho$=-0.28) fails, as semantic similarity does not guarantee writing quality.
-
-\textbf{General-purpose LLM evaluators underperform.} We tested Prometheus~2~\citep{kim2024prometheus2} ($\rho=0.124$) and G-Eval~\citep{liu2024geval} ($\rho=0.090$), as well as zero-shot Qwen3-14B ($\rho=0.105$). All perform far below our fine-tuned 8B model, indicating that general-purpose tuning—regardless of model scale—lacks the specialized linguistic sensitivity and criteria alignment necessary for nuanced Chinese rewriting assessment.
-
-\textbf{Class balancing is critical.} Training on unbalanced data leads to mode collapse ($\rho$=0.337), whereas balanced oversampling (1,008 samples) more than doubles performance to $\rho$=0.645 by enabling diverse, human-aligned predictions.
+\textbf{Class balancing is critical.} Training on unbalanced data leads to mode collapse ($\rho$=0.337), whereas balanced oversampling (1,008 samples) nearly doubles performance to $\rho$=0.645 by enabling diverse, human-aligned predictions.
 
 \textbf{Simple format beats reasoning.} Incorporating chain-of-thought reasoning reduces $\rho$ from 0.645 to 0.360. At the 8B scale, direct score prediction effectively internalizes evaluation criteria, while additional reasoning steps introduce performance-degrading noise.
 
@@ -361,14 +379,14 @@ Notably, our 8B fine-tuned model outperforms all zero-shot baselines including m
 \centering
 \caption{Comparison of evaluation paradigms. Pairwise preference learning substantially outperforms absolute scoring and zero-shot baselines, even against massive frontier models.}
 \label{tab:pairwise_results}
-\resizebox{0.85\columnwidth}{!}{%
+\resizebox{0.8\columnwidth}{!}{%
 \begin{tabular}{lcc}
 \toprule
 Method & Params & Spearman $\rho$ \\
 \midrule
 \textbf{Pairwise (cross-source, ours)} & \textbf{8B} & \textbf{+0.688} \\
 Pairwise (cross-source, ours) & 7B & +0.665 \\
-Absolute scoring (balanced, ours) & 7B & +0.607 \\
+Absolute scoring (balanced, ours) & 8B & +0.645 \\
 \midrule
 Qwen2.5-72B-Instruct (zero-shot) & 72B & +0.406 \\
 DeepSeek-V3 (zero-shot) & 685B & +0.391 \\
@@ -389,7 +407,7 @@ Figure~\ref{fig:scaling} plots parameter count against Spearman $\rho$ for all p
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.9\columnwidth]{figures/qwen3-8b_and_qwen2.5-7b/scaling_analysis.pdf}
+\includegraphics[width=0.8\columnwidth]{figures/qwen3-8b_and_qwen2.5-7b/scaling_analysis.pdf}
 \caption{Model scale vs.\ evaluation quality on RewritingBench. Scaling up zero-shot models does not improve rewriting evaluation; our 8B LoRA model outperforms all zero-shot baselines.}
 \label{fig:scaling}
 \end{figure}
@@ -522,7 +540,7 @@ Our contribution is demonstrating this effect specifically for Chinese text rewr
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.95\columnwidth]{figures/qwen3-8b_and_qwen2.5-7b/accuracy_vs_rho.pdf}
+\includegraphics[width=0.8\columnwidth]{figures/qwen3-8b_and_qwen2.5-7b/accuracy_vs_rho.pdf}
 \caption{Pairwise accuracy vs.\ Spearman $\rho$: high accuracy but low $\rho$ shows accuracy can mislead for zero-shot evaluators}
 \label{fig:acc_vs_rho}
 \end{figure}
@@ -530,7 +548,7 @@ Our contribution is demonstrating this effect specifically for Chinese text rewr
 \textbf{Class balancing is essential for score prediction.}
 The dramatic difference between balanced ($\rho$=0.645) and unbalanced ($\rho$=0.337) training underscores the importance of class balance in ordinal prediction tasks.
 Without balancing, the model learns to predict the majority class (Score~1), achieving 82\% mode collapse.
-This is a common challenge in ordinal regression~\citep{fernandez2018learning}, and our oversampling strategy provides an effective solution.
+This is a common challenge in ordinal regression~\citep{fernandez2018learning}, and our oversampling strategy effectively solves this.
 
 \textbf{Ranking vs.\ calibration.}
 Our evaluation focuses on ranking correlation (Spearman $\rho$), which measures whether the evaluator correctly orders rewrites by quality.
@@ -553,7 +571,7 @@ Our work has several limitations. First, the training set of 730 pairs (1,008 af
 \label{sec:conclusion}
 % ============================================================
 
-We present RewritingBench, the first human-annotated benchmark for Chinese text rewriting, featuring 730 annotated pairs. Our analysis reveals that traditional metrics correlate negatively with human judgment due to a fundamental misalignment between overlap and quality. To address this, we demonstrate that pairwise preference learning provides a superior framework: a fine-tuned 8B model achieves $\rho=0.688$, significantly outperforming absolute scoring ($\rho=0.645$), zero-shot models up to 235B parameters ($\rho \leq 0.406$), and specialized evaluators(Prometheus~2: $\rho$=0.124). Downstream validation confirms that our evaluator-guided filtering improves data quality by 47\% over random selection. Our benchmark and findings provide a foundation for Chinese rewriting evaluation. We release our data, code, and fine-tuned models to support future research.
+We present RewritingBench, the first human-annotated benchmark for Chinese text rewriting, featuring 730 annotated pairs. Our analysis reveals that traditional metrics correlate negatively with human judgment due to a fundamental misalignment between overlap and quality. To address this, we demonstrate that pairwise preference learning provides a superior framework: a fine-tuned 8B model achieves $\rho=0.688$, significantly outperforming absolute scoring ($\rho=0.645$), zero-shot models up to 235B parameters ($\rho \leq 0.406$), and specialized evaluators(Prometheus~2: $\rho$=0.145). Downstream validation confirms that our evaluator-guided filtering improves data quality by 47\% over random selection. Our benchmark and findings provide a foundation for Chinese rewriting evaluation. We release our data, code, and fine-tuned models to support future research.
 
 \textbf{Future work.}
 We plan to expand RewritingBench to include diverse tasks (e.g., style transfer, simplification), additional languages, and sophisticated aggregation methods like Bradley-Terry models. We also aim to investigate if the negative correlation between overlap and quality persists across other languages and domains.
@@ -688,7 +706,7 @@ The Qwen3-8B variant correctly identifies 60\% of Score~0 samples and 66.7\% of 
 The Qwen2.5-7B variant similarly concentrates predictions along the diagonal: 50\% accuracy for Score~0, 58.3\% for Score~4, with the model showing particular strength in the mid-to-high range.
 Both variants rarely commit "extreme" errors, confirming that class-balanced fine-tuning preserves ordinal structure.
 
-In stark contrast, Prometheus~2 exhibits a near-total collapse in discriminative power: it predicts Score~3 for 63.6\%--73.9\% of all samples across every human score category, regardless of true quality. This severe mode collapse explains its low Spearman correlation ($\rho$=0.124), as it effectively acts as a constant-score predictor that fails entirely to capture ordinal variance in human judgments.
+In stark contrast, Prometheus~2 exhibits a near-total collapse in discriminative power: it predicts Score~3 for 63.6\%--73.9\% of all samples across every human score category, regardless of true quality. This severe mode collapse explains its low Spearman correlation ($\rho$=0.145), as it effectively acts as a constant-score predictor that fails entirely to capture ordinal variance in human judgments.
 
 \begin{figure}[h]
 \centering
@@ -982,21 +1000,93 @@ Our RewritingBench and the associated pairwise preference evaluator provide a va
 We investigate how prompt detail affects evaluation quality by comparing three variants: \textbf{Simple} (minimal), \textbf{Standard} (brief criteria), and \textbf{Detailed} (fine-grained rubrics). Notably, the \textbf{Detailed} prompt exactly matches our benchmark's human rubric, grounding the model directly in the human annotation protocol.
 
 
+% \medskip
+% \noindent\textbf{Simple prompt}
+% \medskip
+
+% \begin{prompttextbox}{Simple prompt}{simple}
+% \small
+% 请帮我评判输入文本和输出文本重写的质量，并给出最终综合评分（0-5分的整数）。
+% \end{prompttextbox}
+
+% \medskip
+% \noindent\textbf{Standard prompt}
+% \medskip
+
+% \begin{prompttextbox}{Standard prompt}{standard}
+% \small
+% 你是一个专业的中文文本改写质量评估专家。请根据以下维度对中文文本改写质量进行评分（0-5分）：
+
+% \medskip\textbf{评分维度：}
+% \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=2pt]
+%   \item 语义一致性：改写是否保留了原文的核心语义
+%   \item 句式重构：改写是否进行了句法结构的改变
+%   \item 词汇变化：改写是否使用了不同的词汇表达
+%   \item 风格保持：改写是否保持了原文的风格和长度
+% \end{itemize}
+
+% \medskip\textbf{评分标准：}
+% \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=2pt]
+%   \item 0分：改写完全失败（严重语义扭曲或毫无改写）
+%   \item 1分：改写质量很差 
+%   \item 2分：改写质量较差 
+%   \item 3分：改写质量一般
+%   \item 4分：改写质量较好 
+%   \item 5分：改写质量优秀
+% \end{itemize}
+
+% \medskip
+% 请先简要分析，然后给出最终综合评分（0-5分的整数）。
+% \end{prompttextbox}
+
+% \medskip
+% \noindent\textbf{Detailed prompt}
+% \medskip
+
+% \begin{prompttextbox}{Detailed prompt --- identical to human annotation rubric}{detailed}
+% \small
+% 请帮我判断输入文本与输出文本是否满足以下要求：
+% \begin{itemize}[leftmargin=1.2em,itemsep=2pt,topsep=2pt]
+%   \item \textbf{要求1.} 在保持原文含义不变的前提下，用原文不同的文字进行表达，不额外新增、删减会严重影响语义的内容。
+%   \item \textbf{要求2.} 在保证逻辑正确、语序通顺的前提下，变换实体、短语、概念出现的前后顺序、结构关系；顺序变换幅度越小，分数越低。
+%   \item \textbf{要求3.} 在保证特殊实体、引用、解释、特定语句不变的前提下，使用同义词替换；同义词替换越少，分数越低。
+%   \item \textbf{要求4.} 保持与原文语言风格一致，字数长度变化合理；语言风格差距越大，分数越低。
+%   \item \textbf{要求5.} 改写综合评分要非常严格，同时考虑上述4个要求；在保证语义一致（要求1）的前提下，（要求2,3）变化越大越好，字数越接近越好（要求4）；如果存在大量长字段完全复制，则给0分。
+% \end{itemize}
+
+% \medskip
+% 评分准则，每个要求最低0分，满分均为5分，评分要尽可能严格。
+% \end{prompttextbox}
+
+
+
+
+\begin{table*}[h!]
 \medskip
 \noindent\textbf{Simple prompt}
 \medskip
-
 \begin{prompttextbox}{Simple prompt}{simple}
 \small
+\begin{minipage}[t]{0.47\linewidth}
 请帮我评判输入文本和输出文本重写的质量，并给出最终综合评分（0-5分的整数）。
+\end{minipage}%
+\hfill\vrule\hfill%
+\begin{minipage}[t]{0.47\linewidth}
+\textit{Please evaluate the rewriting quality between the input and output texts, and provide a final overall score (integer from 0 to 5).}
+\end{minipage}
 \end{prompttextbox}
+
+
+
+
+
 
 \medskip
 \noindent\textbf{Standard prompt}
 \medskip
-
 \begin{prompttextbox}{Standard prompt}{standard}
 \small
+\begin{minipage}[t]{0.47\linewidth}
 你是一个专业的中文文本改写质量评估专家。请根据以下维度对中文文本改写质量进行评分（0-5分）：
 
 \medskip\textbf{评分维度：}
@@ -1010,23 +1100,53 @@ We investigate how prompt detail affects evaluation quality by comparing three v
 \medskip\textbf{评分标准：}
 \begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=2pt]
   \item 0分：改写完全失败（严重语义扭曲或毫无改写）
-  \item 1分：改写质量很差 
-  \item 2分：改写质量较差 
+  \item 1分：改写质量很差
+  \item 2分：改写质量较差
   \item 3分：改写质量一般
-  \item 4分：改写质量较好 
+  \item 4分：改写质量较好
   \item 5分：改写质量优秀
 \end{itemize}
 
 \medskip
 请先简要分析，然后给出最终综合评分（0-5分的整数）。
-\end{prompttextbox}
+\end{minipage}%
+\hfill\vrule\hfill%
+\begin{minipage}[t]{0.47\linewidth}
+\textit{You are a professional expert in evaluating Chinese text rewriting quality. Please score the rewriting quality (0--5) along the following dimensions:}
 
+\medskip\textit{\textbf{Evaluation dimensions:}}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=2pt]
+  \item \textit{Semantic consistency: Does the rewrite preserve the core meaning of the original?}
+  \item \textit{Syntactic reconstruction: Does the rewrite alter the syntactic structure?}
+  \item \textit{Lexical variation: Does the rewrite employ different vocabulary?}
+  \item \textit{Style preservation: Does the rewrite maintain the original style and length?}
+\end{itemize}
+
+\medskip\textit{\textbf{Scoring criteria:}}
+\begin{itemize}[leftmargin=1.2em,itemsep=0pt,topsep=2pt]
+  \item \textit{0: Rewriting completely failed (severe semantic distortion or no change at all)}
+  \item \textit{1: Very poor rewriting quality}
+  \item \textit{2: Poor rewriting quality}
+  \item \textit{3: Moderate rewriting quality}
+  \item \textit{4: Good rewriting quality}
+  \item \textit{5: Excellent rewriting quality}
+\end{itemize}
+
+\medskip\textit{Please briefly analyze first, then provide a final overall score (integer from 0 to 5).}
+\end{minipage}
+\end{prompttextbox}
+\end{table*}
+
+
+
+
+\begin{table*}[t]
 \medskip
 \noindent\textbf{Detailed prompt}
 \medskip
-
 \begin{prompttextbox}{Detailed prompt --- identical to human annotation rubric}{detailed}
 \small
+\begin{minipage}[t]{0.47\linewidth}
 请帮我判断输入文本与输出文本是否满足以下要求：
 \begin{itemize}[leftmargin=1.2em,itemsep=2pt,topsep=2pt]
   \item \textbf{要求1.} 在保持原文含义不变的前提下，用原文不同的文字进行表达，不额外新增、删减会严重影响语义的内容。
@@ -1038,32 +1158,48 @@ We investigate how prompt detail affects evaluation quality by comparing three v
 
 \medskip
 评分准则，每个要求最低0分，满分均为5分，评分要尽可能严格。
+\end{minipage}%
+\hfill\vrule\hfill%
+\begin{minipage}[t]{0.47\linewidth}
+\textit{Please evaluate whether the output text satisfies the following requirements with respect to the input text:}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt,topsep=2pt]
+  \item \textit{\textbf{Req.\,1.} Express the same meaning as the original using different wording, without adding or omitting content that significantly affects semantics.}
+  \item \textit{\textbf{Req.\,2.} Rearrange the order and structural relations of entities, phrases, and concepts while ensuring logical correctness and fluency; the smaller the reordering, the lower the score.}
+  \item \textit{\textbf{Req.\,3.} Replace words with synonyms while keeping special entities, citations, explanations, and fixed expressions unchanged; fewer synonym substitutions yield a lower score.}
+  \item \textit{\textbf{Req.\,4.} Maintain a language style consistent with the original and a reasonable change in length; the greater the stylistic divergence, the lower the score.}
+  \item \textit{\textbf{Req.\,5.} Apply strict holistic scoring that simultaneously considers all four requirements above. Given semantic consistency (Req.\,1), maximize structural and lexical changes (Reqs.\,2--3) while keeping length close to the original (Req.\,4). If large verbatim spans are copied, assign a score of 0.}
+\end{itemize}
+
+\medskip\textit{Scoring guideline: each requirement is scored from 0 (minimum) to 5 (maximum); scoring should be as strict as possible.}
+\end{minipage}
 \end{prompttextbox}
+\end{table*}
 
 
 
-As shown in Table~\ref{tab:prompt_granularity}, performance improves monotonically with prompt granularity.
-The detailed prompt achieves $\rho=0.645$, outperforming the standard prompt by 6.2\% and the simple prompt by 27.2\%.
-This suggests that explicitly providing the four evaluation dimensions during fine-tuning helps the model internalize the annotation criteria and better align its predictions with human judgment.
-The substantial gap between simple and detailed ($\Delta\rho=0.138$) indicates that the scoring rubric is not merely redundant context, but carries essential information about what constitutes quality in Chinese text rewriting.
+% As shown in Table~\ref{tab:prompt_granularity}, performance improves monotonically with prompt granularity.
+% The detailed prompt achieves $\rho=0.645$, outperforming the standard prompt by 6.2\% and the simple prompt by 27.2\%.
+% This suggests that explicitly providing the four evaluation dimensions during fine-tuning helps the model internalize the annotation criteria and better align its predictions with human judgment.
+% The substantial gap between simple and detailed ($\Delta\rho=0.138$) indicates that the scoring rubric is not merely redundant context, but carries essential information about what constitutes quality in Chinese text rewriting.
+
+% \begin{table}[h]
+% \centering
+% \caption{Effect of prompt granularity on evaluation quality (Qwen3-8B, balanced training).}
+% \label{tab:prompt_granularity}
+% \resizebox{0.75\columnwidth}{!}{%
+% \begin{tabular}{lc}
+% \toprule
+% Prompt Variant & Spearman $\rho$ \\
+% \midrule
+% Simple prompt & $+$0.507 \\
+% Standard prompt & $+$0.607 \\
+% \textbf{Detailed prompt} & $\mathbf{+0.645}$ \\
+% \bottomrule
+% \end{tabular}
+% }
+% \end{table}
 
 
-\begin{table}[h]
-\centering
-\caption{Effect of prompt granularity on evaluation quality (Qwen3-8B, balanced training).}
-\label{tab:prompt_granularity}
-\resizebox{0.75\columnwidth}{!}{%
-\begin{tabular}{lc}
-\toprule
-Prompt Variant & Spearman $\rho$ \\
-\midrule
-Simple prompt & $+$0.507 \\
-Standard prompt & $+$0.607 \\
-\textbf{Detailed prompt} & $\mathbf{+0.645}$ \\
-\bottomrule
-\end{tabular}
-}
-\end{table}
 
 
 
