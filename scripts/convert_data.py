@@ -167,29 +167,33 @@ def main():
     print(f"  Average pairwise Spearman: {avg_spearman:.4f}")
 
     # Train/eval split with stratification on consensus score
+    # Uses largest-remainder method so per-class eval counts sum to exactly the target
     rng = np.random.RandomState(SEED)
     consensus_scores = np.array([d["consensus_score"] for d in full_data])
 
-    train_indices = []
+    target_eval = 130
     eval_indices = []
+    train_indices = []
+    n_eval_by_class = []
     for score_val in range(6):
         idxs = np.where(consensus_scores == score_val)[0]
         rng.shuffle(idxs)
-        n_eval = max(1, round(len(idxs) * 130 / 730))
-        eval_indices.extend(idxs[:n_eval].tolist())
-        train_indices.extend(idxs[n_eval:].tolist())
+        exact = len(idxs) * target_eval / len(full_data)
+        n_floor = max(1, int(np.floor(exact)))
+        n_eval_by_class.append((score_val, idxs, n_floor, exact - n_floor))
+        eval_indices.extend(idxs[:n_floor].tolist())
+        train_indices.extend(idxs[n_floor:].tolist())
 
-    # Adjust sizes
-    while len(eval_indices) > 130:
-        train_indices.append(eval_indices.pop())
-    all_idx_set = set(range(730))
-    remaining = list(all_idx_set - set(eval_indices) - set(train_indices))
-    while len(eval_indices) < 130 and remaining:
-        eval_indices.append(remaining.pop(0))
-    while len(train_indices) > 600:
-        train_indices.pop()
-    while len(train_indices) < 600 and remaining:
-        train_indices.append(remaining.pop(0))
+    # Distribute remaining slots to classes with largest fractional remainders
+    deficit = target_eval - len(eval_indices)
+    by_remainder = sorted(n_eval_by_class, key=lambda x: -x[3])
+    for i in range(deficit):
+        score_val, idxs, n_floor, _ = by_remainder[i]
+        # Move one sample from train to eval for this class
+        for j, idx in enumerate(train_indices):
+            if consensus_scores[idx] == score_val:
+                eval_indices.append(train_indices.pop(j))
+                break
 
     print(f"\nSplit: train={len(train_indices)}, eval={len(eval_indices)}")
 
