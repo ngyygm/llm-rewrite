@@ -1,0 +1,38 @@
+{
+  "0": {
+    "avg_score": 0.0,
+    "win_rate": 0.0,
+    "wins": 0.0,
+    "comparisons": 5
+  },
+  "20": {
+    "avg_score": 1.0,
+    "win_rate": 0.0,
+    "wins": 0.0,
+    "comparisons": 1
+  },
+  "21": {
+    "avg_score": 1.333,
+    "win_rate": 0.0,
+    "wins": 0.0,
+    "comparisons": 1
+  },
+  "22": {
+    "avg_score": 0.667,
+    "win_rate": 1.0,
+    "wins": 1.0,
+    "comparisons": 1
+  },
+  "23": {
+    "avg_score": 1.0,
+    "win_rate": 0.0,
+    "wins": 0.0,
+    "comparisons": 1
+  },
+  "24": {
+    "avg_score": 1.0,
+    "win_rate": 0.0,
+    "wins": 0.0,
+    "comparisons": 1
+  }
+}

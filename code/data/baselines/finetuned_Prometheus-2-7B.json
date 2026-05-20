@@ -1,0 +1,982 @@
+{
+  "method": "Prometheus-2-7B",
+  "model_name": "prometheus-7b-v2.0",
+  "temperature": 0.1,
+  "n_samples": 129,
+  "parse_failures": 23,
+  "correlations": {
+    "method": "Prometheus-2-7B",
+    "n_valid": 106,
+    "n_total": 129,
+    "spearman_rho": 0.14504828359733557,
+    "spearman_p": 0.13793783232060816,
+    "kendall_tau": 0.12044348973960282,
+    "kendall_p": 0.1343771273957297,
+    "pearson_r": 0.12628571276814052,
+    "pearson_p": 0.19706944703632642,
+    "mae": 1.5377358490566038,
+    "rmse": 1.947153495708301,
+    "exact_agreement_pct": 16.9811320754717,
+    "within_1_pct": 53.77358490566038,
+    "within_2_pct": 75.47169811320755,
+    "pred_mean": 3.207547169811321,
+    "pred_std": 0.948852147975861,
+    "pred_min": 0.0,
+    "pred_max": 5.0
+  },
+  "level_analysis": {
+    "0": {
+      "count": 30,
+      "pred_mean": NaN,
+      "pred_std": NaN,
+      "pred_median": NaN,
+      "exact_agreement_pct": 0.0,
+      "within_1_pct": 33.33333333333333
+    },
+    "1": {
+      "count": 32,
+      "pred_mean": NaN,
+      "pred_std": NaN,
+      "pred_median": NaN,
+      "exact_agreement_pct": 0.0,
+      "within_1_pct": 12.5
+    },
+    "2": {
+      "count": 27,
+      "pred_mean": NaN,
+      "pred_std": NaN,
+      "pred_median": NaN,
+      "exact_agreement_pct": 3.7037037037037033,
+      "within_1_pct": 74.07407407407408
+    },
+    "3": {
+      "count": 26,
+      "pred_mean": NaN,
+      "pred_std": NaN,
+      "pred_median": NaN,
+      "exact_agreement_pct": 61.53846153846154,
+      "within_1_pct": 80.76923076923077
+    },
+    "4": {
+      "count": 11,
+      "pred_mean": NaN,
+      "pred_std": NaN,
+      "pred_median": NaN,
+      "exact_agreement_pct": 9.090909090909092,
+      "within_1_pct": 90.9090909090909
+    },
+    "5": {
+      "count": 3,
+      "pred_mean": NaN,
+      "pred_std": NaN,
+      "pred_median": NaN,
+      "exact_agreement_pct": 0.0,
+      "within_1_pct": 33.33333333333333
+    }
+  },
+  "sample_results": [
+    {
+      "idx": 0,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": null,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information, while also making significant changes in sentence structure and vocabulary. The original text's core meaning and information are preserved, and the sentence structure and vocabulary have been si"
+    },
+    {
+      "idx": 1,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core information and the overall structure of the sentence. However, there are some changes in the wording and sentence structure. For instance, the phrase \"消息\" is replaced with \"消息\" and \"成交量\" is changed to \"成交量达\". These "
+    },
+    {
+      "idx": 2,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 2.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is the announcement of a collective investor meeting. However, the rewrite does not significantly alter the sentence structure or the choice of words, which results in a text that "
+    },
+    {
+      "idx": 3,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. The rewrite has made significant changes in sentence structure and word choice, which are essential for a high-quality rewrite. The new text uses a variety of words and phrase"
+    },
+    {
+      "idx": 4,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a clear and concise rewrite of the original text. It maintains the core meaning and information, while also making significant changes in sentence structure and vocabulary. The original text's core meaning is preserved, but the sentence structure is simplified and the vocabulary"
+    },
+    {
+      "idx": 5,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is the announcement of the opening of the formal entrance for the query of the examination results. However, the rewrite does not make significant changes in sentence structure or "
+    },
+    {
+      "idx": 6,
+      "consensus_score": 0,
+      "avg_score": 0.333,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core message and information, which is a crucial aspect of the evaluation criteria. The sentence structure and word choice have been altered, but the essence of the original text remains intact. The rewrite has been done in a "
+    },
+    {
+      "idx": 7,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": null,
+      "raw_response": "The text provided is a clear and concise representation of the original text. It maintains the core language and information, and it also successfully changes the sentence structure to enhance readability. The use of different words and expressions, as well as the preservation of the original text's"
+    },
+    {
+      "idx": 8,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which affects the overall quality of the text. The rewrite has made some changes in sentence structure and w"
+    },
+    {
+      "idx": 9,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 2.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning and information of the original text, which is the arrival of the Chinese judging team in Qatar and their preparation for the 2022 World Cup. However, the rewrite does not make significant changes in sentence"
+    },
+    {
+      "idx": 10,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points of the original text. However, the sentence structure has been altered, which is a significant change from the original text. The use of words and expressions is also different, which is a c"
+    },
+    {
+      "idx": 11,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. The rewrite has made some changes in sentence structure and word choice, which are noticeable but not overly significant. The rewrite has also preserved the original text's st"
+    },
+    {
+      "idx": 12,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 1.0,
+      "raw_response": "The given text is a rewrite of the original text. The rewrite is quite brief and lacks the depth and detail of the original text. It fails to capture the essence of the original text, particularly in terms of the character's motivations and the context of the film's production. The rewrite does not "
+    },
+    {
+      "idx": 13,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided has been rewritten with a focus on maintaining the core message of the original text. The rewritten text retains the essential information about the progress of the tainted water handling project in the town of Xia Beiyuan. It also successfully conveys the positive impact of the pr"
+    },
+    {
+      "idx": 14,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points. However, it does not make significant changes in sentence structure or vocabulary. The rewrite is quite similar to the original text, with only minor changes in wording. The sentence struct"
+    },
+    {
+      "idx": 15,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points. However, it does not make significant changes in sentence structure or vocabulary. The rewrite is quite similar to the original text, with only minor variations in word choice and sentence "
+    },
+    {
+      "idx": 16,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is the sequence of events in the life of the individual. However, the sentence structure has been simplified, and the use of words has been slightly altered. For instance, \"从法国学成\" "
+    },
+    {
+      "idx": 17,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": null,
+      "raw_response": "The text provided has been rewritten with a focus on maintaining the core message of the original text. The rewritten text is largely successful in preserving the original text's core message, which is the theme of the exhibition and the division of the exhibition into six major categories. However,"
+    },
+    {
+      "idx": 18,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core message and the essence of the original text. However, the rewrite lacks the depth and richness of the original text. The sentence structure is simplified, and the use of vocabulary is limited. The rewrite does not fully "
+    },
+    {
+      "idx": 19,
+      "consensus_score": 0,
+      "avg_score": 0.0,
+      "predicted_score": 3.0,
+      "raw_response": "The given text is a simplified version of the original text. It has been reduced to its core elements, which is the basic situation of the publishing industry. The original text was quite detailed, but the simplified version retains the essential information. The sentence structure has been altered "
+    },
+    {
+      "idx": 20,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is to inform about the free course offer for the 2020 event business unit recruitment exam. However, the rewrite lacks the depth and detail found in the original text. For instance"
+    },
+    {
+      "idx": 21,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": 2.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is the prevalence of counterfeit wine on the market and the associated risks. However, the rewrite does not make significant changes in sentence structure or vocabulary. The senten"
+    },
+    {
+      "idx": 22,
+      "consensus_score": 1,
+      "avg_score": 0.667,
+      "predicted_score": null,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information. The sentence structure has been altered to reflect a more natural flow of language. The vocabulary has been diversified, and the tone has been preserved. The text is also of a similar length to "
+    },
+    {
+      "idx": 23,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning and information of the original text, which is a description of a basketball player's performance. However, the rewrite does not make significant changes in sentence structure or vocabulary, which are key ele"
+    },
+    {
+      "idx": 24,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text has been rewritten with a slight change in the number of digits used to express the total fund amount. The original text states \"总规模200亿元\" while the rewritten text uses \"总规模2千亿元\". This change does not significantly alter the core meaning of the text, as both phrases convey the same amount o"
+    },
+    {
+      "idx": 25,
+      "consensus_score": 1,
+      "avg_score": 0.667,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points of the original text. However, the sentence structure has been altered, which is a significant change from the original text. The use of words and expressions has been varied, which is a pos"
+    },
+    {
+      "idx": 26,
+      "consensus_score": 1,
+      "avg_score": 0.667,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is the issuance of a yellow alert for ice on the roads in Tianjin. However, the rewrite does not make significant changes in sentence structure or vocabulary. The sentence structur"
+    },
+    {
+      "idx": 27,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information points. The sentence structure has been altered to reflect a more natural flow of language. The vocabulary and expression methods have been diversified, and the original text's style and length h"
+    },
+    {
+      "idx": 28,
+      "consensus_score": 1,
+      "avg_score": 0.667,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite is generally coherent and understand"
+    },
+    {
+      "idx": 29,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 2.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core message and information points. However, it does not make significant changes in sentence structure or vocabulary, which is a key aspect of the score rubric. The rewrite is quite similar to the original text, with only mi"
+    },
+    {
+      "idx": 30,
+      "consensus_score": 1,
+      "avg_score": 0.667,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure has been simplified, and the wording has been slightly altered. The phrase \"从四川省新闻工作者协会获悉\" has been changed to \"四川省新闻工作者协会宣布\", which is a direc"
+    },
+    {
+      "idx": 31,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning and information of the original text, which is about the specifications of a new car. The rewrite also makes a significant change in sentence structure, moving from a passive to an active voice. This change i"
+    },
+    {
+      "idx": 32,
+      "consensus_score": 1,
+      "avg_score": 0.667,
+      "predicted_score": 2.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is about the misconduct of a party member. However, the rewrite does not make significant changes in sentence structure or vocabulary. The rewrite is a direct translation of the or"
+    },
+    {
+      "idx": 33,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure has been simplified, and the word choice has been slightly altered. The rewrite does not significantly change the sentence structure or the wor"
+    },
+    {
+      "idx": 34,
+      "consensus_score": 1,
+      "avg_score": 0.667,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a simplified version of the original text. It retains the core meaning of the original text, but it lacks the depth and detail that the original text offers. The sentence structure is also less varied and complex than the original text. The use of words is more straightforward a"
+    },
+    {
+      "idx": 35,
+      "consensus_score": 1,
+      "avg_score": 0.667,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message and the key details of the original text. However, the rewrite does not make significant changes in sentence structure or vocabulary. The sentence structure is almost identical to the original text, and the v"
+    },
+    {
+      "idx": 36,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite does not significantly change the se"
+    },
+    {
+      "idx": 37,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning and information of the original text, which is the requirement for a score of 5. The sentence structure is also changed, which is a requirement for a score of 5. The use of different words and expressions is "
+    },
+    {
+      "idx": 38,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is the resistance of American students to the American government's call to arms. However, the rewrite does not make significant changes in sentence structure or vocabulary. The se"
+    },
+    {
+      "idx": 39,
+      "consensus_score": 1,
+      "avg_score": 0.667,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning and information of the original text, which is a requirement for a high-quality rewrite. However, the rewrite does not make significant changes in sentence structure or word choice, which are key elements in "
+    },
+    {
+      "idx": 40,
+      "consensus_score": 1,
+      "avg_score": 0.667,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core message and information points. However, the sentence structure and word choice have been simplified, which results in a loss of some of the original text's nuances. For instance, the phrase \"形成721的竞争格局\" has been rephrase"
+    },
+    {
+      "idx": 41,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": null,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information points. The sentence structure has been altered to reflect a more natural and conversational tone, which is more engaging for the reader. The use of different words and expressions has been emplo"
+    },
+    {
+      "idx": 42,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite does not significantly change the se"
+    },
+    {
+      "idx": 43,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core information and language structure. However, it lacks the depth of change that would elevate it to a higher score. The rewrite is quite literal, with only minor changes in wording and sentence structure. The use of words "
+    },
+    {
+      "idx": 44,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": null,
+      "raw_response": "The text has been rewritten with a focus on maintaining the core meaning of the original text. The sentence structure has been altered to provide a clearer and more concise explanation. The use of different words and expressions has been employed to enhance the readability and comprehension of the t"
+    },
+    {
+      "idx": 45,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a simplified version of the original text. It retains the core message of the original text, which is the importance of parental involvement in a child's learning process. However, the sentence structure and vocabulary used in the scored text are less varied and less sophisticat"
+    },
+    {
+      "idx": 46,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is about the necessity for purchasing personnel to apply for or carry a vehicle pass to enter the Middle Kingdom. The rewrite also changes the sentence structure and uses different"
+    },
+    {
+      "idx": 47,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core message of the original text. However, the rewrite lacks the depth and detail that the original text provides. The rewrite is more of a paraphrase rather than a comprehensive rewrite. The sentence structure and vocabulary"
+    },
+    {
+      "idx": 48,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": 2.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is to introduce the Warship World V2.0.0.2 official version to the audience. However, the rewrite lacks the depth and detail found in the original text. The original text provides "
+    },
+    {
+      "idx": 49,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 0.0,
+      "raw_response": "The text provided is a simplified version of the original text. It retains the core message of the original text, which is that the company's current bond issue does not require a guarantee. However, the sentence structure and vocabulary have been significantly altered. The original text used a more"
+    },
+    {
+      "idx": 50,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points of the original text. However, the sentence structure has been altered, which is a significant change from the original text. The use of words and expressions has been varied, which is a pos"
+    },
+    {
+      "idx": 51,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points. However, it lacks the depth and detail found in the original text. The sentence structure is simplified, and the vocabulary used is less varied and less rich in comparison to the original t"
+    },
+    {
+      "idx": 52,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is about the response to criticism from the European Union regarding the expansion of Chinese business in Europe. However, the rewrite does not make significant changes in sentence"
+    },
+    {
+      "idx": 53,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure has been altered, which is a significant change from the original text. The use of words and expressions has also been varied, which is a posit"
+    },
+    {
+      "idx": 54,
+      "consensus_score": 1,
+      "avg_score": 1.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided shows a moderate level of change from the original text. The core meaning of the original text is preserved, but there are some changes in wording and sentence structure. For instance, \"东西\" is changed to \"东西的东西\" and \"疯了\" is changed to \"精神错乱\". These changes do not significantly alte"
+    },
+    {
+      "idx": 55,
+      "consensus_score": 1,
+      "avg_score": 1.333,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite does not significantly change the se"
+    },
+    {
+      "idx": 56,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core message and the essence of the original text. However, the rewrite does not fully capture the nuances and the depth of the original text. The rewrite is more straightforward and lacks the complexity and detail that the or"
+    },
+    {
+      "idx": 57,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is to question whether a certain type of writing style is effective in capturing the audience's attention. The rewrite also changes the sentence structure and wording to some exten"
+    },
+    {
+      "idx": 58,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, there are some changes in sentence structure and word choice that affect the overall quality of the text. The sentence \"随着东北亚地缘政治和东南沿海局势稍温和\" is a slight deviation fro"
+    },
+    {
+      "idx": 59,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is the announcement of the 2020 Gansu public service examination. However, the sentence structure and word choice have been altered, which results in a slight deviation from the or"
+    },
+    {
+      "idx": 60,
+      "consensus_score": 2,
+      "avg_score": 1.667,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite also introduces a new phrase \"全面覆盖\" "
+    },
+    {
+      "idx": 61,
+      "consensus_score": 2,
+      "avg_score": 1.667,
+      "predicted_score": 5.0,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information. The sentence structure has been altered to reflect a more natural flow of language. The vocabulary has been diversified, and the tone and style have been preserved. The text is also of a reasona"
+    },
+    {
+      "idx": 62,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite does not significantly change the or"
+    },
+    {
+      "idx": 63,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is that Load Tang is a nobleman in the Qing Dynasty and is known for his kindness and generosity. However, the rewrite does not make significant changes in sentence structure or vo"
+    },
+    {
+      "idx": 64,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite is generally coherent and understand"
+    },
+    {
+      "idx": 65,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points of the original text. However, it does not make significant changes in sentence structure or use of different words and expressions. The rewrite is quite similar to the original text, with o"
+    },
+    {
+      "idx": 66,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points of the original text. However, it does not make significant changes in sentence structure or word choice. The rewrite is quite similar to the original text, with only minor variations in wor"
+    },
+    {
+      "idx": 67,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text has been rewritten with a focus on maintaining the core language and information, while also making changes to the sentence structure and vocabulary. The original text's core language and information are preserved, and the sentence structure is simplified. The vocabulary is also varied, wit"
+    },
+    {
+      "idx": 68,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": null,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information. The sentence structure has been altered to provide a more natural flow, and the vocabulary has been diversified to enhance the text's readability and comprehension. The style and tone of the ori"
+    },
+    {
+      "idx": 69,
+      "consensus_score": 2,
+      "avg_score": 2.333,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite also introduces a new sentence struc"
+    },
+    {
+      "idx": 70,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 1.0,
+      "raw_response": "The text provided is a simplified version of the original text. It loses the essence of the original text by reducing the complexity of the sentence structure and the richness of the vocabulary. The original text was rich in detail and had a more engaging tone, which is not reflected in the simplifi"
+    },
+    {
+      "idx": 71,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is about the prediction of the future of China using astrology and other methods. However, the rewrite does not make significant changes in sentence structure or vocabulary. The se"
+    },
+    {
+      "idx": 72,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is about the journey of hope and the propagation of the seeds of hope. However, the rewrite does not significantly alter the sentence structure or the choice of words, which result"
+    },
+    {
+      "idx": 73,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 4.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points. However, the sentence structure has been altered, which is a significant change from the original text. The use of words like \"赞扬\" and \"率先\" instead of \"提\" and \"第一时间\" shows a clear shift in "
+    },
+    {
+      "idx": 74,
+      "consensus_score": 2,
+      "avg_score": 1.667,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is the story of Tang Wei and her relationship with her ex-boyfriend, Hu Jing. The rewrite also makes some changes in sentence structure and word choice, which are necessary for a n"
+    },
+    {
+      "idx": 75,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure has been altered, which is a significant change from the original text. The use of words like \"相关的问题\" and \"暴涨\" instead of \"伴生的问题\" and \"高涨\" show"
+    },
+    {
+      "idx": 76,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure has been altered, which is a significant change from the original text. The use of words and expressions has been varied, which is a positive a"
+    },
+    {
+      "idx": 77,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight change in the tone and style of the text. The rewrite does not significantly devia"
+    },
+    {
+      "idx": 78,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure has been altered, which is a significant change from the original text. The use of words and expressions has been modified, which is a clear in"
+    },
+    {
+      "idx": 79,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure has been simplified, and the word choice has been slightly altered. The rewrite does not significantly change the original text's sentence stru"
+    },
+    {
+      "idx": 80,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": null,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information points. The sentence structure has been altered to reflect a more natural flow of language, and the use of vocabulary has been diversified to enhance the text's readability and comprehension. The"
+    },
+    {
+      "idx": 81,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text to evaluate is a rewrite of the original text, and it maintains the core meaning and information points of the original text. However, it lacks the detailed sentence structure and the use of varied vocabulary that would have made the text more engaging and informative. The sentence structur"
+    },
+    {
+      "idx": 82,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text has been rewritten with a focus on maintaining the core message of the original text. The sentence structure has been altered to some extent, and the use of words has been varied. However, the changes made are not as extensive as they could be. The language used is still quite close to the "
+    },
+    {
+      "idx": 83,
+      "consensus_score": 2,
+      "avg_score": 1.667,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure has been altered, which is a significant change from the original text. The use of words and expressions has also been varied, which is a posit"
+    },
+    {
+      "idx": 84,
+      "consensus_score": 2,
+      "avg_score": 1.667,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure has been slightly altered, which is a deviation from the original text. The use of words and expressions is also somewhat different, which is a"
+    },
+    {
+      "idx": 85,
+      "consensus_score": 2,
+      "avg_score": 1.667,
+      "predicted_score": null,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information. The sentence structure has been altered to provide a more natural flow, and the vocabulary has been diversified to enhance the text's readability and comprehension. The style and tone of the ori"
+    },
+    {
+      "idx": 86,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 2.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is about the current state of the Chinese market and the future of Chinese brands. However, the rewrite does not make significant changes in sentence structure or vocabulary. The s"
+    },
+    {
+      "idx": 87,
+      "consensus_score": 2,
+      "avg_score": 2.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core language and information, while also making significant changes in sentence structure and vocabulary. The rewritten text is more concise and uses simpler language, which makes it easier to understand. However, the rewri"
+    },
+    {
+      "idx": 88,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite also introduces a new element, the m"
+    },
+    {
+      "idx": 89,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information. The sentence structure has been altered to provide a more natural flow, and the vocabulary has been diversified to enhance the text's readability. The tone and style of the original text have be"
+    },
+    {
+      "idx": 90,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite also introduces a new element, the r"
+    },
+    {
+      "idx": 91,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is about the distribution of small production houses in terms of legality. However, the rewrite does not make significant changes in sentence structure or vocabulary. The sentence "
+    },
+    {
+      "idx": 92,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is the success of the \"三狮军团\" in the World Cup and the European Cup. However, the rewrite does not make significant changes in sentence structure or vocabulary. The sentence structu"
+    },
+    {
+      "idx": 93,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 2.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning and information of the original text, which is about the protagonist, Suzuki, and his training regimen. However, the rewrite does not make significant changes in sentence structure or vocabulary, which result"
+    },
+    {
+      "idx": 94,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 2.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information. However, it lacks the depth and complexity of the original text. The sentence structure is simplified, and the use of words is less varied. The tone and style of the original text are not fully pr"
+    },
+    {
+      "idx": 95,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points. However, the sentence structure has been altered, which is a significant change from the original text. The use of words and expressions is also different, which contributes to the overall "
+    },
+    {
+      "idx": 96,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information. The sentence structure has been altered to reflect a more natural flow of language. The vocabulary has been diversified, and the tone has been preserved. However, the changes made are not as ext"
+    },
+    {
+      "idx": 97,
+      "consensus_score": 3,
+      "avg_score": 2.667,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points. However, it lacks the depth of change in sentence structure and word choice that would elevate it to a higher score. The rewrite is more of a paraphrase than a significant transformation of"
+    },
+    {
+      "idx": 98,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core meaning and information points. The sentence structure has been altered to reflect a more natural flow of language. The vocabulary and expression methods have been diversified, and the original text's style and length h"
+    },
+    {
+      "idx": 99,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original message while introducing some changes in sentence structure and vocabulary. The original text's core message about the shift in power dynamics is preserved. However, the changes in sentence structure and vocabulary are not as exte"
+    },
+    {
+      "idx": 100,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points of the original text. However, the sentence structure has been altered, which is a significant change from the original text. The use of words and expressions has been varied, which is a pos"
+    },
+    {
+      "idx": 101,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite does not significantly change the se"
+    },
+    {
+      "idx": 102,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message and the essential details of the original text. However, the sentence structure and the choice of words have been altered, which results in a slight change in the tone and style of the text. The rewrite is no"
+    },
+    {
+      "idx": 103,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core message of the original text. However, the rewrite does not significantly alter the sentence structure or the choice of words, which results in a lack of variety in sentence construction and vocabulary. The rewrite also f"
+    },
+    {
+      "idx": 104,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite does not significantly change the se"
+    },
+    {
+      "idx": 105,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, it lacks the depth and detail that the original text offers. The sentence structure is similar to the original text, but it does not make significant changes to the s"
+    },
+    {
+      "idx": 106,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, it does not make significant changes in sentence structure or word choice. The rewrite is quite similar to the original text, with only minor changes in wording. The "
+    },
+    {
+      "idx": 107,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite is generally coherent and understand"
+    },
+    {
+      "idx": 108,
+      "consensus_score": 3,
+      "avg_score": 3.333,
+      "predicted_score": 2.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is that every woman can be a good mother and every person can evaluate the quality of a mother. However, the rewrite does not make significant changes in sentence structure or voca"
+    },
+    {
+      "idx": 109,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core message and the essence of the original text. However, the rewrite does not fully capture the original text's nuances and depth. The sentence structure and vocabulary are somewhat simplified, which results in a loss of th"
+    },
+    {
+      "idx": 110,
+      "consensus_score": 3,
+      "avg_score": 3.333,
+      "predicted_score": 4.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. The sentence structure is also preserved, and the language used is similar to the original text. However, there are some minor changes in word choice and sentence construction"
+    },
+    {
+      "idx": 111,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is about a group of tech elites gathering in South TOD, possibly including high-level managers from internet companies, CEOs of tech apps, and individuals from the stock market. Ho"
+    },
+    {
+      "idx": 112,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text has been rewritten with a slight change in tone and word choice, which is evident in the phrase \"毛主席一走进房间,\" where \"一走\" is a more casual and less formal version of \"走进.\" Additionally, the phrase \"大家都紧张得僵硬\" is a more vivid and expressive way of describing the atmosphere in the room. The use o"
+    },
+    {
+      "idx": 113,
+      "consensus_score": 3,
+      "avg_score": 3.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core message and information points. However, the sentence structure and word choice have been simplified, which results in a loss of the original text's complexity and nuance. The rewrite does not significantly alter the sent"
+    },
+    {
+      "idx": 114,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided shows a significant improvement in the quality of the translation. The original text is well-preserved, with the core meaning and key points of the original text being accurately conveyed. The sentence structure is also well-maintained, with the original text's complex sentence str"
+    },
+    {
+      "idx": 115,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": 4.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite also introduces a more natural flow "
+    },
+    {
+      "idx": 116,
+      "consensus_score": 4,
+      "avg_score": 3.667,
+      "predicted_score": 4.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is to ask for name suggestions for a newborn male child with a preference for names containing the word \"木\". The rewrite also changes the sentence structure and uses different word"
+    },
+    {
+      "idx": 117,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite also introduces new elements, such a"
+    },
+    {
+      "idx": 118,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": 5.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points. However, the sentence structure has been altered, which is a significant change from the original text. The use of words and expressions has been varied, which is a positive aspect of the r"
+    },
+    {
+      "idx": 119,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": null,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite uses the phrase \"更加激烈\" to describe t"
+    },
+    {
+      "idx": 120,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core message of the original text, which is about the eighth national moral model story gathering activity. The rewrite also makes some changes in sentence structure and word choice, which are necessary for the text to be"
+    },
+    {
+      "idx": 121,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, the sentence structure and word choice have been altered, which results in a slight deviation from the original text. The rewrite does not significantly change the se"
+    },
+    {
+      "idx": 122,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points. However, it lacks the depth and complexity of the original text. The sentence structure is simplified, and the vocabulary is less varied. The tone and style of the original text are not ful"
+    },
+    {
+      "idx": 123,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information points of the original text. However, it lacks the depth of change that would be expected for a higher score. The sentence structure and word choice are similar to the original text, and there is n"
+    },
+    {
+      "idx": 124,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text. The rewrite maintains the core meaning of the original text, which is that there is no information available about Song Been's parents and that Song Been's success as an actor is estimated to be worth a significant amount of money. However, the re"
+    },
+    {
+      "idx": 125,
+      "consensus_score": 4,
+      "avg_score": 4.0,
+      "predicted_score": 3.0,
+      "raw_response": "The text provided is a rewrite of the original text, and it maintains the core meaning and information of the original text. However, it lacks the depth and complexity of the original text. The sentence structure is simplified, and the use of vocabulary is limited, which results in a less engaging a"
+    },
+    {
+      "idx": 126,
+      "consensus_score": 5,
+      "avg_score": 5.0,
+      "predicted_score": 4.0,
+      "raw_response": "The text has been rewritten with a slight change in wording and sentence structure. The core meaning of the original text is preserved, but the sentence structure is more complex and varied. The use of words is also more diverse, which contributes to a more natural and engaging narrative. The tone o"
+    },
+    {
+      "idx": 127,
+      "consensus_score": 5,
+      "avg_score": 5.0,
+      "predicted_score": null,
+      "raw_response": "The text has been rewritten with a focus on maintaining the original text's core language and information. The sentence structure has been altered to provide a more vivid and engaging description. The use of different words and expressions has been employed to enhance the text's richness and variety"
+    },
+    {
+      "idx": 128,
+      "consensus_score": 5,
+      "avg_score": 5.0,
+      "predicted_score": null,
+      "raw_response": "The text has been rewritten with a focus on maintaining the core meaning of the original text. The sentence structure has been altered to provide a more natural flow, and the vocabulary has been diversified to enhance the readability and comprehension of the text. The tone and style of the original "
+    }
+  ]
+}

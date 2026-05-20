@@ -11,7 +11,7 @@ evaluator/checkpoints/
 evaluator/checkpoints_1/
 
 # Data files (uploaded to HuggingFace)
-data/
+
 
 analysis/qwen3-8B/
 analysis/qwen3-8B_original/

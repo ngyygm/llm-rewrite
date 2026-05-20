@@ -1,0 +1,27 @@
+{
+  "model": "Pro/moonshotai/Kimi-K2-Instruct-0905",
+  "eval_type": "api_cross_source_pairwise",
+  "elapsed_seconds": 607.0,
+  "metrics": {
+    "total_pairs": 6585,
+    "valid_pairs": 6585,
+    "parse_failures": 0,
+    "parse_failure_rate": 0.0,
+    "pairwise_accuracy": 0.3162,
+    "accuracy_easy_diff_ge2": 0.2953,
+    "accuracy_easy_total": 3027,
+    "accuracy_medium_diff_1to2": 0.3208,
+    "accuracy_medium_total": 2777,
+    "accuracy_hard_diff_05to1": 0.3803,
+    "accuracy_hard_total": 781,
+    "spearman_rho_winrate_vs_avg": -0.4722,
+    "spearman_pvalue": 0.0,
+    "kendall_tau_winrate_vs_avg": -0.3674,
+    "kendall_pvalue": 0.0,
+    "num_rewrites_with_comparisons": 129,
+    "min_score_diff": 1.0,
+    "position_swap": false
+  },
+  "total_api_calls": 6585,
+  "api_errors": 0
+}

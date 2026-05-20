@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Downstream validation: filtering strategy comparison. RewriteJudge top-50\% filtering improves mean quality by 52\% with 100\% of selected rewrites scoring $\geq$3.}
+\label{tab:downstream}
+\begin{tabular}{lrrrr}
+\toprule
+Strategy & $N$ & Mean Score & $\sigma$ & \%$\geq$3 \\
+\midrule
+Top 30\% & 270 & 5.00 & 0.00 & 100.0 \\
+$\geq$4 threshold & 411 & 4.84 & 0.37 & 100.0 \\
+\textbf{Top 50\%} & \textbf{450} & \textbf{4.68} & \textbf{0.63} & \textbf{100.0} \\
+BLEU mid-range & 65 & 4.52 & 1.24 & 90.8 \\
+$\geq$3 threshold & 517 & 4.46 & 0.81 & 100.0 \\
+Random 50\% & 450 & 3.13 & 1.77 & 58.7 \\
+All (unfiltered) & 900 & 3.08 & 1.79 & 57.4 \\
+Bottom 50\% & 450 & 1.49 & 0.97 & 14.9 \\
+\bottomrule
+\end{tabular}
+\end{table}

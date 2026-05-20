@@ -1,0 +1,28 @@
+{
+  "model": "Qwen/Qwen2.5-72B-Instruct",
+  "eval_type": "api_cross_source_pairwise",
+  "elapsed_seconds": 25.0,
+  "metrics": {
+    "total_pairs": 5,
+    "valid_pairs": 4,
+    "parse_failures": 1,
+    "parse_failure_rate": 0.2,
+    "pairwise_accuracy": 1.0,
+    "accuracy_easy_diff_ge2": 0.0,
+    "accuracy_easy_total": 0,
+    "accuracy_medium_diff_1to2": 0.75,
+    "accuracy_medium_total": 4,
+    "accuracy_hard_diff_05to1": 1.0,
+    "accuracy_hard_total": 1,
+    "spearman_rho_winrate_vs_avg": -0.4174,
+    "spearman_pvalue": 0.410304,
+    "kendall_tau_winrate_vs_avg": -0.3873,
+    "kendall_pvalue": 0.350688,
+    "num_rewrites_with_comparisons": 6,
+    "min_score_diff": 1.0,
+    "position_swap": true,
+    "total_api_calls": 10
+  },
+  "num_pair_results": 5,
+  "num_per_rewrite_stats": 6
+}

@@ -1,0 +1,27 @@
+{
+  "model": "kimi-k2.5",
+  "eval_type": "api_cross_source_pairwise",
+  "elapsed_seconds": 14677.1,
+  "metrics": {
+    "total_pairs": 6585,
+    "valid_pairs": 0,
+    "parse_failures": 6585,
+    "parse_failure_rate": 1.0,
+    "pairwise_accuracy": 0.0,
+    "accuracy_easy_diff_ge2": 0.0,
+    "accuracy_easy_total": 3027,
+    "accuracy_medium_diff_1to2": 0.0,
+    "accuracy_medium_total": 2777,
+    "accuracy_hard_diff_05to1": 0.0,
+    "accuracy_hard_total": 781,
+    "spearman_rho_winrate_vs_avg": NaN,
+    "spearman_pvalue": NaN,
+    "kendall_tau_winrate_vs_avg": NaN,
+    "kendall_pvalue": NaN,
+    "num_rewrites_with_comparisons": 129,
+    "min_score_diff": 1.0,
+    "position_swap": true
+  },
+  "total_api_calls": 13170,
+  "api_errors": 0
+}

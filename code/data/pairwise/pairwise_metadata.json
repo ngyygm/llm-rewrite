@@ -1,0 +1,56 @@
+{
+  "generated": {
+    "train": {
+      "total_pairs": 1200,
+      "train_sources": 200,
+      "label_distribution": {
+        "1": 600,
+        "0": 600
+      },
+      "prompt_type_pair_distribution": {
+        "(0,1)": 300,
+        "(1,0)": 300,
+        "(0,2)": 300,
+        "(2,0)": 300,
+        "(1,2)": 300,
+        "(2,1)": 300
+      }
+    },
+    "eval": {
+      "total_pairs": 600,
+      "eval_sources": 100,
+      "label_distribution": {
+        "1": 300,
+        "0": 300
+      }
+    }
+  },
+  "cross_source": {
+    "total_pairs": 2652,
+    "source_samples_used": 600,
+    "label_distribution": {
+      "0": 1326,
+      "1": 1326
+    },
+    "score_diff_stats": {
+      "min": 0.666,
+      "max": 5.0,
+      "mean": 1.789,
+      "median": 1.667
+    },
+    "pairs_per_sample_stats": {
+      "min": 4,
+      "max": 12,
+      "mean": 8.8,
+      "median": 9.0
+    },
+    "original_score_distribution": {
+      "0": 120,
+      "1": 165,
+      "2": 129,
+      "3": 120,
+      "4": 53,
+      "5": 13
+    }
+  }
+}

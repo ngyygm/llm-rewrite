@@ -1,0 +1,270 @@
+{
+  "lora_balanced_simple": {
+    "display_name": "RewriteJudge (Ours)",
+    "category": "lora",
+    "size": "8B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.6446,
+    "notes": "1008 balanced"
+  },
+  "lora_score_only_unbalanced": {
+    "display_name": "Unbalanced training",
+    "category": "lora",
+    "size": "8B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.337,
+    "notes": "600 original"
+  },
+  "lora_multi_score": {
+    "display_name": "LoRA-multi-score",
+    "category": "lora",
+    "size": "8B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.4977,
+    "notes": "multi score"
+  },
+  "lora_balanced_reasoning": {
+    "display_name": "+ Reasoning prefix",
+    "category": "lora",
+    "size": "8B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.3598,
+    "notes": "reasoning prefix"
+  },
+  "lora_balanced_simple_50": {
+    "display_name": "RewriteJudge-50",
+    "category": "lora",
+    "size": "8B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.0578,
+    "notes": "50 balanced subset"
+  },
+  "lora_balanced_simple_100": {
+    "display_name": "RewriteJudge-100",
+    "category": "lora",
+    "size": "8B",
+    "valid": 128,
+    "failures": 1,
+    "spearman_vs_avg": 0.1172,
+    "notes": "100 balanced subset"
+  },
+  "lora_balanced_simple_200": {
+    "display_name": "RewriteJudge-200",
+    "category": "lora",
+    "size": "8B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.136,
+    "notes": "200 balanced subset"
+  },
+  "lora_balanced_simple_400": {
+    "display_name": "RewriteJudge-400",
+    "category": "lora",
+    "size": "8B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.2471,
+    "notes": "400 balanced subset"
+  },
+  "lora_balanced_simple_qwen2_5_7b_instruct_20260511_200253": {
+    "display_name": "RewriteJudge (qwen2.5-7b-instruct_20260511_200253)",
+    "category": "lora",
+    "size": "qwen2.5-7b-instruct_20260511_200253",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.5804,
+    "notes": "balanced full"
+  },
+  "lora_score_only_unbalanced_qwen2_5_7b_instruct_20260511_200253": {
+    "display_name": "Unbalanced training (qwen2.5-7b-instruct_20260511_200253)",
+    "category": "lora",
+    "size": "qwen2.5-7b-instruct_20260511_200253",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.2871,
+    "notes": "unbalanced full"
+  },
+  "lora_balanced_simple_50_qwen2_5_7b_instruct_20260511_200253": {
+    "display_name": "RewriteJudge-50 (qwen2.5-7b-instruct_20260511_200253)",
+    "category": "lora",
+    "size": "qwen2.5-7b-instruct_20260511_200253",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.0257,
+    "notes": "50 subset"
+  },
+  "lora_balanced_simple_100_qwen2_5_7b_instruct_20260511_200253": {
+    "display_name": "RewriteJudge-100 (qwen2.5-7b-instruct_20260511_200253)",
+    "category": "lora",
+    "size": "qwen2.5-7b-instruct_20260511_200253",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.0944,
+    "notes": "100 subset"
+  },
+  "lora_balanced_simple_200_qwen2_5_7b_instruct_20260511_200253": {
+    "display_name": "RewriteJudge-200 (qwen2.5-7b-instruct_20260511_200253)",
+    "category": "lora",
+    "size": "qwen2.5-7b-instruct_20260511_200253",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.259,
+    "notes": "200 subset"
+  },
+  "lora_balanced_simple_400_qwen2_5_7b_instruct_20260511_200253": {
+    "display_name": "RewriteJudge-400 (qwen2.5-7b-instruct_20260511_200253)",
+    "category": "lora",
+    "size": "qwen2.5-7b-instruct_20260511_200253",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.2354,
+    "notes": "400 subset"
+  },
+  "geval_qwen7b": {
+    "display_name": "G-Eval (Qwen2.5-7B)",
+    "category": "llm",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.1452,
+    "notes": "CoT evaluation"
+  },
+  "zeroshot_qwen7b": {
+    "display_name": "Zero-shot Qwen2.5-7B",
+    "category": "llm",
+    "size": "7B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.0187,
+    "notes": "Zero-shot prompt"
+  },
+  "zeroshot_qwen14b": {
+    "display_name": "Zero-shot Qwen2.5-14B",
+    "category": "llm",
+    "size": "14B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.0582,
+    "notes": "Zero-shot prompt"
+  },
+  "geval_qwen3_8b": {
+    "display_name": "G-Eval (Qwen3-8B)",
+    "category": "llm",
+    "size": "8B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.0408,
+    "notes": "CoT evaluation"
+  },
+  "zeroshot_qwen3_8b": {
+    "display_name": "Zero-shot Qwen3-8B",
+    "category": "llm",
+    "size": "8B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.1061,
+    "notes": "Zero-shot prompt"
+  },
+  "zeroshot_qwen3_14b": {
+    "display_name": "Zero-shot Qwen3-14B",
+    "category": "llm",
+    "size": "14B",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": 0.1291,
+    "notes": "Zero-shot prompt"
+  },
+  "prometheus2": {
+    "display_name": "Prometheus 2",
+    "category": "llm",
+    "size": "7B",
+    "valid": 106,
+    "failures": 23,
+    "spearman_vs_avg": 0.145,
+    "notes": "Fine-tuned judge, absolute grading"
+  },
+  "m_prometheus": {
+    "display_name": "M-Prometheus",
+    "category": "llm",
+    "size": "7B",
+    "valid": 107,
+    "failures": 22,
+    "spearman_vs_avg": 0.0373,
+    "notes": "Multilingual fine-tuned judge"
+  },
+  "trad_jaccard_char": {
+    "display_name": "JACCARD-CHAR",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.5951,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_jaccard_word": {
+    "display_name": "JACCARD-WORD",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.5376,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_bleu": {
+    "display_name": "BLEU",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.2939,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_rouge_l": {
+    "display_name": "ROUGE-L",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.3852,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_tfidf_cosine": {
+    "display_name": "TFIDF-COSINE",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.5711,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_sbert_cosine": {
+    "display_name": "SBERT-COSINE",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.2803,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  },
+  "trad_w2v_cosine": {
+    "display_name": "W2V-COSINE",
+    "category": "traditional",
+    "size": "-",
+    "valid": 129,
+    "failures": 0,
+    "spearman_vs_avg": -0.3362,
+    "continuous": true,
+    "notes": "Continuous similarity metric (range varies)"
+  }
+}

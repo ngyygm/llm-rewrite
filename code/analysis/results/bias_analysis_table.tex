@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Bias analysis for different evaluator methods. Lower absolute correlation values indicate less bias.}
+\label{tab:bias_analysis}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+Method & Output Len. $r$ & Input Len. $r$ & Verbosity $\\rho$ & Pos. Bias $r$ & Bias Score \\
+\midrule
+RewriteJudge (Ours, Qwen3-8B) & -0.033 & -0.070 & 0.006 & 0.120 & 0.057 \\
+RewriteJudge (Ours, Qwen2.5-7B) & -0.058 & -0.115 & 0.106 & 0.187 & 0.116 \\
+Prometheus 2 & 0.010 & -0.071 & 0.098 & 0.223 & 0.100 \\
+Zero-shot Qwen3-8B & 0.325 & 0.167 & 0.382 & 0.437 & 0.328 \\
+Char Overlap & 0.306 & 0.044 & 0.760 & 0.762 & 0.468 \\
+Length Heuristic & 0.287 & 0.052 & 0.741 & 0.681 & 0.441 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

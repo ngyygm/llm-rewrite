@@ -1,0 +1,39 @@
+{
+  "model": "/Qwen/Qwen3-8B",
+  "adapter_path": "/qwen3-8b/multi_score_full",
+  "mode": "multi_score",
+  "prompt_variant": "detail",
+  "inference_params": {
+    "temperature": 0.0,
+    "max_new_tokens": 256,
+    "top_p": 0.9,
+    "repetition_penalty": 1.1
+  },
+  "num_samples": 129,
+  "metrics_vs_avg_score": {
+    "spearman_rho": 0.4977,
+    "pearson_r": 0.5023,
+    "kendall_tau": 0.4319,
+    "mae": 0.8863,
+    "rmse": 1.1558,
+    "exact_agreement": 0.2093,
+    "within_1_pct": 0.814,
+    "within_2_pct": 0.9535,
+    "num_valid": 129,
+    "num_total": 129,
+    "parse_failures": 0
+  },
+  "metrics_vs_consensus_score": {
+    "spearman_rho": 0.4729,
+    "pearson_r": 0.4834,
+    "kendall_tau": 0.4248,
+    "mae": 0.8682,
+    "rmse": 1.1681,
+    "exact_agreement": 0.3333,
+    "within_1_pct": 0.845,
+    "within_2_pct": 0.9535,
+    "num_valid": 129,
+    "num_total": 129,
+    "parse_failures": 0
+  }
+}

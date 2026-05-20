@@ -1,0 +1,7 @@
+[
+  {"subset_size": 0, "method": "zero_shot_7b", "spearman": 0}
+, {"subset_size": 50, "method": "lora_7b", "spearman": 0.0257}
+, {"subset_size": 100, "method": "lora_7b", "spearman": 0.0944}
+, {"subset_size": 200, "method": "lora_7b", "spearman": 0.259}
+, {"subset_size": 400, "method": "lora_7b", "spearman": 0.2354}
+]
